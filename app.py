@@ -247,6 +247,23 @@ def ping(): return "ok"
 def robots():
     return send_from_directory('.', 'robots.txt')
 
+@app.route("/sitemap.xml")
+def sitemap():
+    pages = []
+    # Dynamic list of routes to include in sitemap
+    for rule in app.url_map.iter_rules():
+        if "GET" in rule.methods and len(rule.arguments) == 0:
+            # Exclude some routes
+            if rule.rule not in ["/rishav", "/logout", "/account", "/edit_account", "/sitemap.xml", "/robots.txt", "/ads.txt", "/ping"]:
+                pages.append("https://raa-earthquake.onrender.com" + rule.rule)
+    
+    sitemap_xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    for page in pages:
+        sitemap_xml += f'  <url><loc>{page}</loc><lastmod>{datetime.utcnow().strftime("%Y-%m-%d")}</lastmod></url>\n'
+    sitemap_xml += '</urlset>'
+    
+    return sitemap_xml, 200, {'Content-Type': 'application/xml'}
+
 # ================= EXISTING ARTICLES =================
 @app.route("/earthquake")
 def earthquake(): return render_template("earthquake.html")
