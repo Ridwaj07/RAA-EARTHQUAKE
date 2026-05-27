@@ -1,574 +1,327 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}RAA Earthquake | Real-Time Earthquake Monitoring & Safety Platform{% endblock %}</title>
+<meta name="description" content="{% block meta_description %}RAA Earthquake provides real-time earthquake monitoring, live seismic maps, educational articles, and comprehensive safety guides. Track earthquakes worldwide and stay prepared.{% endblock %}">
+<meta name="keywords" content="{% block meta_keywords %}earthquake tracker, real-time earthquake, earthquake map, earthquake safety, seismic activity, earthquake alerts, earthquake monitoring{% endblock %}">
+<meta name="author" content="RAA Earthquake">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#4f46e5">
+<link rel="icon" href="https://earthquake.usgs.gov/favicon.ico">
+<link rel="canonical" href="{% block canonical %}https://raa-earthquake.onrender.com/{% endblock %}">
 
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="{% block og_title %}RAA Earthquake — Real-Time Earthquake Monitoring{% endblock %}">
+<meta property="og:description" content="{% block og_description %}Track earthquakes worldwide with real-time data, interactive maps, safety guides, and educational content.{% endblock %}">
+<meta property="og:site_name" content="RAA Earthquake">
 
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="RAA Earthquake — Real-Time Monitoring">
 
+<!-- Google Verification -->
+<meta name="google-site-verification" content="aKhYEG-Q-t5PaNZiKUb1DyFniY4j3ITzPq1hrzK_0Fg" />
 
-
-<!-- Google tag (gtag.js) -->
+<!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z40QWB9RF1"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-Z40QWB9RF1');
 </script>
 
-
-
-
-
-
-
-<meta charset="UTF-8">
-
-<title>RAA Earthquake | Live Earthquake Alerts & Global Earthquake Map</title>
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<meta name="description" content="RAA Earthquake - Real time earthquake alerts and safety guide for India and world.">
-
-<meta name="keywords" content="earthquake alert, earthquake tracker, live earthquake map, India earthquake">
-
-<meta name="author" content="RAA Earthquake">
-
-<meta name="robots" content="index, follow">
-
-<meta name="theme-color" content="#111">
-
-<link rel="icon" href="https://earthquake.usgs.gov/favicon.ico">
-
-<meta name="google-site-verification" content="aKhYEG-Q-t5PaNZiKUb1DyFniY4j3ITzPq1hrzK_0Fg" />
-
 <!-- Google AdSense -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7255617068810954"
-crossorigin="anonymous"></script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7255617068810954" crossorigin="anonymous"></script>
 
-<style>
-
-body{
-margin:0;
-font-family:Arial, sans-serif;
-background:#f4f4f4;
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "RAA Earthquake",
+  "url": "https://raa-earthquake.onrender.com",
+  "description": "Real-time earthquake monitoring platform with live maps, safety guides, and educational content.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "RAA Groups"
+  }
 }
+</script>
 
+<!-- CSS -->
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
-
-
-
-
-
-
-
-/* TOPBAR */
-
-.topbar{
-background:#111;
-color:white;
-padding:12px 15px;
-display:flex;
-align-items:center;
-position:sticky;
-top:0;
-z-index:100;
-}
-
-.menu-toggle{
-font-size:22px;
-cursor:pointer;
-margin-right:15px;
-}
-
-.topbar-title{
-font-weight:bold;
-}
-
-/* SIDEBAR */
-
-.sidebar{
-position:fixed;
-left:-250px;
-top:0;
-width:230px;
-height:100vh;
-background:#111;
-padding:10px;
-color:rgb(203, 190, 190);
-transition:0.3s;
-z-index:1000;
-overflow-y:auto;
-overflow-x:hidden;
-}
-
-.sidebar.active{
-left:0;
-}
-
-.menu-box{
-background:#222;
-margin:10px 0;
-padding:12px;
-border-radius:10px;
-text-align:center;
-border:1px solid #444;
-}
-
-.menu-box:hover{
-background:#333;
-}
-
-.menu-box a{
-color:white;
-text-decoration:none;
-font-weight:bold;
-display:block;
-}
-
-/* CONTENT */
-
-.content{
-padding:20px;
-margin:20px;
-background:white;
-border:3px solid #111;
-border-radius:18px;
-box-shadow:0 10px 30px rgba(0,0,0,0.15);
-}
-
-/* OVERLAY */
-
-.overlay{
-display:none;
-position:fixed;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.5);
-top:0;
-left:0;
-z-index:500;
-}
-
-.overlay.active{
-display:block;
-}
-
-/* FOOTER */
-
-footer{
-text-align:center;
-padding:25px;
-background:#111;
-color:#ccc;
-margin-top:40px;
-}
-
-footer a{
-color:#ccc;
-text-decoration:none;
-margin:0 10px;
-}
-
-/* ===== DARK MODE ADD ===== */
-
-#darkToggle{
-position:fixed;
-top:20px;
-right:20px;
-padding:10px 14px;
-border:none;
-border-radius:50%;
-background:black;
-color:white;
-font-size:18px;
-cursor:pointer;
-z-index:9999;
-box-shadow:0 4px 10px rgba(0,0,0,0.3);
-}
-
-body.dark{
-background:#121212;
-color:#f1f1f1;
-}
-
-body.dark .content{
-background:#1e1e1e;
-color:white;
-border-color:#444;
-}
-
-body.dark footer{
-background:#000;
-color:white;
-}
-
-body.dark .menu-box{
-background:#222;
-}
-
-body.dark .topbar{
-background:#000;
-}
-
-
-
-
-
-/* ===== FIX TEXT VISIBILITY IN DARK MODE ===== */
-
-body.dark p,
-body.dark h1,
-body.dark h2,
-body.dark h3,
-body.dark h4,
-body.dark h5,
-body.dark h6,
-body.dark span,
-body.dark li{
-color:#f1f1f1 !important;
-}
-
-/* Fix custom sections */
-body.dark .image-description{
-background:#1e1e1e !important;
-color:#f1f1f1 !important;
-}
-
-/* Fix lists */
-body.dark #quakeList li{
-background:#1e1e1e !important;
-color:white !important;
-}
-
-/* ===== FIX CONTENT BOX IN DARK MODE ===== */
-
-body.dark .content{
-background:#1e1e1e !important;
-color:#f1f1f1 !important;
-border-color:#444 !important;
-box-shadow:0 10px 30px rgba(0,0,0,0.6) !important;
-}
-
-body.dark .image-description{
-background:#1e1e1e !important;
-color:#f1f1f1 !important;
-}
-
-body.dark #quakeList li{
-background:#2a2a2a !important;
-color:white !important;
-}
-
-
-
-
-/* ===== FORCE DARK MODE FIX ===== */
-
-/* Force ALL text visible */
-body.dark * {
-    color: #f1f1f1 !important;
-}
-
-/* Fix main content box */
-body.dark .content {
-    background: #1e1e1e !important;
-    color: #f1f1f1 !important;
-    border-color: #444 !important;
-}
-
-/* Fix ALL inner elements inside content */
-body.dark .content * {
-    background-color: transparent !important;
-    color: #f1f1f1 !important;
-}
-
-/* Fix sections like image-description */
-body.dark .image-description {
-    background: #1e1e1e !important;
-    color: #f1f1f1 !important;
-}
-
-/* Fix list items */
-body.dark #quakeList li {
-    background: #2a2a2a !important;
-    color: white !important;
-}
-
-/* Fix links */
-body.dark a {
-    color: #90caf9 !important;
-}
-
-
-
-
-
-</style>
-
+{% block head %}{% endblock %}
 </head>
 
 <body>
-<button id="darkToggle">🌙</button>
-<!-- TOP BAR -->
 
-<div class="topbar">
-<div class="menu-toggle" onclick="toggleMenu()">☰</div>
-<div class="topbar-title">RAA EARTHQUAKE</div>
+<!-- EARTHQUAKE ALERT BANNER -->
+<div class="alert-banner" id="alertBanner">
+    <span>🚨</span>
+    <span id="alertText">Monitoring seismic activity worldwide</span>
 </div>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+    <div class="navbar-inner">
+        <div style="display:flex;align-items:center;gap:12px;">
+            <button class="nav-btn" id="menuToggle" onclick="toggleSidebar()" aria-label="Open menu">☰</button>
+            <a href="/" class="navbar-brand">
+                <div class="brand-icon">🌍</div>
+                <span>RAA Earthquake</span>
+            </a>
+        </div>
+        <div class="navbar-actions">
+            <button class="nav-btn" id="darkToggle" aria-label="Toggle dark mode">🌙</button>
+            {% if session.get("user_id") %}
+            <a href="/account" class="nav-btn" aria-label="Account">👤</a>
+            {% else %}
+            <a href="/login" class="btn btn-primary btn-sm" style="border-radius:10px;">Sign In</a>
+            {% endif %}
+        </div>
+    </div>
+</nav>
 
 <!-- SIDEBAR -->
-<div class="sidebar" id="sidebar">
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <span style="font-weight:700;font-size:1.1rem;">Menu</span>
+        <button class="sidebar-close" onclick="toggleSidebar()">✕</button>
+    </div>
 
-<div class="menu-box" onclick="toggleMenu()">
-    <span class="menu-icon">☰</span>
-    <span class="menu-text">Menu</span>
-</div>
+    <div class="sidebar-section">
+        <div class="sidebar-label">Navigation</div>
+        <a href="/" class="sidebar-link">
+            <span class="link-icon">🏠</span> Home
+        </a>
+        <a href="/map" class="sidebar-link">
+            <span class="link-icon">🗺️</span> Live Map
+        </a>
+        <a href="/world" class="sidebar-link">
+            <span class="link-icon">🌍</span> World Earthquakes
+        </a>
+        <a href="/asia" class="sidebar-link">
+            <span class="link-icon">🌏</span> Asia Earthquakes
+        </a>
+        <a href="/india" class="sidebar-link">
+            <span class="link-icon">🇮🇳</span> India Earthquakes
+        </a>
+    </div>
 
-<div class="menu-box">
-<a href="/">
-    <span class="menu-icon">🏠</span>
-    <span class="menu-text">Home</span>
-</a>
-</div>
+    <div class="sidebar-divider"></div>
 
-<div class="menu-box">
-<a href="/earthquake">
-    <span class="menu-icon">🌋</span>
-    <span class="menu-text">Earthquake</span>
-</a>
-</div>
+    <div class="sidebar-section">
+        <div class="sidebar-label">Learn</div>
+        <a href="/earthquake" class="sidebar-link">
+            <span class="link-icon">📚</span> Articles
+        </a>
+        <a href="/guide" class="sidebar-link">
+            <span class="link-icon">📘</span> Safety Guide
+        </a>
+        <a href="/earthquake-safety" class="sidebar-link">
+            <span class="link-icon">🛡️</span> Safety Tips
+        </a>
+    </div>
 
-<div class="menu-box">
-<a href="/asia">
-    <span class="menu-icon">🌏</span>
-    <span class="menu-text">Asia</span>
-</a>
-</div>
+    <div class="sidebar-divider"></div>
 
-<div class="menu-box">
-<a href="/world">
-    <span class="menu-icon">🌍</span>
-    <span class="menu-text">World</span>
-</a>
-</div>
+    <div class="sidebar-section">
+        <div class="sidebar-label">Account</div>
+        {% if session.get("user_id") %}
+        <a href="/account" class="sidebar-link">
+            <span class="link-icon">👤</span> My Account
+        </a>
+        <a href="/logout" class="sidebar-link">
+            <span class="link-icon">🚪</span> Logout
+        </a>
+        {% else %}
+        <a href="/login" class="sidebar-link">
+            <span class="link-icon">🔑</span> Login
+        </a>
+        <a href="/signup" class="sidebar-link">
+            <span class="link-icon">📝</span> Sign Up
+        </a>
+        {% endif %}
 
-<div class="menu-box">
-<a href="/map">
-    <span class="menu-icon">🗺</span>
-    <span class="menu-text">Map</span>
-</a>
-</div>
+        {% if session.get("user_email") in ["bharadwajrishav8434@gmail.com","nitu9sharma9@gmail.com"] %}
+        <a href="/rishav" class="sidebar-link">
+            <span class="link-icon">⚙️</span> Admin
+        </a>
+        {% endif %}
+    </div>
 
-<div class="menu-box">
-<a href="/guide">
-    <span class="menu-icon">📘</span>
-    <span class="menu-text">Guide</span>
-</a>
-</div>
+    <div class="sidebar-divider"></div>
 
-<hr style="border:0.5px solid #444;margin:10px;">
-
-{% if session.get("user_id") %}
-
-<div class="menu-box">
-<a href="/account">
-    <span class="menu-icon">👤</span>
-    <span class="menu-text">Account</span>
-</a>
-</div>
-
-<div class="menu-box">
-<a href="/logout">
-    <span class="menu-icon">🚪</span>
-    <span class="menu-text">Logout</span>
-</a>
-</div>
-
-{% else %}
-
-<div class="menu-box">
-<a href="/login">
-    <span class="menu-icon">🔑</span>
-    <span class="menu-text">Login</span>
-</a>
-</div>
-
-<div class="menu-box">
-<a href="/signup">
-    <span class="menu-icon">📝</span>
-    <span class="menu-text">Signup</span>
-</a>
-</div>
-
-{% endif %}
-
-{% if session.get("user_email") in [
-"bharadwajrishav8434@gmail.com",
-"nitu9sharma9@gmail.com"
-] %}
-
-<div class="menu-box">
-<a href="/rishav">
-    <span class="menu-icon">⚙</span>
-    <span class="menu-text">Admin</span>
-</a>
-</div>
-
-{% endif %}
-
-<hr style="border:0.5px solid #444;margin:10px;">
-
-<div class="menu-box">
-<a href="/about">
-    <span class="menu-icon">ℹ</span>
-    <span class="menu-text">About</span>
-</a>
-</div>
-
-<div class="menu-box">
-<a href="/contact">
-    <span class="menu-icon">📩</span>
-    <span class="menu-text">Contact</span>
-</a>
-</div>
-
-<div class="menu-box">
-<a href="/terms">
-    <span class="menu-icon">📜</span>
-    <span class="menu-text">Terms</span>
-</a>
-</div>
-
-<div class="menu-box">
-<a href="/privacy">
-    <span class="menu-icon">🔒</span>
-    <span class="menu-text">Privacy</span>
-</a>
-</div>
-
-<div class="menu-box">
-<a href="/disclaimer">
-    <span class="menu-icon">⚠</span>
-    <span class="menu-text">Disclaimer</span>
-</a>
-</div>
-
-</div>
+    <div class="sidebar-section">
+        <div class="sidebar-label">More</div>
+        <a href="/about" class="sidebar-link">
+            <span class="link-icon">ℹ️</span> About
+        </a>
+        <a href="/contact" class="sidebar-link">
+            <span class="link-icon">📩</span> Contact
+        </a>
+        <a href="/terms" class="sidebar-link">
+            <span class="link-icon">📜</span> Terms
+        </a>
+        <a href="/privacy" class="sidebar-link">
+            <span class="link-icon">🔒</span> Privacy
+        </a>
+        <a href="/disclaimer" class="sidebar-link">
+            <span class="link-icon">⚠️</span> Disclaimer
+        </a>
+    </div>
+</aside>
 
 <!-- OVERLAY -->
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
 
-<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
-
-<!-- CONTENT -->
-
-<div class="content">
-
-{% block content %}
-{% endblock %}
-
-</div>
+<!-- MAIN CONTENT -->
+<main class="main-content">
+{% block content %}{% endblock %}
+</main>
 
 <!-- FOOTER -->
+<footer class="site-footer">
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <h3>🌍 RAA Earthquake</h3>
+            <p>A comprehensive real-time earthquake monitoring and educational platform. We provide live seismic data, safety guides, and in-depth articles to help communities stay informed and prepared.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Monitor</h4>
+            <a href="/">Home</a>
+            <a href="/map">Live Map</a>
+            <a href="/world">World</a>
+            <a href="/asia">Asia</a>
+            <a href="/india">India</a>
+        </div>
+        <div class="footer-col">
+            <h4>Learn</h4>
+            <a href="/earthquake">Articles</a>
+            <a href="/what-is-earthquake">What is Earthquake?</a>
+            <a href="/earthquake-safety">Safety Tips</a>
+            <a href="/guide">Safety Guide</a>
+            <a href="/biggest-earthquakes">Biggest Earthquakes</a>
+        </div>
+        <div class="footer-col">
+            <h4>Company</h4>
+            <a href="/about">About Us</a>
+            <a href="/contact">Contact</a>
+            <a href="/terms">Terms</a>
+            <a href="/privacy">Privacy</a>
+            <a href="/disclaimer">Disclaimer</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 RAA Earthquake Monitoring Platform — Built by RAA Groups. All rights reserved.</p>
+    </div>
+</footer>
 
+<!-- SCROLL TO TOP -->
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Scroll to top">↑</button>
 
-
+<!-- SCRIPTS -->
 <script>
-
-function toggleMenu(){
-document.getElementById("sidebar").classList.toggle("active");
-document.getElementById("overlay").classList.toggle("active");
+// Sidebar toggle
+function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('active');
+    document.getElementById('overlay').classList.toggle('active');
 }
 
-</script>
-
-<script>
-
-let lastEarthquakeID=null;
-
-if("Notification" in window){
-
-if(Notification.permission==="default"){
-Notification.requestPermission();
+// Dark mode
+const darkToggle = document.getElementById('darkToggle');
+if (localStorage.getItem('theme') === 'dark') {
+    document.body.classList.add('dark');
+    darkToggle.textContent = '☀️';
 }
+darkToggle.onclick = function() {
+    document.body.classList.toggle('dark');
+    if (document.body.classList.contains('dark')) {
+        localStorage.setItem('theme', 'dark');
+        this.textContent = '☀️';
+    } else {
+        localStorage.setItem('theme', 'light');
+        this.textContent = '🌙';
+    }
+};
 
-}
-
-async function checkEarthquakes(){
-
-try{
-
-let url="https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson";
-
-let response=await fetch(url);
-let data=await response.json();
-
-data.features.forEach(eq=>{
-
-let mag=eq.properties.mag;
-let place=eq.properties.place;
-let id=eq.id;
-
-if(mag>=6 && id!==lastEarthquakeID){
-
-lastEarthquakeID=id;
-
-if(Notification.permission==="granted"){
-
-new Notification("🚨 Large Earthquake Detected!",{
-body:place+" | Magnitude: "+mag,
-icon:"https://earthquake.usgs.gov/favicon.ico"
+// Scroll to top visibility
+window.addEventListener('scroll', function() {
+    const btn = document.getElementById('scrollTop');
+    btn.classList.toggle('visible', window.scrollY > 400);
 });
 
+// Earthquake notification system
+let lastEarthquakeID = null;
+if ('Notification' in window && Notification.permission === 'default') {
+    Notification.requestPermission();
 }
-
+async function checkEarthquakes() {
+    try {
+        const response = await fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson');
+        const data = await response.json();
+        data.features.forEach(eq => {
+            const mag = eq.properties.mag;
+            const place = eq.properties.place;
+            const id = eq.id;
+            if (mag >= 6 && id !== lastEarthquakeID) {
+                lastEarthquakeID = id;
+                // Show alert banner
+                const banner = document.getElementById('alertBanner');
+                const text = document.getElementById('alertText');
+                text.textContent = `⚡ M${mag} earthquake detected near ${place}`;
+                banner.classList.add('active');
+                // Browser notification
+                if (Notification.permission === 'granted') {
+                    new Notification('🚨 Large Earthquake Detected!', {
+                        body: `${place} | Magnitude: ${mag}`,
+                        icon: 'https://earthquake.usgs.gov/favicon.ico'
+                    });
+                }
+            }
+        });
+    } catch (e) { console.log(e); }
 }
-
-});
-
-}catch(e){
-
-console.log(e);
-
-}
-
-}
-
-setInterval(checkEarthquakes,60000);
+setInterval(checkEarthquakes, 60000);
 checkEarthquakes();
 
+// FAQ accordion
+document.addEventListener('click', function(e) {
+    const q = e.target.closest('.faq-question');
+    if (q) q.parentElement.classList.toggle('open');
+});
+
+// Animated counter
+function animateCounters() {
+    document.querySelectorAll('.counter').forEach(el => {
+        const target = parseInt(el.getAttribute('data-target'));
+        const duration = 2000;
+        const step = target / (duration / 16);
+        let current = 0;
+        const timer = setInterval(() => {
+            current += step;
+            if (current >= target) { current = target; clearInterval(timer); }
+            el.textContent = Math.floor(current).toLocaleString();
+        }, 16);
+    });
+}
+// Trigger on scroll into view
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            animateCounters();
+            observer.disconnect();
+        }
+    });
+});
+const statsEl = document.querySelector('.stats-grid');
+if (statsEl) observer.observe(statsEl);
 </script>
-<script>
 
-const toggle = document.getElementById("darkToggle");
-
-if(localStorage.getItem("theme") === "dark"){
-document.body.classList.add("dark");
-toggle.innerText = "☀️";
-}
-
-toggle.onclick = function(){
-
-document.body.classList.toggle("dark");
-
-if(document.body.classList.contains("dark")){
-localStorage.setItem("theme","dark");
-this.innerText = "☀️";
-}else{
-localStorage.setItem("theme","light");
-this.innerText = "🌙";
-}
-
-}
-
-
-
-
-
-
-
-
-
-</script>
 </body>
 </html>

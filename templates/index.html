@@ -1,402 +1,338 @@
 {% extends "base.html" %}
 
+{% block title %}RAA Earthquake — Real-Time Earthquake Monitoring, Safety & Education{% endblock %}
+
 {% block content %}
 
-<style>
-
-/* IMAGE SECTION */
-
-.image-section{
-position:relative;
-margin-bottom:60px;
-}
-
-/* FULL SCREEN IMAGE */
-
-.fullscreen-image{
-width:100%;
-height:100vh;
-object-fit:cover;
-display:block;
-border-radius:10px;
-}
-
-/* TEXT ON IMAGE */
-
-.hero-text{
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-color:white;
-text-align:center;
-font-size:42px;
-font-weight:bold;
-text-shadow:2px 2px 10px rgba(0,0,0,0.8);
-max-width:700px;
-padding:20px;
-}
-
-/* PARAGRAPH BELOW IMAGE */
-
-.image-description{
-max-width:900px;
-margin:30px auto;
-font-size:18px;
-line-height:1.7;
-color:black;
-font-weight:bold;
-text-align:center;
-border-radius:10px;
-box-shadow:0 10px 20px rgba(0,0,0,0.1);
-padding:0 20px;
-}
-
-/* LATEST EARTHQUAKE LIST */
-
-#quakeList{
-max-width:800px;
-margin:auto;
-padding:0;
-list-style:none;
-}
-
-#quakeList li{
-background:#f3f3f3;
-margin:10px 0;
-padding:12px;
-border-radius:8px;
-font-weight:bold;
-}
-
-</style>
-
-
-<!-- ================= MAIN HEADING ================= -->
-
-<h1 style="text-align:center;margin-top:20px;">
-RAA Earthquake – Real-Time Earthquake Monitoring & Safety Guide
-</h1>
-
-
-<!-- ================= ABOUT INTRO ================= -->
-
-<h2>About RAA Earthquake</h2>
-
-<p>
-RAA Earthquake is a real-time earthquake monitoring platform that provides
-live earthquake data from around the world. The platform helps users track
-recent seismic activity and stay informed about earthquake events.
-</p>
-
-<p>
-Our website also provides earthquake safety guidance and educational
-information to help people understand earthquakes and how to respond
-during seismic events.
-</p>
-
-<p>
-This platform is built to spread awareness, improve safety knowledge, and
-make earthquake information simple and accessible for everyone.
-</p>
-
-<section style="
-max-width:900px;
-margin:40px auto;
-line-height:1.8;
-font-size:18px;
-background:white;
-padding:30px;
-border-radius:12px;
-box-shadow:0 10px 25px rgba(0,0,0,0.1);
-">
-
-<h2>Understanding Earthquakes in Detail</h2>
-
-<p>
-Earthquakes are one of the most powerful natural phenomena on Earth. They occur when energy stored in the Earth's crust is suddenly released, causing the ground to shake. This release of energy happens due to stress that builds up over time as tectonic plates move and interact with each other. When the stress exceeds the strength of rocks, it is released in the form of seismic waves, which we feel as earthquakes.
-</p>
-
-<p>
-The Earth’s surface is divided into several large tectonic plates that are constantly moving, although very slowly. These plates can collide, pull apart, or slide past each other. These interactions create stress zones, especially near fault lines. When these zones suddenly shift, an earthquake occurs. This is why regions near plate boundaries, such as the Himalayan region, are more prone to earthquakes.
-</p>
-
-<p>
-Earthquakes can vary greatly in intensity. Some are so small that they are only detected by instruments, while others can cause widespread destruction. The strength of an earthquake is measured using magnitude scales, such as the Richter scale or moment magnitude scale. Even a small increase in magnitude represents a significant increase in energy released.
-</p>
-
-<h2>Why Earthquake Awareness Matters</h2>
-
-<p>
-Earthquake awareness is extremely important because earthquakes can happen without warning. Unlike some other natural disasters, there is currently no reliable way to predict exactly when and where an earthquake will occur. This makes preparedness the most effective way to reduce risk.
-</p>
-
-<p>
-Being aware of earthquake safety measures can save lives. For example, knowing to “Drop, Cover, and Hold On” during shaking can significantly reduce injuries. Similarly, understanding safe evacuation procedures and having an emergency kit ready can make a big difference in survival during major earthquakes.
-</p>
-
-<p>
-In addition to personal safety, awareness also helps communities become more resilient. Governments and organizations use earthquake data to improve building standards, plan emergency responses, and educate the public. Platforms like RAA Earthquake contribute to this awareness by providing real-time information and educational resources.
-</p>
-
-<h2>Global Earthquake Activity</h2>
-
-<p>
-Earthquakes occur all over the world, but they are most common in regions known as seismic belts. The most active seismic belt is the “Ring of Fire,” which surrounds the Pacific Ocean. This region experiences frequent earthquakes and volcanic activity due to intense tectonic movement.
-</p>
-
-<p>
-Countries like Japan, Indonesia, Chile, and the United States often experience earthquakes because they are located along these active zones. India is also affected due to the collision between the Indian Plate and the Eurasian Plate, especially in the Himalayan region.
-</p>
-
-<p>
-Monitoring global earthquake activity is essential for understanding patterns and improving preparedness. Real-time data allows scientists to study seismic trends and helps authorities respond quickly to major events. This is why live earthquake tracking tools are valuable for both researchers and the general public.
-</p>
-
-<h2>Impact of Earthquakes on Society</h2>
-
-<p>
-The impact of earthquakes can be devastating, especially in densely populated areas. Strong earthquakes can destroy buildings, damage infrastructure, and disrupt essential services such as electricity, water, and communication systems. In severe cases, earthquakes can also trigger secondary disasters like landslides, tsunamis, and fires.
-</p>
-
-<p>
-The level of damage caused by an earthquake depends on several factors, including its magnitude, depth, location, and the quality of construction in the affected area. Buildings that are not designed to withstand seismic forces are more likely to collapse, leading to greater loss of life and property.
-</p>
-
-<p>
-Economic impacts can also be significant. Repairing infrastructure and rebuilding communities requires large investments. This is why earthquake-resistant construction and proper urban planning are crucial in reducing long-term damage.
-</p>
-
-<h2>How Technology Helps in Earthquake Monitoring</h2>
-
-<p>
-Modern technology plays a vital role in earthquake monitoring and analysis. Seismographs are used to detect and record seismic waves, providing valuable data about earthquakes. This data is analyzed to determine the location, depth, and magnitude of an earthquake.
-</p>
-
-<p>
-Satellite technology and global positioning systems (GPS) are also used to monitor tectonic plate movements. These tools help scientists understand how stress builds up in the Earth's crust and identify areas that are more likely to experience earthquakes.
-</p>
-
-<p>
-Web platforms like RAA Earthquake bring this data to users in an accessible way. By displaying real-time earthquake information, interactive maps, and educational content, such platforms help people stay informed and prepared.
-</p>
-
-<h2>Earthquake Safety and Preparedness</h2>
-
-<p>
-Preparedness is the key to reducing the impact of earthquakes. Every individual should have a basic understanding of what to do before, during, and after an earthquake. Simple steps like securing heavy furniture, identifying safe spots in your home, and keeping emergency supplies can make a significant difference.
-</p>
-
-<p>
-During an earthquake, the most important thing is to stay calm and protect yourself. If you are indoors, drop to the ground, take cover under sturdy furniture, and hold on until the shaking stops. If you are outdoors, move away from buildings, trees, and power lines.
-</p>
-
-<p>
-After an earthquake, it is important to check for injuries, avoid damaged areas, and follow official instructions. Being prepared not only helps protect yourself but also enables you to assist others in need.
-</p>
-
-<h2>Our Mission at RAA Earthquake</h2>
-
-<p>
-RAA Earthquake is built with the mission of spreading awareness and providing accurate earthquake information to people around the world. Our goal is to make complex seismic data easy to understand and accessible to everyone.
-</p>
-
-<p>
-We aim to combine real-time updates, educational content, and user-friendly design to create a platform that is both informative and practical. By helping users stay informed about earthquakes and safety measures, we hope to contribute to safer communities.
-</p>
-
-<p>
-As earthquakes continue to occur globally, having access to reliable information becomes increasingly important. RAA Earthquake is committed to improving awareness, enhancing knowledge, and supporting preparedness efforts for people everywhere.
-</p>
-
-</section>
-<!-- ================= FEATURED ARTICLES ================= -->
-
-
-
-
-
-
-<!-- ================= IMAGE 1 ================= -->
-
-<section class="image-section">
-
-<img src="{{ url_for('static', filename='image.png') }}" class="fullscreen-image">
-
-<div class="hero-text">
-RAA EARTHQUAKE
-<br>
-<span style="font-size:18px;">
-Real-time earthquake monitoring platform
-</span>
-</div>
-
+<!-- HERO SECTION -->
+<section class="hero fade-in">
+    <div class="hero-bg" style="background-image:url('{{ url_for('static', filename='image.png') }}')"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <div class="hero-badge">
+            <span class="pulse"></span> Live Monitoring Active
+        </div>
+        <h1>Real-Time Earthquake Monitoring & Safety Platform</h1>
+        <p>Track seismic activity worldwide with live data, interactive maps, comprehensive safety guides, and in-depth educational articles.</p>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+            <a href="/map" class="btn btn-white btn-lg">🗺️ Live Map</a>
+            <a href="/earthquake" class="btn btn-outline btn-lg" style="border-color:rgba(255,255,255,0.4);color:white;">📚 Learn More</a>
+        </div>
+    </div>
 </section>
 
-<div class="image-description">
-
-<p>
-<strong>RAA Earthquake</strong> is a modern earthquake monitoring web application designed to help people stay informed about seismic activity around the world. 
-Our platform provides real-time earthquake updates, clear information about magnitude and location, and an easy-to-use interface so anyone can quickly understand what is happening. 
-By combining reliable data with a clean design, RAA Earthquake makes it simple for users to stay aware and prepared.
-</p>
-
-
-
-</div>
-
-
-
-<!-- ================= LATEST EARTHQUAKES ================= -->
-
-<h2 style="text-align:center;margin-top:50px;">Latest Earthquakes</h2>
-
-<ul id="quakeList"></ul>
-
-
-
-<!-- ================= IMAGE 2 ================= -->
-
-<section class="image-section">
-
-<img src="{{ url_for('static', filename='image copy.png') }}" class="fullscreen-image">
-
+<!-- LIVE STATS -->
+<section class="section fade-in">
+    <div class="section-header">
+        <span class="section-label">Live Statistics</span>
+        <h2>Today's Earthquake Activity</h2>
+        <p>Real-time seismic data from the USGS Earthquake Hazards Program, updated continuously.</p>
+    </div>
+    <div class="stats-grid" id="statsGrid">
+        <div class="stat-card">
+            <div class="stat-icon red">🔴</div>
+            <div class="stat-number counter" data-target="0" id="statTotal">—</div>
+            <div class="stat-label">Earthquakes Today</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon orange">⚡</div>
+            <div class="stat-number" id="statSignificant">—</div>
+            <div class="stat-label">Significant (M4.5+)</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon blue">📊</div>
+            <div class="stat-number" id="statMaxMag">—</div>
+            <div class="stat-label">Largest Magnitude</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon green">🌍</div>
+            <div class="stat-number">195</div>
+            <div class="stat-label">Countries Monitored</div>
+        </div>
+    </div>
 </section>
 
-<div class="image-description">
+<!-- LATEST EARTHQUAKES -->
+<section class="section fade-in">
+    <div class="section-header">
+        <span class="section-label">Live Feed</span>
+        <h2>Latest Earthquakes</h2>
+        <p>Most recent seismic events detected in the last hour, sourced from USGS.</p>
+    </div>
 
-<p>
-With earthquakes happening unexpectedly across the globe, staying informed can make a big difference. 
-RAA Earthquake helps users monitor recent earthquakes, explore global seismic activity, and learn how to respond during natural disasters. 
-Our goal is to spread awareness and provide accurate information that can help communities stay safer and better prepared.
-</p>
+    <!-- Skeleton Loader -->
+    <div id="quakeSkeletons">
+        <div class="skeleton" style="height:72px;margin-bottom:12px;"></div>
+        <div class="skeleton" style="height:72px;margin-bottom:12px;"></div>
+        <div class="skeleton" style="height:72px;margin-bottom:12px;"></div>
+        <div class="skeleton" style="height:72px;margin-bottom:12px;"></div>
+    </div>
 
-</div>
+    <ul class="eq-list" id="quakeList" style="display:none;"></ul>
 
+    <div style="text-align:center;margin-top:20px;">
+        <a href="/world" class="btn btn-outline">View All World Earthquakes →</a>
+    </div>
+</section>
 
+<!-- ABOUT SECTION -->
+<section class="section fade-in">
+    <div class="content-card">
+        <div class="section-header">
+            <span class="section-label">About Our Platform</span>
+            <h2>Understanding Earthquakes with RAA Earthquake</h2>
+        </div>
+        <div class="article-container" style="max-width:100%;">
+            <p>RAA Earthquake is a comprehensive real-time earthquake monitoring platform that provides live earthquake data from around the world. The platform helps users track recent seismic activity, explore educational content about earthquakes, and stay informed about earthquake safety measures.</p>
 
-<!-- ================= LIVE MAP ================= -->
+            <p>Our website combines reliable data from trusted global sources like the United States Geological Survey (USGS) with a clean, modern interface so that anyone — regardless of technical knowledge — can quickly understand what is happening. We aim to make complex seismic data accessible, understandable, and actionable.</p>
 
-<h2 style="text-align:center;margin-top:50px;">Live Earthquake Map</h2>
+            <h2>Why Earthquake Awareness Matters</h2>
+            <p>Earthquakes are among the most unpredictable natural disasters on Earth. They can occur without warning, affecting millions of people in seconds. Understanding how earthquakes work, knowing safety procedures, and staying informed about recent seismic activity can significantly reduce risks and save lives.</p>
 
-<div id="map" style="height:500px;border-radius:10px;"></div>
+            <p>Being aware of earthquake safety measures — such as the "Drop, Cover, and Hold On" technique — can protect you during shaking. Having an emergency kit ready, knowing evacuation routes, and educating family members about safety protocols are essential steps that every household in earthquake-prone regions should take.</p>
 
+            <h2>Global Earthquake Activity</h2>
+            <p>Earthquakes occur all over the world, but they are most common in regions known as seismic belts. The most active seismic belt is the "Ring of Fire," which surrounds the Pacific Ocean and accounts for approximately 80% of the world's largest earthquakes. Countries like Japan, Indonesia, Chile, and the United States frequently experience earthquakes because they are located along these active tectonic plate boundaries.</p>
+
+            <p>India is also significantly affected by seismic activity due to the ongoing collision between the Indian Plate and the Eurasian Plate. This collision, which formed the Himalayan mountain range, continues to generate frequent earthquakes across northern India, Nepal, and surrounding regions.</p>
+
+            <h2>How Technology Helps Earthquake Monitoring</h2>
+            <p>Modern technology plays a vital role in earthquake monitoring and analysis. Global networks of seismographs detect and record seismic waves, providing valuable data about earthquakes within minutes of their occurrence. Satellite technology and GPS systems monitor tectonic plate movements, helping scientists understand how stress builds up in the Earth's crust.</p>
+
+            <p>Platforms like RAA Earthquake bring this data directly to users in an accessible way. By displaying real-time earthquake information, interactive maps, and educational content, we help people stay informed, prepared, and safe. Our mission is to make earthquake knowledge accessible to everyone, everywhere.</p>
+        </div>
+    </div>
+</section>
+
+<!-- LIVE MAP PREVIEW -->
+<section class="section fade-in">
+    <div class="section-header">
+        <span class="section-label">Interactive</span>
+        <h2>Live Earthquake Map</h2>
+        <p>Real-time visualization of global seismic activity in the last 24 hours.</p>
+    </div>
+
+    <div class="map-wrapper">
+        <div id="map" style="height:500px;"></div>
+        <div class="map-legend">
+            <strong style="font-size:0.85rem;display:block;margin-bottom:8px;">Magnitude</strong>
+            <div class="map-legend-item"><div class="map-legend-dot" style="background:#10b981;"></div> Low (&lt; 4.0)</div>
+            <div class="map-legend-item"><div class="map-legend-dot" style="background:#f59e0b;"></div> Moderate (4.0–5.9)</div>
+            <div class="map-legend-item"><div class="map-legend-dot" style="background:#ef4444;"></div> Strong (6.0–6.9)</div>
+            <div class="map-legend-item"><div class="map-legend-dot" style="background:#7c3aed;"></div> Major (7.0+)</div>
+        </div>
+    </div>
+
+    <div style="text-align:center;margin-top:16px;">
+        <a href="/map" class="btn btn-primary">Open Full Map →</a>
+    </div>
+</section>
+
+<!-- FEATURED ARTICLES -->
+<section class="section fade-in">
+    <div class="section-header">
+        <span class="section-label">Educational Content</span>
+        <h2>Featured Articles</h2>
+        <p>In-depth, educational articles about earthquakes, safety, and seismology. Explore and learn.</p>
+    </div>
+
+    <div class="card-grid">
+        <div class="card">
+            <div class="card-tag">Science</div>
+            <h3>What Causes Earthquakes?</h3>
+            <p>Learn about tectonic plates, fault lines, volcanic activity, and the science behind seismic events.</p>
+            <a href="/what-is-earthquake" class="btn btn-outline btn-sm" style="margin-top:12px;">Read Article →</a>
+        </div>
+        <div class="card">
+            <div class="card-tag">Safety</div>
+            <h3>Earthquake Safety Guide</h3>
+            <p>Comprehensive tips for before, during, and after an earthquake to keep you and your family safe.</p>
+            <a href="/earthquake-safety" class="btn btn-outline btn-sm" style="margin-top:12px;">Read Article →</a>
+        </div>
+        <div class="card">
+            <div class="card-tag">History</div>
+            <h3>Biggest Earthquakes in History</h3>
+            <p>Explore the most powerful earthquakes ever recorded and their devastating impact on communities worldwide.</p>
+            <a href="/biggest-earthquakes" class="btn btn-outline btn-sm" style="margin-top:12px;">Read Article →</a>
+        </div>
+        <div class="card">
+            <div class="card-tag">Education</div>
+            <h3>How Earthquakes Are Measured</h3>
+            <p>Understand the Richter scale, moment magnitude scale, and how scientists quantify seismic energy.</p>
+            <a href="/richter-scale" class="btn btn-outline btn-sm" style="margin-top:12px;">Read Article →</a>
+        </div>
+        <div class="card">
+            <div class="card-tag">Preparedness</div>
+            <h3>Earthquake Preparedness Checklist</h3>
+            <p>A complete checklist for preparing your home, family, and community for earthquake emergencies.</p>
+            <a href="/earthquake-preparedness" class="btn btn-outline btn-sm" style="margin-top:12px;">Read Article →</a>
+        </div>
+        <div class="card">
+            <div class="card-tag">Science</div>
+            <h3>Understanding Tectonic Plates</h3>
+            <p>Discover how Earth's tectonic plates move, interact, and shape our planet's geography and seismicity.</p>
+            <a href="/tectonic-plates" class="btn btn-outline btn-sm" style="margin-top:12px;">Read Article →</a>
+        </div>
+    </div>
+
+    <div style="text-align:center;">
+        <a href="/earthquake" class="btn btn-primary btn-lg">Browse All Articles →</a>
+    </div>
+</section>
+
+<!-- SAFETY TIPS SECTION -->
+<section class="section fade-in">
+    <div class="content-card" style="background:linear-gradient(135deg, rgba(79,70,229,0.05), rgba(239,68,68,0.05));">
+        <div class="section-header">
+            <span class="section-label">Stay Safe</span>
+            <h2>Quick Earthquake Safety Tips</h2>
+        </div>
+        <div class="card-grid" style="margin-bottom:0;">
+            <div class="card" style="border-left:4px solid #10b981;">
+                <h3>🛡️ Before</h3>
+                <ul>
+                    <li>Secure heavy furniture to walls</li>
+                    <li>Prepare an emergency kit with water, food, and first aid</li>
+                    <li>Identify safe spots in every room (under sturdy tables)</li>
+                    <li>Practice "Drop, Cover, and Hold On" drills</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:4px solid #f59e0b;">
+                <h3>⚡ During</h3>
+                <ul>
+                    <li>Drop to the ground immediately</li>
+                    <li>Take cover under sturdy furniture</li>
+                    <li>Hold on until shaking stops</li>
+                    <li>Stay away from windows and heavy objects</li>
+                </ul>
+            </div>
+            <div class="card" style="border-left:4px solid #ef4444;">
+                <h3>🔍 After</h3>
+                <ul>
+                    <li>Check yourself and others for injuries</li>
+                    <li>Be prepared for aftershocks</li>
+                    <li>Avoid damaged buildings and areas</li>
+                    <li>Follow official emergency instructions</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter fade-in">
+    <h2>Stay Informed About Earthquakes</h2>
+    <p>Get earthquake alerts, safety tips, and educational content delivered to your awareness. Enable browser notifications for instant alerts.</p>
+    <div style="margin-top:16px;">
+        <a href="/guide" class="btn btn-white btn-lg">📘 Read Safety Guide</a>
+    </div>
+</section>
+
+<!-- LEAFLET MAP SCRIPTS -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
-
-if (window.mapInstance) {
-    window.mapInstance.remove();
-}
-
-var map = L.map('map').setView([20,0],2);
+// Initialize map
+if (window.mapInstance) window.mapInstance.remove();
+var map = L.map('map', {
+    worldCopyJump: false,
+    maxBounds: [[-90, -180],[90, 180]],
+    maxBoundsViscosity: 1.0
+}).setView([20, 0], 2);
 window.mapInstance = map;
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-maxZoom:18
-}).addTo(map);
+var isDark = document.body.classList.contains('dark');
+var tileUrl = isDark
+    ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
+    : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 
-fetch("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson")
-.then(response => response.json())
+L.tileLayer(tileUrl, { maxZoom: 18, noWrap: true, attribution: '&copy; OpenStreetMap' }).addTo(map);
+
+function getMagColor(mag) {
+    if (mag >= 7) return '#7c3aed';
+    if (mag >= 6) return '#ef4444';
+    if (mag >= 4) return '#f59e0b';
+    return '#10b981';
+}
+function getMagClass(mag) {
+    if (mag >= 7) return 'severe';
+    if (mag >= 6) return 'high';
+    if (mag >= 4) return 'moderate';
+    return 'low';
+}
+
+fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson')
+.then(r => r.json())
 .then(data => {
+    data.features.forEach(eq => {
+        var c = eq.geometry.coordinates;
+        var mag = eq.properties.mag || 0;
+        var place = eq.properties.place;
+        var color = getMagColor(mag);
 
-data.features.forEach(eq => {
-
-let coords = eq.geometry.coordinates;
-let mag = eq.properties.mag;
-let place = eq.properties.place;
-
-L.circleMarker([coords[1],coords[0]],{
-radius: mag * 2,
-color:"red"
-})
-.addTo(map)
-.bindPopup("Magnitude: "+mag+"<br>"+place);
-
+        L.circleMarker([c[1], c[0]], {
+            radius: Math.max(mag * 2.5, 3),
+            color: color, fillColor: color,
+            fillOpacity: 0.7, weight: 1
+        }).addTo(map).bindPopup(
+            '<div style="font-family:Inter,sans-serif;"><strong>' + place + '</strong><br>Magnitude: <strong>' + mag + '</strong></div>'
+        );
+    });
 });
 
-});
+// Load earthquake list
+async function loadEarthquakes() {
+    try {
+        const response = await fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson');
+        const data = await response.json();
+        const list = document.getElementById('quakeList');
+        const skeletons = document.getElementById('quakeSkeletons');
 
-</script>
+        if (data.features.length === 0) {
+            skeletons.innerHTML = '<p style="text-align:center;color:var(--text-muted);">No earthquakes detected in the last hour. The Earth is quiet right now.</p>';
+            return;
+        }
 
+        data.features.slice(0, 10).forEach(eq => {
+            const mag = eq.properties.mag || 0;
+            const place = eq.properties.place;
+            const time = new Date(eq.properties.time).toLocaleTimeString();
+            const magClass = getMagClass(mag);
 
+            const item = document.createElement('li');
+            item.className = 'eq-item fade-in';
+            item.innerHTML = `
+                <div class="eq-mag ${magClass}">${mag.toFixed(1)}</div>
+                <div class="eq-info">
+                    <div class="eq-place">${place}</div>
+                    <div class="eq-time">🕐 ${time}</div>
+                </div>
+            `;
+            list.appendChild(item);
+        });
 
-<!-- ================= IMAGE 3 ================= -->
-
-<section class="image-section">
-
-<img src="{{ url_for('static', filename='img.raa.png') }}" class="fullscreen-image">
-
-</section>
-
-<div class="image-description">
-
-<p>
-RAA Earthquake is more than just an information website — it is a tool built to support awareness and safety. 
-By delivering fast updates, clear earthquake data, and helpful safety guides, the platform empowers users to understand earthquake risks and take action when needed. 
-Our mission is to make earthquake knowledge accessible to everyone, everywhere.
-</p>
-
-</div>
-
-
-
-<!-- ================= FOOTER ================= -->
-
-<footer style="text-align:center;margin-top:40px;">
-<p>
-© 2026 RAA Earthquake Monitoring App |
-<a href="/about">About</a> |
-<a href="/contact">Contact</a> |
-<a href="/terms">Terms</a> |
-<a href="/privacy">Privacy Policy</a> |
-<a href="/disclaimer">Disclaimer</a>
-</p>
-</footer>
-
-
-
-<!-- ================= EARTHQUAKE SCRIPT ================= -->
-
-<script>
-
-async function loadEarthquakes(){
-
-try{
-
-let url="https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson";
-
-let response=await fetch(url);
-let data=await response.json();
-
-let list=document.getElementById("quakeList");
-
-data.features.slice(0,10).forEach(eq=>{
-
-let mag=eq.properties.mag;
-let place=eq.properties.place;
-let time=new Date(eq.properties.time).toLocaleTimeString();
-
-let item=document.createElement("li");
-
-item.innerHTML="Magnitude " + mag + " - " + place + " - " + time;
-
-list.appendChild(item);
-
-});
-
-}catch(error){
-
-console.log("Error loading earthquakes:",error);
-
+        skeletons.style.display = 'none';
+        list.style.display = 'block';
+    } catch (error) {
+        console.log('Error loading earthquakes:', error);
+    }
 }
-
-}
-
 loadEarthquakes();
 
+// Load live stats
+async function loadStats() {
+    try {
+        const response = await fetch('/api/stats');
+        const data = await response.json();
+        document.getElementById('statTotal').textContent = data.total;
+        document.getElementById('statTotal').setAttribute('data-target', data.total);
+        document.getElementById('statSignificant').textContent = data.significant;
+        document.getElementById('statMaxMag').textContent = data.max_mag.toFixed(1);
+    } catch(e) { console.log(e); }
+}
+loadStats();
 </script>
 
 {% endblock %}

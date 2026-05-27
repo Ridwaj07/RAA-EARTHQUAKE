@@ -1,191 +1,94 @@
 {% extends "base.html" %}
 
+{% block title %}Asia Earthquakes — Recent Seismic Activity in Asia | RAA Earthquake{% endblock %}
+{% block meta_description %}Track real-time earthquakes across Asia, including Japan, India, Indonesia, and Nepal. Detailed seismic data, magnitude reports, and educational resources on Asian seismicity.{% endblock %}
+
 {% block content %}
-<h2 style="text-align:center;">Asia Earthquakes (Last 30 Days)</h2>
+<div class="breadcrumb"><a href="/">Home</a> <span>/</span> <span>Asia Earthquakes</span></div>
 
-<!-- FILTER FORM -->
-<form method="POST" style="text-align:center;margin:20px 0;">
-    <select name="country" style="padding:8px 12px;font-size:16px;">
-        {% for country in countries %}
-            <option value="{{ country }}" {% if country == selected_country %}selected{% endif %}>{{ country }}</option>
-        {% endfor %}
-    </select>
-    <button type="submit" style="padding:8px 15px;background:red;color:white;border:none;border-radius:5px;">Filter</button>
-</form>
-
-<!-- EARTHQUAKE LIST -->
-<div style="max-width:900px;margin:auto;">
-    {% for eq in earthquakes %}
-    <div style="border:1px solid #111;padding:15px;margin-bottom:15px;border-radius:10px;background:#f9f9f9;">
-        <strong>Location:</strong> {{ eq.place }}<br>
-        <strong>Magnitude:</strong> {{ eq.mag }}<br>
-        <strong>Time:</strong> {{ eq.time }}
+<section class="section fade-in">
+    <div class="section-header">
+        <span class="section-label">Regional Monitor</span>
+        <h1>Asia Earthquakes</h1>
+        <p>Real-time earthquake monitoring for the world's most seismically active continent.</p>
     </div>
-    {% else %}
-    <p style="text-align:center;">No earthquakes found for this country.</p>
-    {% endfor %}
-</div>
+
+    <!-- Filter Bar -->
+    <div class="content-card" style="padding: 24px; margin-bottom: 32px;">
+        <form method="POST" class="filter-bar">
+            <span style="font-weight: 600; color: var(--text-secondary);">Select Country:</span>
+            <select name="country" class="form-select" style="max-width: 250px;">
+                {% for country in countries %}
+                <option value="{{ country }}" {% if country == selected_country %}selected{% endif %}>
+                    {{ country }}
+                </option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn btn-primary">Refresh Data</button>
+        </form>
+    </div>
+
+    <div class="card-grid" style="grid-template-columns: 1fr;">
+        <div id="quakeListContainer">
+            {% if earthquakes %}
+                <ul class="eq-list">
+                    {% for eq in earthquakes %}
+                    <li class="eq-item fade-in">
+                        <div class="eq-mag {% if eq.mag >= 7 %}severe{% elif eq.mag >= 6 %}high{% elif eq.mag >= 4 %}moderate{% else %}low{% endif %}">
+                            {{ "%.1f"|format(eq.mag) }}
+                        </div>
+                        <div class="eq-info">
+                            <div class="eq-place">{{ eq.place }}</div>
+                            <div class="eq-time">🕐 {{ eq.time.strftime('%Y-%m-%d %H:%M:%S') }} UTC</div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <div class="content-card" style="text-align: center; padding: 60px;">
+                    <div style="font-size: 3rem; margin-bottom: 16px;">🌏</div>
+                    <h3>No recent activity detected</h3>
+                    <p>No major earthquakes were recorded in <strong>{{ selected_country }}</strong> within the last 30 days.</p>
+                    <a href="/asia" class="btn btn-outline" style="margin-top: 16px;">Reset Filter</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- EDUCATIONAL CONTENT -->
+<section class="section fade-in">
+    <div class="content-card">
+        <div class="article-container" style="max-width: 100%;">
+            <h2>Earthquakes in Asia: A Geological Overview</h2>
+            <p>Asia is the most earthquake-prone continent on our planet. Its vulnerability stems from a complex tectonic landscape where major plates — including the Eurasian, Indian, Arabian, and Pacific plates — are in a constant state of collision, subduction, and friction.</p>
+
+            <h3>Why Asia is a Seismic Hotspot</h3>
+            <p>The continent's seismic activity is dominated by two massive tectonic processes. In the south, the Indian Plate is continuously pushing northward into the Eurasian Plate, a collision that created and continues to raise the Himalayas. This "continental collision" is responsible for devastating earthquakes in countries like Nepal, India, and Bhutan.</p>
+            
+            <p>In the east and southeast, countries like Japan, the Philippines, and Indonesia sit along the "Pacific Ring of Fire." Here, oceanic plates are sliding beneath continental plates in a process called subduction, which causes not only powerful earthquakes but also frequent volcanic eruptions and tsunamis.</p>
+
+            <div class="info-box warning">
+                <strong>Safety Fact:</strong> Because many Asian earthquakes occur underwater or near coastlines, the threat of tsunamis is significantly higher in this region compared to other continents.
+            </div>
+
+            <h3>Major Seismic Zones in Asia</h3>
+            <ul>
+                <li><strong>The Himalayan Belt:</strong> One of the world's highest-risk zones, extending from Afghanistan through Pakistan, India, Nepal, and Bhutan.</li>
+                <li><strong>The Japanese Archipelago:</strong> Located at the junction of four tectonic plates, making it one of the most monitored seismic regions in the world.</li>
+                <li><strong>Indonesia's Sunda Megathrust:</strong> A massive fault line that produced the catastrophic 2004 Indian Ocean earthquake and tsunami.</li>
+            </ul>
+
+            <h3>Our Goal for Asian Seismic Monitoring</h3>
+            <p>RAA Earthquake aims to provide the most reliable regional monitoring for Asian citizens. By localizing data and providing context on regional fault lines, we help communities better understand their local risks and encourage the adoption of earthquake-resistant building practices across the continent.</p>
+        </div>
+    </div>
+</section>
 
 <script>
+// Auto-refresh every 60 seconds
 setTimeout(function(){
     location.reload();
-}, 30000);
+}, 60000);
 </script>
-
-<!-- ================= ARTICLE CONTENT ================= -->
-
-<style>
-.article{
-max-width:1000px;
-margin:auto;
-margin-top:30px;
-line-height:1.8;
-background:#f9f9f9;
-padding:25px;
-border-radius:12px;
-border:2px solid #111;
-}
-</style>
-
-<div class="article">
-
-<h2>Earthquakes in Asia: Understanding Seismic Activity</h2>
-
-<p>
-Asia is one of the most earthquake-prone continents in the world due to its complex geological structure.
-The region sits on multiple tectonic plate boundaries, making it highly vulnerable to seismic activity.
-Countries such as Japan, Indonesia, Nepal, and India frequently experience earthquakes of varying magnitudes.
-</p>
-
-<h2>Why Asia Experiences Frequent Earthquakes</h2>
-
-<p>
-The primary reason for frequent earthquakes in Asia is the interaction of several major tectonic plates,
-including the Indian Plate, Eurasian Plate, and Pacific Plate.
-These plates constantly move and collide, creating stress that is eventually released as earthquakes.
-</p>
-
-<p>
-The collision between the Indian Plate and the Eurasian Plate is particularly significant,
-as it is responsible for the formation of the Himalayas and ongoing seismic activity in the region.
-</p>
-
-<h2>Major Earthquake Zones in Asia</h2>
-
-<ul>
-<li>The Himalayan Belt (India, Nepal, Bhutan)</li>
-<li>The Pacific Ring of Fire (Japan, Indonesia, Philippines)</li>
-<li>Central Asian seismic zones</li>
-</ul>
-
-<p>
-These regions are considered high-risk areas due to continuous tectonic movement.
-</p>
-
-<h2>Understanding the Data Above</h2>
-
-<p>
-The earthquake data shown above represents seismic activity across Asia over the last 30 days.
-Users can filter results by country to focus on specific regions.
-</p>
-
-<ul>
-<li><strong>Location:</strong> Where the earthquake occurred</li>
-<li><strong>Magnitude:</strong> Strength of the earthquake</li>
-<li><strong>Time:</strong> When the earthquake happened</li>
-</ul>
-
-<h2>Impact of Earthquakes in Asia</h2>
-
-<p>
-Earthquakes in Asia have caused significant damage in the past, including loss of life,
-destruction of infrastructure, and economic disruption.
-Highly populated areas are particularly vulnerable to the effects of strong earthquakes.
-</p>
-
-<p>
-In some cases, earthquakes can trigger secondary disasters such as tsunamis,
-landslides, and building collapses.
-</p>
-
-<h2>Preparedness in Asian Countries</h2>
-
-<p>
-Many countries in Asia have developed advanced earthquake preparedness systems.
-Japan, for example, has strict building codes and early warning systems that help reduce damage.
-</p>
-
-<p>
-However, in developing regions, lack of infrastructure and awareness can increase the impact of earthquakes.
-</p>
-
-<h2>Challenges in Earthquake Prediction</h2>
-
-<p>
-Despite technological advancements, predicting earthquakes remains difficult.
-Scientists can identify high-risk zones but cannot accurately predict when an earthquake will occur.
-</p>
-
-<h2>Importance of Awareness and Education</h2>
-
-<p>
-Raising awareness about earthquakes is essential for reducing risks.
-People should be educated about safety measures and emergency preparedness.
-</p>
-
-<p>
-Understanding how earthquakes work can help individuals respond effectively during such events.
-</p>
-
-<h2>How This Page Helps Users</h2>
-
-<p>
-This page provides real-time earthquake data for Asia and allows users to:
-</p>
-
-<ul>
-<li>Track recent earthquakes</li>
-<li>Filter by country</li>
-<li>Understand seismic activity patterns</li>
-<li>Stay informed and prepared</li>
-</ul>
-
-<h2>Safety Reminder</h2>
-
-<p>
-Always be prepared for earthquakes by learning safety techniques and keeping emergency supplies ready.
-Awareness and preparation can save lives.
-</p>
-
-<p>
-👉 <a href="/earthquake-safety">Read Earthquake Safety Tips</a><br>
-👉 <a href="/earthquake">Explore Educational Articles</a>
-</p>
-
-<h2>Frequently Asked Questions (FAQs)</h2>
-
-<p><strong>Why is Asia prone to earthquakes?</strong><br>
-Because it lies on multiple tectonic plate boundaries.</p>
-
-<p><strong>Which country in Asia has the most earthquakes?</strong><br>
-Japan and Indonesia experience frequent earthquakes.</p>
-
-<p><strong>Can earthquakes in Asia cause tsunamis?</strong><br>
-Yes, especially those occurring under the ocean.</p>
-
-</div>
-
-<!-- ================= FOOTER ================= -->
-
-<footer style="text-align:center;margin-top:40px;">
-<p>
-© 2026 RAA Earthquake Monitoring App |
-<a href="/about">About</a> |
-<a href="/contact">Contact</a> |
-<a href="/terms">Terms</a> |
-<a href="/privacy">Privacy Policy</a> |
-<a href="/disclaimer">Disclaimer</a>
-</p>
-</footer>
-
 {% endblock %}

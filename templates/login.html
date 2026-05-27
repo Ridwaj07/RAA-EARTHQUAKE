@@ -1,26 +1,37 @@
 {% extends "base.html" %}
 
+{% block title %}Sign In — RAA Earthquake{% endblock %}
+
 {% block content %}
-<h2>Login</h2>
+<div class="auth-container fade-in">
+    <div class="auth-card">
+        <div style="text-align: center; margin-bottom: 24px;">
+            <div class="navbar-brand" style="justify-content: center; font-size: 1.5rem;">
+                <div class="brand-icon" style="width: 48px; height: 48px; font-size: 24px;">🌍</div>
+                <span>RAA Earthquake</span>
+            </div>
+        </div>
+        
+        <h2>Welcome Back</h2>
+        <p class="auth-sub">Log in to your account to access personalized earthquake alerts and saved settings.</p>
 
-<form method="POST">
-    <input type="email" name="email" placeholder="Enter email" required><br><br>
-    <input type="password" name="password" placeholder="Enter password" required><br><br>
+        <form method="POST" action="/login">
+            <div class="form-group">
+                <label class="form-label">Email Address</label>
+                <input type="email" name="email" class="form-input" placeholder="name@example.com" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Password</label>
+                <input type="password" name="password" class="form-input" placeholder="••••••••" required>
+            </div>
+            
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 16px;">Sign In</button>
+        </form>
 
-    <button type="submit">Login</button>
-</form>
-
-<p>No account? <a href="/signup">Sign Up</a></p>
-
-<footer style="text-align:center;margin-top:40px;">
-<p>
-© 2026 RAA Earthquake Monitoring App |
-<a href="/about">About</a> |
-<a href="/contact">Contact</a> |
-<a href="/terms">Terms</a> |
-<a href="/privacy">Privacy Policy</a> |
-<a href="/disclaimer">Disclaimer</a>
-</p>
-</footer>
-
+        <div class="auth-footer">
+            Don't have an account? <a href="/signup" style="font-weight: 600;">Sign Up</a>
+        </div>
+    </div>
+</div>
 {% endblock %}

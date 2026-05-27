@@ -1,211 +1,98 @@
 {% extends "base.html" %}
 
+{% block title %}World Earthquakes — Recent Global Seismic Activity | RAA Earthquake{% endblock %}
+{% block meta_description %}Monitor the latest earthquakes globally with our real-time world earthquake tracker. Filter by country, view magnitude, location, and precise event timing.{% endblock %}
+
 {% block content %}
+<div class="breadcrumb"><a href="/">Home</a> <span>/</span> <span>World Earthquakes</span></div>
 
-<h2 style="text-align:center;">World Earthquakes</h2>
+<section class="section fade-in">
+    <div class="section-header">
+        <span class="section-label">Global Tracker</span>
+        <h1>World Earthquakes</h1>
+        <p>Real-time data for the most recent seismic events detected around the globe.</p>
+    </div>
 
-<form method="POST" style="text-align:center;margin:20px 0;">
+    <!-- Filter Bar -->
+    <div class="content-card" style="padding: 24px; margin-bottom: 32px;">
+        <form method="POST" class="filter-bar">
+            <span style="font-weight: 600; color: var(--text-secondary);">Filter by Region:</span>
+            <select name="country" class="form-select" style="max-width: 250px;">
+                {% for country in countries %}
+                <option value="{{ country }}" {% if country == selected_country %}selected{% endif %}>
+                    {{ country }}
+                </option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn btn-primary">Apply Filter</button>
+        </form>
+    </div>
 
-<select name="country" style="padding:8px 12px;font-size:16px;">
+    <div class="card-grid" style="grid-template-columns: 1fr;">
+        <div id="quakeListContainer">
+            {% if earthquakes %}
+                <ul class="eq-list">
+                    {% for eq in earthquakes %}
+                    <li class="eq-item fade-in">
+                        <div class="eq-mag {% if eq.mag >= 7 %}severe{% elif eq.mag >= 6 %}high{% elif eq.mag >= 4 %}moderate{% else %}low{% endif %}">
+                            {{ "%.1f"|format(eq.mag) }}
+                        </div>
+                        <div class="eq-info">
+                            <div class="eq-place">{{ eq.place }}</div>
+                            <div class="eq-time">🕐 {{ eq.time.strftime('%Y-%m-%d %H:%M:%S') }} UTC</div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <div class="content-card" style="text-align: center; padding: 60px;">
+                    <div style="font-size: 3rem; margin-bottom: 16px;">🔍</div>
+                    <h3>No earthquakes found</h3>
+                    <p>No recent seismic activity was detected for the selected region: <strong>{{ selected_country }}</strong></p>
+                    <a href="/world" class="btn btn-outline" style="margin-top: 16px;">View All Regions</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
 
-{% for country in countries %}
-<option value="{{ country }}" {% if country == selected_country %}selected{% endif %}>
-{{ country }}
-</option>
-{% endfor %}
+<!-- EDUCATIONAL CONTENT FOR SEO -->
+<section class="section fade-in">
+    <div class="content-card">
+        <div class="article-container" style="max-width: 100%;">
+            <h2>Understanding Earthquakes Around the World</h2>
+            <p>Earthquakes are dynamic natural occurrences that result from the complex interplay of tectonic plates forming the Earth's crust. While some regions remain relatively stable for centuries, others experience near-constant seismic activity. Tracking these events on a global scale is not just about recording numbers; it's about understanding the pulse of our planet.</p>
 
-</select>
+            <h3>How Global Seismicity is Monitored</h3>
+            <p>The earthquake data provided on this page is synced with global monitoring networks comprising thousands of seismographs. These instruments are sensitive enough to detect vibrations occurring thousands of miles away. When multiple stations record the same event, triangulating the data allows scientists to determine the precise epicenter, depth, and magnitude of the earthquake.</p>
 
-<button type="submit" style="padding:8px 15px;background:#111;color:white;border:none;border-radius:6px;">
-Filter
-</button>
+            <div class="info-box info">
+                <strong>Science Note:</strong> Earthquakes happen at different depths. Shallow earthquakes (0-70km) typically cause more damage than deep earthquakes (over 300km) because the energy is released closer to the surface.
+            </div>
 
-</form>
+            <h3>Major Seismic Belts of the World</h3>
+            <p>Seismic activity is not uniformly distributed. Most earthquakes occur within well-defined belts that follow the edges of tectonic plates:</p>
+            <ul>
+                <li><strong>The Circum-Pacific Belt (Ring of Fire):</strong> This is the most active seismic zone, tracing the edges of the Pacific Ocean. It accounts for about 81% of the world's largest earthquakes.</li>
+                <li><strong>The Alpide Belt:</strong> Extending from Java to Sumatra through the Himalayas, the Mediterranean, and out into the Atlantic. This belt accounts for about 17% of the world's largest earthquakes.</li>
+                <li><strong>The Mid-Atlantic Ridge:</strong> An underwater mountain system in the Atlantic Ocean where tectonic plates are pulling apart.</li>
+            </ul>
 
-<div style="max-width:900px;margin:auto;">
+            <h3>The Importance of Real-Time Monitoring</h3>
+            <p>For governments and emergency responders, real-time data is critical for disaster relief. For citizens, it provides high-value situational awareness. Knowing where earthquakes are happening helps individuals in high-risk zones stay mentally prepared and reinforces the need for structural safety and emergency planning.</p>
 
-{% for eq in earthquakes %}
-
-<div style="border:2px solid #111;padding:15px;margin-bottom:15px;border-radius:10px;background:#f9f9f9;">
-
-<strong>Location:</strong> {{ eq.place }}<br>
-<strong>Magnitude:</strong> {{ eq.mag }}<br>
-<strong>Time:</strong> {{ eq.time }}
-
-</div>
-
-{% else %}
-
-<p style="text-align:center;">No earthquakes found for this country.</p>
-
-{% endfor %}
-
-</div>
+            <div style="margin-top: 32px; display: flex; gap: 12px; flex-wrap: wrap;">
+                <a href="/earthquake-safety" class="btn btn-primary">Safety Tips</a>
+                <a href="/map" class="btn btn-outline">Live Global Map</a>
+            </div>
+        </div>
+    </div>
+</section>
 
 <script>
+// Auto-refresh every 60 seconds
 setTimeout(function(){
     location.reload();
-}, 30000);
+}, 60000);
 </script>
-
-<!-- ================= ARTICLE CONTENT ================= -->
-
-<style>
-.article{
-max-width:1000px;
-margin:auto;
-margin-top:30px;
-line-height:1.8;
-background:#f9f9f9;
-padding:25px;
-border-radius:12px;
-border:2px solid #111;
-}
-</style>
-
-<div class="article">
-
-<h2>Understanding Earthquakes Around the World</h2>
-
-<p>
-Earthquakes are natural events that occur in many parts of the world due to the movement of tectonic plates.
-Some regions experience frequent earthquakes, while others remain relatively stable.
-This page allows users to explore real-time earthquake activity globally and understand how seismic events are distributed across different countries.
-</p>
-
-<h2>How Earthquakes Occur Globally</h2>
-
-<p>
-The Earth's surface is divided into several tectonic plates that are constantly moving.
-When these plates interact with each other, stress builds up and is released in the form of seismic energy,
-causing earthquakes.
-</p>
-
-<p>
-Most earthquakes occur near plate boundaries, which are areas where plates collide, separate, or slide past one another.
-These regions are often referred to as seismic zones.
-</p>
-
-<h2>High Earthquake Risk Regions</h2>
-
-<p>
-Certain parts of the world are more prone to earthquakes due to their geological structure.
-Some of the most active regions include:
-</p>
-
-<ul>
-<li>The Pacific Ring of Fire</li>
-<li>Japan and Southeast Asia</li>
-<li>Western coast of North and South America</li>
-<li>Himalayan region</li>
-</ul>
-
-<p>
-These areas experience frequent earthquakes because they are located along major tectonic plate boundaries.
-</p>
-
-<h2>Understanding the Data Displayed Above</h2>
-
-<p>
-The earthquake data shown above is updated regularly and includes important details such as location,
-magnitude, and time of occurrence.
-</p>
-
-<ul>
-<li><strong>Location:</strong> Indicates where the earthquake occurred</li>
-<li><strong>Magnitude:</strong> Shows the strength of the earthquake</li>
-<li><strong>Time:</strong> Displays when the earthquake happened</li>
-</ul>
-
-<p>
-By using the country filter, users can focus on specific regions and better understand earthquake patterns in different parts of the world.
-</p>
-
-<h2>Why Global Earthquake Monitoring Matters</h2>
-
-<p>
-Monitoring earthquakes on a global scale is essential for disaster preparedness and risk reduction.
-It helps governments, scientists, and emergency services respond quickly to potential threats.
-</p>
-
-<p>
-For individuals, staying informed about earthquakes can help improve awareness and readiness.
-This is especially important for people living in high-risk areas.
-</p>
-
-<h2>Impact of Earthquakes Worldwide</h2>
-
-<p>
-Earthquakes can have devastating effects on communities, including damage to infrastructure,
-loss of life, and economic disruption.
-</p>
-
-<p>
-In some cases, earthquakes can also trigger secondary disasters such as tsunamis and landslides,
-which can cause additional damage.
-</p>
-
-<h2>Challenges in Predicting Earthquakes</h2>
-
-<p>
-Despite advances in technology, predicting earthquakes remains a major challenge.
-Scientists can identify high-risk areas but cannot accurately determine when an earthquake will occur.
-</p>
-
-<p>
-This is why continuous monitoring and preparedness are critical.
-</p>
-
-<h2>How This Page Helps Users</h2>
-
-<p>
-This world earthquake page is designed to provide real-time information in an easy-to-understand format.
-It allows users to:
-</p>
-
-<ul>
-<li>Track earthquakes globally</li>
-<li>Filter data by country</li>
-<li>Understand seismic patterns</li>
-<li>Stay informed about natural disasters</li>
-</ul>
-
-<h2>Safety Awareness and Preparedness</h2>
-
-<p>
-While monitoring earthquakes is useful, it is equally important to know how to respond during an earthquake.
-Preparedness can significantly reduce the impact of such disasters.
-</p>
-
-<p>
-👉 <a href="/earthquake-safety">Read Earthquake Safety Tips</a><br>
-👉 <a href="/earthquake">Explore Educational Articles</a>
-</p>
-
-<h2>Frequently Asked Questions (FAQs)</h2>
-
-<p><strong>Which country experiences the most earthquakes?</strong><br>
-Countries along the Pacific Ring of Fire, such as Japan and Indonesia, experience frequent earthquakes.</p>
-
-<p><strong>Are all earthquakes dangerous?</strong><br>
-No, many small earthquakes occur daily and are not harmful.</p>
-
-<p><strong>Can earthquakes happen anywhere?</strong><br>
-Yes, but they are more common near tectonic plate boundaries.</p>
-
-</div>
-
-<!-- ================= FOOTER ================= -->
-
-<footer style="text-align:center;margin-top:40px;">
-<p>
-© 2026 RAA Earthquake Monitoring App |
-<a href="/about">About</a> |
-<a href="/contact">Contact</a> |
-<a href="/terms">Terms</a> |
-<a href="/privacy">Privacy Policy</a> |
-<a href="/disclaimer">Disclaimer</a>
-</p>
-</footer>
-
 {% endblock %}

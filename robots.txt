@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /rishav
+Disallow: /logout
+Disallow: /account
+Disallow: /edit_account
+
+Sitemap: https://raa-earthquake.onrender.com/sitemap.xml

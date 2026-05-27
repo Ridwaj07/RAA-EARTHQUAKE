@@ -1,187 +1,98 @@
 {% extends "base.html" %}
 
+{% block title %}How Earthquakes Are Measured: Magnitude, Intensity, and Scales | RAA Earthquake{% endblock %}
+{% block meta_description %}A deep dive into earthquake measurement. Learn the difference between the Richter Scale and Moment Magnitude, how seismographs work, and the Mercalli Intensity Scale.{% endblock %}
+
 {% block content %}
+<div class="breadcrumb"><a href="/">Home</a> <span>/</span> <a href="/earthquake">Articles</a> <span>/</span> <span>Measuring Earthquakes</span></div>
 
-<div class="article-container">
-
-    <h1>📏 How Earthquakes Are Measured: Magnitude, Intensity & Seismic Scales (Complete Guide)</h1>
-
-    <p>
-        Earthquakes are powerful natural events, but how do scientists measure their strength and impact? Understanding earthquake measurement helps us know how strong an earthquake is and how much damage it can cause.
-    </p>
-
-    <p>
-        In this complete guide, we will explain magnitude, intensity, and the different scales used to measure earthquakes in a simple and clear way.
-    </p>
-
-    <div class="section">
-        <h2>🌍 What Does Measuring an Earthquake Mean?</h2>
-        <p>
-            Measuring an earthquake involves calculating two main things:
-        </p>
-        <ul>
-            <li><strong>Magnitude</strong> – the energy released</li>
-            <li><strong>Intensity</strong> – the effects on people and structures</li>
-        </ul>
-    </div>
-
-    <div class="section">
-        <h2>📊 Magnitude of an Earthquake</h2>
-        <p>
-            Magnitude measures the total energy released at the source of the earthquake.
-        </p>
-        <p>
-            It is calculated using instruments called seismographs.
-        </p>
-
-        <h3>📈 Richter Scale</h3>
-        <p>
-            The Richter Scale is one of the earliest methods used to measure earthquake magnitude.
-        </p>
-        <ul>
-            <li>Ranges from 1 to 10</li>
-            <li>Each step is 10× stronger</li>
-        </ul>
-
-        <h3>🌐 Moment Magnitude Scale (Mw)</h3>
-        <p>
-            The Moment Magnitude Scale is the modern and more accurate method.
-        </p>
-        <ul>
-            <li>Used by scientists worldwide</li>
-            <li>Measures total energy released</li>
-        </ul>
-    </div>
-
-    <div class="section">
-        <h2>📍 Intensity of an Earthquake</h2>
-        <p>
-            Intensity measures how strongly people feel an earthquake and the damage it causes.
-        </p>
-
-        <h3>🏚 Modified Mercalli Scale (MMI)</h3>
-        <p>
-            This scale measures earthquake intensity based on observed effects.
-        </p>
-
-        <div class="grid">
-            <div class="card green">
-                <h4>I – III</h4>
-                <p>Weak, barely felt</p>
-            </div>
-            <div class="card yellow">
-                <h4>IV – VI</h4>
-                <p>Light shaking</p>
-            </div>
-            <div class="card orange">
-                <h4>VII – IX</h4>
-                <p>Strong, damage begins</p>
-            </div>
-            <div class="card red">
-                <h4>X – XII</h4>
-                <p>Severe destruction</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="section">
-        <h2>🧠 Difference Between Magnitude and Intensity</h2>
-
-        <div class="grid">
-            <div class="card">
-                <h4>Magnitude</h4>
-                <ul>
-                    <li>Energy released</li>
-                    <li>Same everywhere</li>
-                    <li>Measured by instruments</li>
-                </ul>
+<article class="section fade-in">
+    <div class="content-card">
+        <div class="article-container">
+            <div class="section-label">Seismology Science</div>
+            <h1>How Earthquakes Are Measured: A Guide to Magnitude and Intensity</h1>
+            
+            <div class="article-meta">
+                <span>📅 Updated: May 2026</span>
+                <span>⏱️ 10 min read</span>
+                <span>🖊️ By RAA Science Team</span>
             </div>
 
-            <div class="card">
-                <h4>Intensity</h4>
-                <ul>
-                    <li>Effects on people</li>
-                    <li>Varies by location</li>
-                    <li>Based on observation</li>
-                </ul>
+            <p class="fade-in">When a major earthquake strikes, the first question people often ask is, "What was the magnitude?" However, magnitude is only one part of the story. In seismology, we use a variety of scales and instruments to quantify seismic events, ranging from the energy released at the source to the actual damage experienced on the surface. Understanding these measurements is essential for interpreting earthquake news and assessing personal risk.</p>
+
+            <h2 class="fade-in">1. The Instrument: How Seismographs Work</h2>
+            <p>At the center of earthquake measurement is the <strong>Seismograph</strong> (or seismometer). This instrument records the ground's motion caused by seismic waves. A traditional seismograph consists of a weight suspended by a spring or wire. When the ground shakes, the frame of the instrument moves with it, while the heavy weight remains relatively stationary due to inertia. A pen attached to the weight records the movement on a rotating drum of paper, creating a <strong>Seismogram</strong>.</p>
+            
+            <p>Modern seismometers are digital and infinitely more sensitive. They can detect the slight vibrations of an earthquake occurring on the opposite side of the planet. These instruments use electronic sensors to record velocity or acceleration, which is then processed by computers to determine an earthquake's characteristics.</p>
+
+            <h2 class="fade-in">2. Quantifying Energy: Magnitude Scales</h2>
+            <p>Magnitude represents the size of the earthquake at its source. It is an "objective" measurement of the energy released. There are several magnitude scales, each with its own specific use cases.</p>
+
+            <h3>The Richter Scale (Local Magnitude, ML)</h3>
+            <p>Developed in 1935 by Charles Richter and Beno Gutenberg, the Richter Scale was the first widely used method to quantify earthquakes. It measures the amplitude of the largest seismic wave recorded on a specific type of seismograph. However, the Richter Scale has limitations: it is only accurate for smaller, local earthquakes and "saturates" for massive events (above M7.0), meaning it cannot distinguish between very large magnitudes accurately.</p>
+
+            <h3>The Moment Magnitude Scale (MW)</h3>
+            <p>Most scientists today use the <strong>Moment Magnitude Scale</strong> (MW) for media reports and scientific analysis of large earthquakes. Unlike the Richter Scale, which measures wave amplitude, MW measures the "Seismic Moment" — a combination of the area of the fault that ruptured, the average amount of slip (movement) on the fault, and the rigidity of the rocks.</p>
+            
+            <p>The Moment Magnitude scale is logarithmic. This means that each whole number increase on the scale represents a <strong>10-fold increase</strong> in the amplitude of the waves and approximately a <strong>32-fold increase</strong> in the energy released.</p>
+
+            <div class="info-box info">
+                <strong>Energy Comparison:</strong> A magnitude 7.0 earthquake releases about 31.6 times more energy than a 6.0, and about 1,000 times more energy than a 5.0 (31.6 x 31.6).
+            </div>
+
+            <h2 class="fade-in">3. Quantifying Impact: The Intensity Scale</h2>
+            <p>While magnitude is a fixed number for an earthquake, <strong>Intensity</strong> is a subjective measure that varies based on your location. It describes the physical effects of the shaking on people, buildings, and the geography.</p>
+
+            <h3>The Modified Mercalli Intensity Scale (MMI)</h3>
+            <p>The MMI scale uses Roman numerals from I to XII to categorize the impact of an earthquake:</p>
+            <ul>
+                <li><strong>MMI I:</strong> Not felt except by a very few under especially favorable conditions.</li>
+                <li><strong>MMI IV:</strong> Felt indoors by many, outdoors by few. Dishes, windows, doors disturbed; walls make cracking sound.</li>
+                <li><strong>MMI VI:</strong> Felt by all, many frightened. Some heavy furniture moved; a few instances of fallen plaster. Damage slight.</li>
+                <li><strong>MMI VIII:</strong> Damage slight in specially designed structures; considerable damage in ordinary substantial buildings with partial collapse.</li>
+                <li><strong>MMI XII:</strong> Damage total. Waves seen on ground surfaces. Objects thrown upward into the air.</li>
+            </ul>
+
+            <h2 class="fade-in">Comparison: Magnitude vs. Intensity</h2>
+            <div class="content-card" style="background: var(--bg-tertiary); margin: 32px 0;">
+                <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                    <thead>
+                        <tr style="border-bottom: 2px solid var(--border);">
+                            <th style="padding: 12px;">Feature</th>
+                            <th style="padding: 12px;">Magnitude (MW)</th>
+                            <th style="padding: 12px;">Intensity (MMI)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid var(--border);">
+                            <td style="padding: 12px; font-weight: 600;">Definition</td>
+                            <td style="padding: 12px;">Energy released at source</td>
+                            <td style="padding: 12px;">Observed effects on surface</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--border);">
+                            <td style="padding: 12px; font-weight: 600;">Number per EQ</td>
+                            <td style="padding: 12px;">One fixed number</td>
+                            <td style="padding: 12px;">Varies by location</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--border);">
+                            <td style="padding: 12px; font-weight: 600;">Factors</td>
+                            <td style="padding: 12px;">Fault area, slip, rock rigidity</td>
+                            <td style="padding: 12px;">Distance, soil type, building quality</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2 class="fade-in">Why Measurement Matters for Safety</h2>
+            <p>Measurement is not just for the textbooks. It informs building codes, land-use planning, and emergency response. Engineering "earthquake-resistant" buildings requires a precise understanding of the ground acceleration (measured in 'g') that an earthquake of a certain magnitude and intensity will produce in a specific area. By measuring and recording every tremor, we create a data-driven map of our world's seismic risks.</p>
+
+            <div class="sidebar-divider" style="margin-top: 48px;"></div>
+            
+            <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px;">
+                <a href="/magnitude-vs-intensity" class="btn btn-primary">Magnitude vs Intensity Guide →</a>
+                <a href="/earthquake" class="btn btn-outline">Back to Articles</a>
             </div>
         </div>
     </div>
-
-    <div class="section">
-        <h2>📡 Instruments Used</h2>
-        <ul>
-            <li>Seismograph</li>
-            <li>Accelerometer</li>
-            <li>GPS sensors</li>
-        </ul>
-    </div>
-
-    <div class="section">
-        <h2>🌍 Why Measurement is Important</h2>
-        <ul>
-            <li>Helps predict damage</li>
-            <li>Improves warning systems</li>
-            <li>Supports disaster planning</li>
-        </ul>
-    </div>
-
-    <div class="section">
-        <h2>❓ FAQs</h2>
-        <p><strong>Which scale is used today?</strong> Moment Magnitude Scale.</p>
-        <p><strong>Is higher magnitude dangerous?</strong> Yes.</p>
-        <p><strong>Can intensity vary?</strong> Yes, by location.</p>
-    </div>
-
-    <div class="section">
-        <h2>🚀 Conclusion</h2>
-        <p>
-            Measuring earthquakes helps us understand their power and impact. Both magnitude and intensity are important for safety and awareness.
-        </p>
-    </div>
-
-    <div class="navigation">
-        <a href="/earthquake">⬅ Back to Articles</a>
-      
-    </div>
-
-</div>
-
-<style>
-.article-container {
-    max-width: 900px;
-    margin: auto;
-    padding: 20px;
-    line-height: 1.8;
-}
-
-.section {
-    margin-top: 40px;
-}
-
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 15px;
-}
-
-.card {
-    padding: 15px;
-    border-radius: 10px;
-    background: #2c3e50;
-    color: white;
-}
-
-.red { background: #e74c3c; }
-.orange { background: #e67e22; }
-.yellow { background: #f1c40f; color: black; }
-.green { background: #2ecc71; }
-
-.navigation {
-    margin-top: 40px;
-    display: flex;
-    justify-content: space-between;
-}
-</style>
-
+</article>
 {% endblock %}

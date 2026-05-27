@@ -1,56 +1,135 @@
 {% extends "base.html" %}
 
+{% block title %}Contact Us — Get in Touch | RAA Earthquake{% endblock %}
+{% block meta_description %}Contact the RAA Earthquake team for inquiries, feedback, or collaborations. We are here to
+help and value your suggestions for improving earthquake safety.{% endblock %}
+
 {% block content %}
+<div class="breadcrumb"><a href="/">Home</a> <span>/</span> <span>Contact</span></div>
 
-<div class="container mt-4">
-    <h1>Contact Us</h1>
+<section class="section fade-in">
+    <div class="section-header">
+        <span class="section-label">Connect</span>
+        <h1>Contact Us</h1>
+        <p>Have questions, feedback, or suggestions? We'd love to hear from you.</p>
+    </div>
 
-    <p>If you have any questions or suggestions, feel free to contact us.</p>
+    <div class="card-grid" style="grid-template-columns: 1fr 1.5fr;">
+        <!-- Contact Info -->
+        <div class="fade-in">
+            <div class="content-card" style="height: 100%;">
+                <h3>Get in Touch</h3>
+                <p>We are always open to hearing from our users and fellow earthquake enthusiasts. Your feedback helps
+                    us build a better and safer platform for everyone.</p>
 
-    <form method="POST">
+                <div style="margin-top: 32px;">
+                    <div class="sidebar-link" style="padding-left: 0; pointer-events: none;">
+                        <span class="link-icon">📩</span>
+                        <div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);">Official Email</div>
+                            <div style="color: var(--text-primary); font-weight: 600;">raa.earthquake.2.0@gmail.com
+                            </div>
+                        </div>
+                    </div>
 
-        <div class="mb-3">
-            <label>Name</label>
-            <input type="text" class="form-control" name="name" required>
+                    <div class="sidebar-link" style="padding-left: 0; pointer-events: none; margin-top: 16px;">
+                        <span class="link-icon">📍</span>
+                        <div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);">Location</div>
+                            <div style="color: var(--text-primary); font-weight: 600;">Birpur (Supaul), Bihar, India
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-box" style="margin-top: 32px;">
+                    <strong>Trust Signal:</strong> We value your privacy. Any information shared via this form is kept
+                    strictly confidential and used only to respond to your inquiry.
+                </div>
+            </div>
         </div>
 
-        <div class="mb-3">
-            <label>Email</label>
-            <input type="email" class="form-control" name="email" required>
+        <!-- Contact Form -->
+        <div class="fade-in">
+            <div class="content-card">
+                {% if success %}
+                <div class="info-box success" style="margin-bottom: 24px;">
+                    <strong>Success!</strong> Your message has been sent successfully. We will get back to you soon.
+                </div>
+                {% endif %}
+
+                {% if error %}
+                <div class="info-box danger" style="margin-bottom: 24px;">
+                    <strong>Error!</strong> There was a problem sending your message. Please try again later.
+                </div>
+                {% endif %}
+
+                <form method="POST" action="/contact">
+                    <div class="form-group">
+                        <label class="form-label" for="name">Full Name</label>
+                        <input type="text" id="name" name="name" class="form-input" placeholder="John Doe" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="email">Email Address</label>
+                        <input type="email" id="email" name="email" class="form-input" placeholder="john@example.com"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="message">Your Message</label>
+                        <textarea id="message" name="message" class="form-textarea" placeholder="How can we help you?"
+                            required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ SECTION -->
+<section class="section fade-in">
+    <div class="section-header">
+        <span class="section-label">Common Questions</span>
+        <h2>Frequently Asked Questions</h2>
+        <p>Quick answers to some of the most common inquiries we receive.</p>
+    </div>
+
+    <div style="max-width: 800px; margin: 0 auto;">
+        <div class="faq-item">
+            <div class="faq-question">Where does your earthquake data come from?</div>
+            <div class="faq-answer">
+                Our real-time earthquake data is sourced directly from the United States Geological Survey (USGS)
+                Earthquake Hazards Program. We receive updates within minutes of seismic detection.
+            </div>
         </div>
 
-        <div class="mb-3">
-            <label>Message</label>
-            <textarea class="form-control" name="message" rows="4" required></textarea>
+        <div class="faq-item">
+            <div class="faq-question">How often is the live map updated?</div>
+            <div class="faq-answer">
+                The live map updates automatically every few minutes to ensure you're seeing the most recent seismic
+                activity. You can also manually refresh the page to fetch the latest data instantly.
+            </div>
         </div>
 
-        <button class="btn btn-primary">Send Message</button>
+        <div class="faq-item">
+            <div class="faq-question">Is RAA Earthquake free to use?</div>
+            <div class="faq-answer">
+                Yes, our platform is completely free for everyone. Our mission is to spread awareness and education
+                about earthquake safety, which we believe should be accessible to all.
+            </div>
+        </div>
 
-    </form>
+        <div class="faq-item">
+            <div class="faq-question">Can I contribute articles to your platform?</div>
+            <div class="faq-answer">
+                We are always open to collaboration with educational researchers or enthusiasts. Please reach out via
+                the contact form above with your proposal.
+            </div>
+        </div>
+    </div>
+</section>
 
-    <br>
-
-    <p>You can also contact us at:</p>
-    <p><strong>Email:</strong> your-raa.earthquake.2.0@gmail.com</p>
-
-</div>
-
-
-
-{% if success %}
-<p style="color:green;font-weight:bold;">
-Message sent successfully!
-</p>
-{% endif %}
-
-<footer style="text-align:center;margin-top:40px;">
-<p>
-© 2026 RAA Earthquake Monitoring App |
-<a href="/about">About</a> |
-<a href="/contact">Contact</a> |
-<a href="/terms">Terms</a> |
-<a href="/privacy">Privacy Policy</a> |
-<a href="/disclaimer">Disclaimer</a>
-</p>
-</footer>
 {% endblock %}

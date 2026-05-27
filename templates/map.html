@@ -1,212 +1,95 @@
 {% extends "base.html" %}
+{% block title %}Live Earthquake Map — Real-Time Global Seismic Activity | RAA Earthquake{% endblock %}
+{% block meta_description %}Interactive live earthquake map showing real-time seismic activity worldwide. Track earthquakes by magnitude, location, and time with color-coded markers and detailed popups.{% endblock %}
 
 {% block content %}
+<div class="breadcrumb"><a href="/">Home</a> <span>/</span> <span>Live Map</span></div>
 
-<h2 style="text-align:center;">Live Earthquake Map</h2>
+<div class="section-header" style="margin-bottom:24px;">
+    <span class="section-label">Real-Time</span>
+    <h1>Live Earthquake Map</h1>
+    <p>Interactive visualization of all earthquakes detected in the last 24 hours. Click any marker for details.</p>
+</div>
 
-<style>
-#map{
-height:600px;
-width:100%;
-border:3px solid #111;
-position:relative;
-z-index:1;
-}
+<div class="map-wrapper">
+    <div id="map" style="height:600px;"></div>
+    <div class="map-legend">
+        <strong style="display:block;margin-bottom:8px;">Magnitude</strong>
+        <div class="map-legend-item"><div class="map-legend-dot" style="background:#10b981;"></div> Low (&lt; 4.0)</div>
+        <div class="map-legend-item"><div class="map-legend-dot" style="background:#f59e0b;"></div> Moderate (4–5.9)</div>
+        <div class="map-legend-item"><div class="map-legend-dot" style="background:#ef4444;"></div> Strong (6–6.9)</div>
+        <div class="map-legend-item"><div class="map-legend-dot" style="background:#7c3aed;"></div> Major (7.0+)</div>
+    </div>
+</div>
 
-.leaflet-control-container{
-z-index:500;
-}
+<!-- MAP ARTICLE CONTENT -->
+<div class="content-card" style="margin-top:32px;">
+    <div class="article-container" style="max-width:100%;">
+        <h2>Understanding the Live Earthquake Map</h2>
+        <p>The live earthquake map is a powerful tool that allows users to track seismic activity across the world in real time. It displays earthquake locations, magnitudes, and affected areas using data from the United States Geological Survey (USGS). This feature helps users stay informed about ongoing seismic events and understand global seismic patterns.</p>
 
-.article{
-max-width:1000px;
-margin:auto;
-margin-top:30px;
-line-height:1.8;
-background:#f9f9f9;
-padding:25px;
-border-radius:12px;
-border:2px solid #111;
-}
-</style>
+        <h2>How This Earthquake Map Works</h2>
+        <p>This map uses real-time GeoJSON data from USGS to show all earthquakes detected in the last 24 hours. Each earthquake is represented by a circular marker on the map. The size of the marker corresponds to the earthquake's magnitude — larger circles indicate stronger earthquakes. The color of each marker indicates severity:</p>
+        <ul>
+            <li><strong>Green markers</strong> represent low magnitude earthquakes (below 4.0) — usually not felt by people</li>
+            <li><strong>Orange markers</strong> represent moderate earthquakes (4.0 to 5.9) — can cause light to moderate damage</li>
+            <li><strong>Red markers</strong> represent strong earthquakes (6.0 to 6.9) — potentially destructive</li>
+            <li><strong>Purple markers</strong> represent major earthquakes (7.0+) — can cause severe destruction</li>
+        </ul>
+        <p>By clicking on any marker, users can see detailed information including the exact location and magnitude of the earthquake.</p>
+
+        <h2>Why Monitoring Earthquakes is Important</h2>
+        <p>Earthquakes can occur without warning and can have devastating effects on communities. Monitoring earthquake activity helps scientists, governments, emergency services, and individuals stay prepared. Real-time monitoring is especially important for regions prone to seismic activity, as it allows people to take precautionary measures and stay alert.</p>
+        <p>For researchers, continuous monitoring reveals patterns in seismic activity that can help improve building codes, emergency response plans, and public awareness campaigns. For the general public, access to live earthquake data means better personal preparedness and faster response during emergencies.</p>
+
+        <h2>Understanding Earthquake Magnitude</h2>
+        <p>The magnitude of an earthquake indicates how much energy is released during the event. Higher magnitude earthquakes release exponentially more energy and can cause significantly more damage:</p>
+        <ul>
+            <li><strong>Magnitude 3.0 or below:</strong> Usually not felt by people, detected only by instruments</li>
+            <li><strong>Magnitude 4.0–5.0:</strong> Light shaking, felt by many people, minor damage possible</li>
+            <li><strong>Magnitude 6.0–7.0:</strong> Strong shaking, potentially damaging to buildings and infrastructure</li>
+            <li><strong>Magnitude 8.0+:</strong> Major destruction possible, can affect areas hundreds of kilometers away</li>
+        </ul>
+
+        <div class="info-box">
+            <strong>Did You Know?</strong> Each whole number increase in magnitude represents approximately 31.6 times more energy released. A magnitude 7.0 earthquake releases about 1,000 times more energy than a magnitude 5.0 earthquake.
+        </div>
+
+        <h2>Global Earthquake Trends</h2>
+        <p>Earthquakes occur most frequently along tectonic plate boundaries. Regions such as the Pacific Ring of Fire experience a high number of earthquakes due to intense geological activity. By observing the map regularly, users can identify patterns and understand which regions are more seismically active.</p>
+
+        <h2>Safety Reminder</h2>
+        <p>While tracking earthquakes is useful, it is equally important to know how to respond during an earthquake. Users are encouraged to learn safety measures and stay prepared at all times.</p>
+        <p>
+            <a href="/earthquake-safety" class="btn btn-outline btn-sm">Read Safety Tips →</a>
+            <a href="/earthquake" class="btn btn-outline btn-sm" style="margin-left:8px;">Explore Articles →</a>
+        </p>
+    </div>
+</div>
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-
-<div id="map"></div>
-
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
 <script>
 var map = L.map('map', {
     worldCopyJump: false,
     maxBounds: [[-90, -180],[90, 180]],
     maxBoundsViscosity: 1.0
-}).setView([20,0], 2);
+}).setView([20, 0], 2);
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-    attribution:'© OpenStreetMap',
-    noWrap: true
+var isDark = document.body.classList.contains('dark');
+L.tileLayer(isDark ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png' : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap', noWrap: true, maxZoom: 18
 }).addTo(map);
 
-var url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson";
+function getMagColor(m) { return m >= 7 ? '#7c3aed' : m >= 6 ? '#ef4444' : m >= 4 ? '#f59e0b' : '#10b981'; }
 
-fetch(url)
-.then(response => response.json())
-.then(data => {
-
+fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson')
+.then(r => r.json()).then(data => {
     data.features.forEach(eq => {
-
-        var coords = eq.geometry.coordinates;
-        var mag = eq.properties.mag;
-        var place = eq.properties.place;
-
-        var lat = coords[1];
-        var lon = coords[0];
-
-        var color = "green";
-        if(mag >= 6) color = "red";
-        else if(mag >= 4) color = "orange";
-
-        var marker = L.circleMarker([lat, lon],{
-            radius: mag * 2,
-            color: color,
-            fillColor: color,
-            fillOpacity: 0.8
-        }).addTo(map);
-
-        marker.bindPopup(
-            "<b>Location:</b> " + place +
-            "<br><b>Magnitude:</b> " + mag
-        );
-
+        var c = eq.geometry.coordinates, mag = eq.properties.mag || 0, place = eq.properties.place, color = getMagColor(mag);
+        L.circleMarker([c[1], c[0]], { radius: Math.max(mag * 2.5, 3), color: color, fillColor: color, fillOpacity: 0.7, weight: 1 })
+        .addTo(map).bindPopup('<div style="font-family:Inter,sans-serif;"><strong>' + place + '</strong><br>Magnitude: <strong>' + mag + '</strong></div>');
     });
-
 });
 </script>
-
-<script>
-setTimeout(function(){
-    location.reload();
-}, 30000);
-</script>
-
-<!-- ================= ARTICLE CONTENT ================= -->
-
-<div class="article">
-
-<h2>Understanding the Live Earthquake Map</h2>
-
-<p>
-The live earthquake map is a powerful tool that allows users to track seismic activity across the world in real time.
-It displays earthquake locations, magnitudes, and affected areas using data collected from reliable global monitoring systems.
-This feature helps users stay informed about ongoing earthquake activity and understand global seismic patterns.
-</p>
-
-<h2>How This Earthquake Map Works</h2>
-
-<p>
-This map uses real-time data from trusted sources to show earthquakes that have occurred in the last 24 hours.
-Each earthquake is represented by a circular marker on the map. The size and color of the marker indicate the strength of the earthquake.
-</p>
-
-<ul>
-<li>Green markers represent low magnitude earthquakes</li>
-<li>Orange markers represent moderate earthquakes</li>
-<li>Red markers represent strong earthquakes</li>
-</ul>
-
-<p>
-By clicking on any marker, users can see details such as the location and magnitude of the earthquake.
-This makes it easy to quickly understand where seismic activity is happening.
-</p>
-
-<h2>Why Monitoring Earthquakes is Important</h2>
-
-<p>
-Earthquakes can occur without warning and can have devastating effects on communities.
-Monitoring earthquake activity helps scientists, governments, and individuals stay prepared.
-It also helps in reducing damage by providing early awareness.
-</p>
-
-<p>
-Real-time earthquake monitoring is especially important for regions that are prone to seismic activity.
-It allows people to take precautionary measures and stay alert.
-</p>
-
-<h2>Understanding Earthquake Magnitude</h2>
-
-<p>
-The magnitude of an earthquake indicates how much energy is released during the event.
-Higher magnitude earthquakes release more energy and can cause more damage.
-</p>
-
-<p>
-For example:
-</p>
-
-<ul>
-<li>Magnitude 3 or below: Usually not felt</li>
-<li>Magnitude 4–5: Light shaking</li>
-<li>Magnitude 6–7: Strong and potentially damaging</li>
-<li>Magnitude 8+: Major destruction</li>
-</ul>
-
-<h2>Global Earthquake Trends</h2>
-
-<p>
-Earthquakes occur most frequently along tectonic plate boundaries.
-Regions such as the Pacific Ring of Fire experience a high number of earthquakes due to intense geological activity.
-</p>
-
-<p>
-By observing the map regularly, users can identify patterns and understand which regions are more prone to earthquakes.
-</p>
-
-<h2>Limitations of Earthquake Prediction</h2>
-
-<p>
-While this map provides real-time data, it is important to understand that earthquakes cannot be predicted accurately.
-Scientists can identify high-risk areas but cannot determine the exact time or location of future earthquakes.
-</p>
-
-<h2>How This Tool Helps Users</h2>
-
-<p>
-This earthquake map is designed to provide easy access to real-time data in a simple and understandable format.
-It helps users:
-</p>
-
-<ul>
-<li>Stay informed about global earthquake activity</li>
-<li>Understand earthquake magnitude and impact</li>
-<li>Track seismic events in real time</li>
-<li>Increase awareness about natural disasters</li>
-</ul>
-
-<h2>Safety Reminder</h2>
-
-<p>
-While tracking earthquakes is useful, it is equally important to know how to respond during an earthquake.
-Users are encouraged to learn safety measures and stay prepared at all times.
-</p>
-
-<p>
-👉 <a href="/earthquake-safety">Read Earthquake Safety Tips</a><br>
-👉 <a href="/earthquake">Explore More Articles</a>
-</p>
-
-</div>
-
-<!-- ================= FOOTER ================= -->
-
-<footer style="text-align:center;margin-top:40px;">
-<p>
-© 2026 RAA Earthquake Monitoring App |
-<a href="/about">About</a> |
-<a href="/contact">Contact</a> |
-<a href="/terms">Terms</a> |
-<a href="/privacy">Privacy Policy</a> |
-<a href="/disclaimer">Disclaimer</a>
-</p>
-</footer>
-
 {% endblock %}

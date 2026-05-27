@@ -1,98 +1,204 @@
 {% extends "base.html" %}
 
+{% block title %}Earthquake Knowledge Hub — Educational Articles & Guides | RAA Earthquake{% endblock %}
+{% block meta_description %}Explore our comprehensive library of earthquake articles. Learn about seismology, safety guides, historical events, tectonic plates, and more to stay informed and protected.{% endblock %}
+
 {% block content %}
+<div class="breadcrumb"><a href="/">Home</a> <span>/</span> <span>Knowledge Hub</span></div>
 
-<style>
-.container{
-max-width:1000px;
-margin:auto;
-padding:20px;
-}
+<section class="section fade-in">
+    <div class="section-header">
+        <span class="section-label">Earthquake Education</span>
+        <h1>Seismology & Safety Knowledge Hub</h1>
+        <p>A comprehensive collection of in-depth articles designed to eliminate "Low Value Content" and provide real expertise on earthquake science and safety.</p>
+    </div>
 
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:20px;
-margin-top:30px;
-}
+    <!-- Article Search/Filter (Visual placeholder for premium feel) -->
+    <div class="content-card" style="padding: 24px; margin-bottom: 48px; background: var(--bg-tertiary); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+        <div style="font-weight: 700; color: var(--text-primary);">Explore over 20+ expert resources on earthquake awareness</div>
+        <div style="display: flex; gap: 8px;">
+            <span class="card-tag">Science</span>
+            <span class="card-tag" style="background: rgba(16,185,129,0.1); color: var(--success);">Safety</span>
+            <span class="card-tag" style="background: rgba(245,158,11,0.1); color: var(--warning);">History</span>
+        </div>
+    </div>
 
-.card{
-background:#f9f9f9;
-padding:25px;
-border-radius:12px;
-border:2px solid #111;
-box-shadow:0 6px 20px rgba(0,0,0,0.15);
-text-align:center;
-transition:0.3s;
-cursor:pointer;
-}
+    <!-- ARTICLE GRID -->
+    <div class="card-grid">
+        <!-- Existing & Foundation Articles -->
+        <div class="card">
+            <div class="card-tag">Science</div>
+            <div class="card-icon">🌋</div>
+            <h3>What is an Earthquake?</h3>
+            <p>A complete beginner's guide to the causes, types, and fundamental science behind seismic events.</p>
+            <a href="/what-is-earthquake" class="btn btn-outline btn-sm" style="margin-top: 16px;">Read Now →</a>
+        </div>
 
-.card:hover{
-transform:scale(1.05);
-background:#eee;
-}
+        <div class="card">
+            <div class="card-tag" style="background: rgba(16,185,129,0.1); color: var(--success);">Safety</div>
+            <div class="card-icon">🛡️</div>
+            <h3>Earthquake Safety Guide</h3>
+            <p>Essential protocols for before, during, and after an earthquake to protect yourself and your family.</p>
+            <a href="/earthquake-safety" class="btn btn-outline btn-sm" style="margin-top: 16px;">Read Now →</a>
+        </div>
 
-.card a{
-text-decoration:none;
-color:black;
-font-weight:bold;
-display:block;
-}
+        <div class="card">
+            <div class="card-tag" style="background: rgba(245,158,11,0.1); color: var(--warning);">History</div>
+            <div class="card-icon">🏛️</div>
+            <h3>Biggest Earthquakes in History</h3>
+            <p>Exploring the data and lessons from the most powerful earthquakes ever recorded by human history.</p>
+            <a href="/biggest-earthquakes" class="btn btn-outline btn-sm" style="margin-top: 16px;">Read Now →</a>
+        </div>
 
-.card p{
-font-size:14px;
-margin-top:10px;
-}
-</style>
+        <div class="card">
+            <div class="card-tag">Science</div>
+            <div class="card-icon">📊</div>
+            <h3>How Earthquakes Are Measured</h3>
+            <p>Comparing the Richter scale vs. the Moment Magnitude scale and how intensity is mapped.</p>
+            <a href="/richter-scale" class="btn btn-outline btn-sm" style="margin-top: 16px;">Read Now →</a>
+        </div>
 
-<div class="container">
+        <div class="card">
+            <div class="card-tag" style="background: rgba(16,185,129,0.1); color: var(--success);">Safety</div>
+            <div class="card-icon">🎒</div>
+            <h3>Earthquake Preparedness</h3>
+            <p>A practical checklist for creating emergency kits, family meeting plans, and securing your home.</p>
+            <a href="/earthquake-preparedness" class="btn btn-outline btn-sm" style="margin-top: 16px;">Read Now →</a>
+        </div>
 
-<h1 style="text-align:center;">🌍 Earthquake</h1>
+        <div class="card">
+            <div class="card-tag">Science</div>
+            <div class="card-icon">🧩</div>
+            <h3>Understanding Tectonic Plates</h3>
+            <p>Visualizing the giant pieces of Earth's crust that shape our continents and trigger seismic shifts.</p>
+            <a href="/tectonic-plates" class="btn btn-outline btn-sm" style="margin-top: 16px;">Read Now →</a>
+        </div>
 
-<p style="text-align:center;">
-Explore detailed articles about earthquakes, safety, science, and history.
-Click any topic below to learn more.
-</p>
+        <!-- Regional/Specific Articles -->
+        <div class="card">
+            <div class="card-tag">Regional</div>
+            <div class="card-icon">🇮🇳</div>
+            <h3>Earthquakes in India</h3>
+            <p>Deep-diving into India's seismic zones, the Himalayan threat, and national disaster management.</p>
+            <a href="/earthquakes-india" class="btn btn-outline btn-sm" style="margin-top: 16px;">Read Now →</a>
+        </div>
 
-<div class="grid">
+        <div class="card">
+            <div class="card-tag">Regional</div>
+            <div class="card-icon">🇯🇵</div>
+            <h3>Why Japan Gets Many Earthquakes</h3>
+            <p>Exploring Japan's unique geological position at the intersection of four massive tectonic plates.</p>
+            <a href="/japan-earthquakes" class="btn btn-outline btn-sm" style="margin-top: 16px;">Read Now →</a>
+        </div>
 
-<div class="card">
-<a href="/what-is-earthquake">
-What is an Earthquake?
-<p>Causes, types, and effects explained</p>
-</a>
-</div>
+        <!-- Advanced/Technical Articles -->
+        <div class="card">
+            <div class="card-tag">Engineering</div>
+            <div class="card-icon">🏗️</div>
+            <h3>Earthquake Resistant Buildings</h3>
+            <p>The science of engineering structures that can sway and survive the world's most powerful tremors.</p>
+            <a href="/earthquake-resistant-buildings" class="btn btn-outline btn-sm" style="margin-top: 16px;">Read Now →</a>
+        </div>
 
-<div class="card">
-<a href="/richter-scale">
-How Earthquakes Are Measured
-<p>Richter scale & modern methods</p>
-</a>
-</div>
+        <div class="card">
+            <div class="card-tag">Advanced</div>
+            <div class="card-icon">🔔</div>
+            <h3>Early Warning Systems</h3>
+            <p>How technology detects initial P-waves to provide seconds of warning before destructive S-waves arrive.</p>
+            <a href="/early-warning-systems" class="btn btn-outline btn-sm" style="margin-top: 16px;">Read Now →</a>
+        </div>
 
-<div class="card">
-<a href="/biggest-earthquakes">
-Top 10 Strongest Earthquakes
-<p>History’s most powerful earthquakes</p>
-</a>
-</div>
+        <div class="card">
+            <div class="card-tag">Advanced</div>
+            <div class="card-icon">🔮</div>
+            <h3>Can Earthquakes Be Predicted?</h3>
+            <p>Separating facts from myths concerning the current scientific limits of earthquake forecasting.</p>
+            <a href="/earthquake-prediction" class="btn btn-outline btn-sm" style="margin-top: 16px;">Read Now →</a>
+        </div>
 
-<div class="card">
-<a href="/earthquake-safety">
-Earthquake Safety Tips
-<p>Before, during & after safety guide</p>
-</a>
-</div>
+        <div class="card">
+            <div class="card-tag">Science</div>
+            <div class="card-icon">🌊</div>
+            <h3>Tsunamis and Earthquakes</h3>
+            <p>Understanding the vertical shifts in the seabed that trigger catastrophic ocean waves.</p>
+            <a href="/tsunamis-earthquakes" class="btn btn-outline btn-sm" style="margin-top: 16px;">Read Now →</a>
+        </div>
 
-<div class="card">
-<a href="/earthquakes-india">
-Why Earthquakes Happen in India
-<p>Seismic zones & risk areas</p>
-</a>
-</div>
+        <div class="card">
+            <div class="card-tag" style="background: rgba(16,185,129,0.1); color: var(--success);">Safety</div>
+            <div class="card-icon">🏫</div>
+            <h3>Safety Tips for Schools</h3>
+            <p>Protocols for teachers and students to ensure safety during school-hour seismic events.</p>
+            <a href="/earthquake-safety-schools" class="btn btn-outline btn-sm" style="margin-top: 16px;">Read Now →</a>
+        </div>
 
-</div>
+        <div class="card">
+            <div class="card-tag" style="background: rgba(245,158,11,0.1); color: var(--warning);">Education</div>
+            <div class="card-icon">❓</div>
+            <h3>Earthquake Facts vs. Myths</h3>
+            <p>Busting common misconceptions about "earthquake weather," animal behavior, and safety techniques.</p>
+            <a href="/earthquake-facts-myths" class="btn btn-outline btn-sm" style="margin-top: 16px;">Read Now →</a>
+        </div>
+    </div>
 
-</div>
+    <div class="section-header" style="margin-top: 64px;">
+        <span class="section-label">Deep Perspectives</span>
+        <h2>The Human & Global Context</h2>
+        <p>In-depth explorations of how earthquakes impact our psychology, economy, environment, and ethics.</p>
+    </div>
+
+    <div class="card-grid">
+        <div class="card">
+            <div class="card-tag">Psychology</div>
+            <div class="card-icon">🧠</div>
+            <h3>The Psychology of Disasters</h3>
+            <p>Understanding fear, the normalcy bias, and how humans respond to the sudden trauma of an earthquake.</p>
+            <a href="/psychology-of-disasters" class="btn btn-outline btn-sm" style="margin-top: 16px;">Read Now →</a>
+        </div>
+
+        <div class="card">
+            <div class="card-tag">Economy</div>
+            <div class="card-icon">📉</div>
+            <h3>The Hidden Economic Cost</h3>
+            <p>How earthquakes reshape the economies of cities and nations, far beyond the initial cleanup costs.</p>
+            <a href="/economic-impact-earthquakes" class="btn btn-outline btn-sm" style="margin-top: 16px;">Read Now →</a>
+        </div>
+
+        <div class="card">
+            <div class="card-tag">Environment</div>
+            <div class="card-icon">🌡️</div>
+            <h3>Seismicity & Climate Change</h3>
+            <p>Exploring the emerging science of how glacial melting and climate shifts might impact seismic activity.</p>
+            <a href="/future-seismicity-climate" class="btn btn-outline btn-sm" style="margin-top: 16px;">Read Now →</a>
+        </div>
+
+        <div class="card">
+            <div class="card-tag">History</div>
+            <div class="card-icon">🏺</div>
+            <h3>Ancestral Earthquake Wisdom</h3>
+            <p>How ancient civilizations interpreted and survived earthquakes before the age of modern science.</p>
+            <a href="/ancestral-earthquake-knowledge" class="btn btn-outline btn-sm" style="margin-top: 16px;">Read Now →</a>
+        </div>
+
+        <div class="card">
+            <div class="card-tag">Ethics</div>
+            <div class="card-icon">⚖️</div>
+            <h3>Ethics of Disaster Response</h3>
+            <p>A deep look at social justice, resource allocation, and the ethics of earthquake preparedness.</p>
+            <a href="/ethics-of-disaster-response" class="btn btn-outline btn-sm" style="margin-top: 16px;">Read Now →</a>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="section fade-in">
+    <div class="newsletter">
+        <h2>Stay Updated on Seismic Education</h2>
+        <p>Our library is updated weekly with new research summaries and safety protocols. Join thousands of users staying informed.</p>
+        <div style="margin-top: 24px;">
+            <a href="/guide" class="btn btn-white btn-lg">View Master Safety Guide</a>
+        </div>
+    </div>
+</section>
 
 {% endblock %}

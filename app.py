@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session, send_from_directory
+from flask import Flask, render_template, request, redirect, session, send_from_directory, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timedelta
 import requests
@@ -127,7 +127,7 @@ def india():
 @app.route("/world", methods=["GET", "POST"])
 def world():
     earthquakes = []
-    countries = ["All Countries","India","United States","Japan","Turkey","Indonesia"]
+    countries = ["All Countries","India","United States","Japan","Turkey","Indonesia","Chile","Mexico","Philippines","Nepal","Iran"]
 
     selected_country = request.form.get("country") if request.method == "POST" else "All Countries"
 
@@ -243,7 +243,11 @@ def ads(): return send_from_directory('.', 'ads.txt')
 @app.route("/ping")
 def ping(): return "ok"
 
-# ================= ARTICLES =================
+@app.route("/robots.txt")
+def robots():
+    return send_from_directory('.', 'robots.txt')
+
+# ================= EXISTING ARTICLES =================
 @app.route("/earthquake")
 def earthquake(): return render_template("earthquake.html")
 
@@ -262,7 +266,88 @@ def earthquake_safety(): return render_template("earthquake-safety.html")
 @app.route("/earthquakes-india")
 def earthquakes_india(): return render_template("earthquakes-india.html")
 
+# ================= NEW ARTICLES =================
+@app.route("/earthquake-preparedness")
+def earthquake_preparedness(): return render_template("earthquake-preparedness.html")
+
+@app.route("/magnitude-vs-intensity")
+def magnitude_vs_intensity(): return render_template("magnitude-vs-intensity.html")
+
+@app.route("/japan-earthquakes")
+def japan_earthquakes(): return render_template("japan-earthquakes.html")
+
+@app.route("/early-warning-systems")
+def early_warning_systems(): return render_template("early-warning-systems.html")
+
+@app.route("/earthquake-prediction")
+def earthquake_prediction(): return render_template("earthquake-prediction.html")
+
+@app.route("/tsunamis-earthquakes")
+def tsunamis_earthquakes(): return render_template("tsunamis-earthquakes.html")
+
+@app.route("/earthquake-safety-schools")
+def earthquake_safety_schools(): return render_template("earthquake-safety-schools.html")
+
+@app.route("/earthquake-safety-home")
+def earthquake_safety_home(): return render_template("earthquake-safety-home.html")
+
+@app.route("/earthquake-facts-myths")
+def earthquake_facts_myths(): return render_template("earthquake-facts-myths.html")
+
+@app.route("/tectonic-plates")
+def tectonic_plates(): return render_template("tectonic-plates.html")
+
+@app.route("/earthquake-resistant-buildings")
+def earthquake_resistant_buildings(): return render_template("earthquake-resistant-buildings.html")
+
+@app.route("/psychology-of-disasters")
+def psychology_of_disasters(): return render_template("psychology-of-disasters.html")
+
+@app.route("/economic-impact-earthquakes")
+def economic_impact_earthquakes(): return render_template("economic-impact-earthquakes.html")
+
+@app.route("/future-seismicity-climate")
+def future_seismicity_climate(): return render_template("future-seismicity-climate.html")
+
+@app.route("/ancestral-earthquake-knowledge")
+def ancestral_earthquake_knowledge(): return render_template("ancestral-earthquake-knowledge.html")
+
+@app.route("/ethics-of-disaster-response")
+def ethics_of_disaster_response(): return render_template("ethics-of-disaster-response.html")
+
+# ================= API ENDPOINT =================
+@app.route("/api/stats")
+def api_stats():
+    try:
+        url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson"
+        response = requests.get(url, timeout=5)
+        data = response.json()
+        features = data.get("features", [])
+        total = len(features)
+        significant = len([f for f in features if f["properties"].get("mag", 0) and f["properties"]["mag"] >= 4.5])
+        max_mag = max([f["properties"].get("mag", 0) or 0 for f in features]) if features else 0
+        return jsonify({"total": total, "significant": significant, "max_mag": max_mag, "countries": 50})
+    except:
+        return jsonify({"total": 0, "significant": 0, "max_mag": 0, "countries": 0})
+
+# ================= ADMIN =================
+@app.route("/rishav")
+def rishav():
+    if session.get("user_email") not in ADMIN_EMAILS:
+        return redirect("/")
+    return render_template("rishav.html")
+
+@app.route("/edit_account")
+def edit_account():
+    if "user_id" not in session:
+        return redirect("/login")
+    return render_template("edit_account.html")
+
 # ================= ERROR HANDLER =================
+@app.errorhandler(404)
+def not_found(e):
+    return render_template("index.html"), 404
+
 @app.errorhandler(500)
 def error(e):
     return "Something went wrong. Please try again.", 500

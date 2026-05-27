@@ -1,17 +1,84 @@
 {% extends "base.html" %}
 
-{% block content %}
-<h1>India Earthquakes (Last 30 Days)</h1>
+{% block title %}India Earthquakes — Live Seismic Monitoring in India | RAA Earthquake{% endblock %}
+{% block meta_description %}Monitor live earthquakes in India. Track seismic activity across the Himalayas, Northeast India, Gujarat, and other high-risk seismic zones with real-time USGS data.{% endblock %}
 
-{% if earthquakes %}
-    {% for eq in earthquakes %}
-        <div style="background:#e7dede; padding:15px; margin:10px 0; border-radius:10px;">
-            <h3>{{ eq.place }}</h3>
-            <p>Magnitude: {{ eq.mag }}</p>
-            <p>Date & Time: {{ eq.time }}</p>
+{% block content %}
+<div class="breadcrumb"><a href="/">Home</a> <span>/</span> <span>India Earthquakes</span></div>
+
+<section class="section fade-in">
+    <div class="section-header">
+        <span class="section-label">National Monitor</span>
+        <h1>India Earthquakes</h1>
+        <p>Live earthquake monitoring for the Indian subcontinent, focusing on high-risk seismic zones.</p>
+    </div>
+
+    <div class="card-grid" style="grid-template-columns: 1fr;">
+        <div id="quakeListContainer">
+            {% if earthquakes %}
+                <ul class="eq-list">
+                    {% for eq in earthquakes %}
+                    <li class="eq-item fade-in">
+                        <div class="eq-mag {% if eq.mag >= 7 %}severe{% elif eq.mag >= 6 %}high{% elif eq.mag >= 4 %}moderate{% else %}low{% endif %}">
+                            {{ "%.1f"|format(eq.mag) }}
+                        </div>
+                        <div class="eq-info">
+                            <div class="eq-place">{{ eq.place }}</div>
+                            <div class="eq-time">🕐 {{ eq.time.strftime('%Y-%m-%d %H:%M:%S') }} UTC</div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <div class="content-card" style="text-align: center; padding: 60px;">
+                    <div style="font-size: 3rem; margin-bottom: 16px;">🇮🇳</div>
+                    <h3>Quiet on the seismic front</h3>
+                    <p>No significant earthquakes have been recorded in India within the last 30 days. This data is updated in real-time from global monitoring networks.</p>
+                    <a href="/world" class="btn btn-outline" style="margin-top: 16px;">Check Global Activity</a>
+                </div>
+            {% endif %}
         </div>
-    {% endfor %}
-{% else %}
-    <p>No earthquake data found.</p>
-{% endif %}
+    </div>
+</section>
+
+<!-- EDUCATIONAL CONTENT FOR INDIA -->
+<section class="section fade-in">
+    <div class="content-card">
+        <div class="article-container" style="max-width: 100%;">
+            <h2>Earthquake Vulnerability in India</h2>
+            <p>India is one of the most seismically active countries in the world. Approximately 59% of India's landmass is prone to earthquakes of moderate to very high intensity. The primary reason for this high vulnerability is the ongoing subduction of the Indian Plate beneath the Eurasian Plate.</p>
+
+            <h3>The Major Seismic Zones of India</h3>
+            <p>The Bureau of Indian Standards (BIS) has categorized the country into four seismic zones (II, III, IV, and V) based on the historical seismic activity and geological structure:</p>
+            <ul>
+                <li><strong>Zone V (Very High Damage Risk):</strong> Includes the entire Northeast India, parts of Jammu & Kashmir, Himachal Pradesh, Uttarakhand, Rann of Kutch in Gujarat, and the Andaman & Nicobar Islands.</li>
+                <li><strong>Zone IV (High Damage Risk):</strong> Covers parts of Jammu & Kashmir and Himachal Pradesh, the remaining parts of North India including Delhi and the Indo-Gangetic plain.</li>
+                <li><strong>Zone III (Moderate Damage Risk):</strong> Includes Kerala, Goa, Lakshadweep islands, and parts of Uttar Pradesh, Gujarat, and West Bengal.</li>
+                <li><strong>Zone II (Low Damage Risk):</strong> Covers the remaining parts of the country which are historically stable.</li>
+            </ul>
+
+            <div class="info-box info">
+                <strong>Did You Know?</strong> The 1950 Assam-Tibet earthquake (Magnitude 8.6) remains the strongest earthquake recorded in India and one of the largest in the world.
+            </div>
+
+            <h3>Why the Himalayan Region is Critical</h3>
+            <p>The Himalayan arc, stretching over 2,400km, is a "seismic gap" where massive tectonic stress has been building up for decades. Many earthquake scientists believe the region is overdue for a "great earthquake" (magnitude 8.0 or larger). This makes continuous monitoring and strict adherence to earthquake-resistant building codes essential for millions of people living in these mountains and the plains below.</p>
+
+            <h3>How RAA Earthquake Supports India's Safety</h3>
+            <p>By providing a dedicated India monitoring page, RAA Earthquake aims to keep citizens informed about local seismic trends. We correlate global USGS data with India's seismic map to provide context on whether an earthquake occurred in a known high-risk zone, helping focus awareness where it is needed most.</p>
+
+            <div style="margin-top: 32px; display: flex; gap: 12px; flex-wrap: wrap;">
+                <a href="/earthquakes-india" class="btn btn-primary">Read India Seismology Article</a>
+                <a href="/earthquake-safety" class="btn btn-outline">General Safety Tips</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+// Auto-refresh every 60 seconds
+setTimeout(function(){
+    location.reload();
+}, 60000);
+</script>
 {% endblock %}
