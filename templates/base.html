@@ -75,6 +75,14 @@
                 <div class="brand-icon">🌍</div>
                 <span>RAA Earthquake</span>
             </a>
+            <div class="desktop-nav-links" style="display:flex;align-items:center;gap:18px;margin-left:20px;">
+                <a href="/disasters" style="font-weight:600;font-size:0.9rem;color:var(--text-secondary);">Disasters</a>
+                <a href="/india-disaster-risk" style="font-weight:600;font-size:0.9rem;color:var(--text-secondary);">India Risk</a>
+                <a href="/preparedness" style="font-weight:600;font-size:0.9rem;color:var(--text-secondary);">Preparedness</a>
+                <a href="/emergency-contacts" style="font-weight:600;font-size:0.9rem;color:var(--danger);">Helplines 🚨</a>
+                <a href="/map" style="font-weight:600;font-size:0.9rem;color:var(--text-secondary);">Live Map</a>
+                <a href="/disaster-glossary" style="font-weight:600;font-size:0.9rem;color:var(--text-secondary);">Glossary</a>
+            </div>
         </div>
         <div class="navbar-actions">
             <button class="nav-btn" id="darkToggle" aria-label="Toggle dark mode">🌙</button>
@@ -87,6 +95,7 @@
     </div>
 </nav>
 
+
 <!-- SIDEBAR -->
 <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
@@ -95,7 +104,7 @@
     </div>
 
     <div class="sidebar-section">
-        <div class="sidebar-label">Navigation</div>
+        <div class="sidebar-label">Monitor & Map</div>
         <a href="/" class="sidebar-link">
             <span class="link-icon">🏠</span> Home
         </a>
@@ -111,20 +120,56 @@
         <a href="/india" class="sidebar-link">
             <span class="link-icon">🇮🇳</span> India Earthquakes
         </a>
+        <a href="/live-disaster-feeds" class="sidebar-link">
+            <span class="link-icon">📡</span> Live Multi-Hazard Feeds
+        </a>
     </div>
 
     <div class="sidebar-divider"></div>
 
     <div class="sidebar-section">
-        <div class="sidebar-label">Learn</div>
+        <div class="sidebar-label">Disasters & Risk</div>
+        <a href="/disasters" class="sidebar-link">
+            <span class="link-icon">⚠️</span> Disasters Hub (34 Types)
+        </a>
+        <a href="/india-disaster-risk" class="sidebar-link">
+            <span class="link-icon">🗺️</span> India Disaster Risk Map
+        </a>
+    </div>
+
+    <div class="sidebar-divider"></div>
+
+    <div class="sidebar-section">
+        <div class="sidebar-label">Preparedness & Safety</div>
+        <a href="/preparedness" class="sidebar-link">
+            <span class="link-icon">🛡️</span> Preparedness Portal
+        </a>
+        <a href="/disaster-kit-guide" class="sidebar-link">
+            <span class="link-icon">🎒</span> Emergency Survival Kit
+        </a>
+        <a href="/emergency-contacts" class="sidebar-link">
+            <span class="link-icon">📞</span> Helpline & Emergency Contacts
+        </a>
+    </div>
+
+    <div class="sidebar-divider"></div>
+
+    <div class="sidebar-section">
+        <div class="sidebar-label">Knowledge & Resources</div>
         <a href="/earthquake" class="sidebar-link">
-            <span class="link-icon">📚</span> Articles
+            <span class="link-icon">📚</span> Earthquake Articles
         </a>
         <a href="/guide" class="sidebar-link">
             <span class="link-icon">📘</span> Safety Guide
         </a>
-        <a href="/earthquake-safety" class="sidebar-link">
-            <span class="link-icon">🛡️</span> Safety Tips
+        <a href="/disaster-glossary" class="sidebar-link">
+            <span class="link-icon">📖</span> Disaster Glossary A-Z
+        </a>
+        <a href="/official-data-sources" class="sidebar-link">
+            <span class="link-icon">🏛️</span> Official Data Sources
+        </a>
+        <a href="/historic-disasters" class="sidebar-link">
+            <span class="link-icon">🏛️</span> Historic Disasters Archive
         </a>
     </div>
 
@@ -189,32 +234,45 @@
 <footer class="site-footer">
     <div class="footer-grid">
         <div class="footer-brand">
-            <h3>🌍 RAA Earthquake</h3>
-            <p>RAA Earthquake is an independent educational and monitoring platform. Our mission is to democratize seismic data and provide life-saving safety education to global communities.</p>
+            <h3>🌍 RAA Earthquake & Multi-Disaster Platform</h3>
+            <p>RAA Earthquake is a multi-hazard disaster information, monitoring, education, and preparedness platform. Empowering individuals and communities with scientific data, India disaster risk profiles, and life-saving safety guidance.</p>
             <div style="margin-top: 16px; font-size: 0.8rem; color: var(--text-muted);">
-                <strong>Primary Data Source:</strong> U.S. Geological Survey (USGS)<br>
-                <strong>Scientific Review:</strong> RAA Editorial Board<br>
-                <strong>Service Status:</strong> Live & 24/7 Monitoring
+                <strong>Primary Data Sources:</strong> USGS, IMD, NDMA, INCOIS, GDACS, WMO<br>
+                <strong>Scientific & Safety Review:</strong> RAA Advisory Panel<br>
+                <strong>Service Status:</strong> 24/7 Multi-Hazard Monitoring
             </div>
         </div>
         <div class="footer-col">
             <h4>Monitor</h4>
             <a href="/">Home</a>
             <a href="/map">Live Map</a>
-            <a href="/world">World</a>
-            <a href="/asia">Asia</a>
-            <a href="/india">India</a>
+            <a href="/world">World Earthquakes</a>
+            <a href="/asia">Asia Earthquakes</a>
+            <a href="/india">India Earthquakes</a>
+            <a href="/live-disaster-feeds">Live Multi-Hazard Feeds</a>
         </div>
         <div class="footer-col">
-            <h4>Learn</h4>
-            <a href="/earthquake">Articles</a>
-            <a href="/what-is-earthquake">What is Earthquake?</a>
-            <a href="/earthquake-safety">Safety Tips</a>
+            <h4>Disasters & India</h4>
+            <a href="/disasters">Disasters Directory (34 Types)</a>
+            <a href="/disasters/earthquake">Earthquakes</a>
+            <a href="/disasters/tsunami">Tsunamis</a>
+            <a href="/disasters/cyclone">Cyclones & Typhoons</a>
+            <a href="/india-disaster-risk">India Disaster Risk Map</a>
+            <a href="/historic-disasters">Historic Disasters</a>
+        </div>
+        <div class="footer-col">
+            <h4>Preparedness</h4>
+            <a href="/preparedness">Preparedness Portal</a>
+            <a href="/disaster-kit-guide">Emergency Survival Kit</a>
+            <a href="/emergency-contacts">Emergency Helplines (112)</a>
+            <a href="/earthquake-safety">Earthquake Safety Tips</a>
             <a href="/guide">Safety Guide</a>
-            <a href="/biggest-earthquakes">Biggest Earthquakes</a>
         </div>
         <div class="footer-col">
-            <h4>Company</h4>
+            <h4>Knowledge & Company</h4>
+            <a href="/disaster-glossary">Disaster Glossary A-Z</a>
+            <a href="/official-data-sources">Official Data Sources</a>
+            <a href="/earthquake">Earthquake Articles</a>
             <a href="/about">About Us</a>
             <a href="/contact">Contact</a>
             <a href="/terms">Terms</a>
@@ -223,9 +281,10 @@
         </div>
     </div>
     <div class="footer-bottom">
-        <p>&copy; 2026 RAA Earthquake Monitoring Platform — Built by RAA Groups. All rights reserved.</p>
+        <p>&copy; 2026 RAA Earthquake & Multi-Disaster Platform — Built by RAA Groups. All rights reserved.</p>
     </div>
 </footer>
+
 
 <!-- SCROLL TO TOP -->
 <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Scroll to top">↑</button>

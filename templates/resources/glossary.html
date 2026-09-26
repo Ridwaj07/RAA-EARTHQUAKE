@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Multi-Disaster Glossary A-Z | Terminology & Concepts — RAA Earthquake{% endblock %}
+{% block meta_description %}A-Z terminology index covering disaster management, seismology, meteorology, hydrology, and risk assessment. Simple and scientific definitions for 20+ core concepts.{% endblock %}
+
+{% block content %}
+<div class="breadcrumb">
+    <a href="/">Home</a> <span>/</span> <span>Disaster Glossary</span>
+</div>
+
+<div style="text-align: center; max-width: 800px; margin: 0 auto 40px;">
+    <span class="category-badge" style="background: rgba(79, 70, 229, 0.15); color: var(--accent);">📖 Knowledge Index</span>
+    <h1 style="margin-top: 12px; margin-bottom: 16px;">Multi-Disaster Glossary A-Z</h1>
+    <p style="font-size: 1.1rem; color: var(--text-secondary);">
+        Clear, accessible explanations of disaster management, seismology, meteorology, and scientific terminology.
+    </p>
+</div>
+
+<!-- SEARCH & CATEGORY FILTER -->
+<form method="GET" action="/disaster-glossary" class="search-box-lg">
+    <input type="text" name="q" value="{{ query }}" class="search-input-lg" placeholder="🔍 Search term (e.g. Epicentre, Liquefaction, Storm Surge, Magnitude)...">
+    <select name="cat" class="search-input-lg" style="max-width: 200px;" onchange="this.form.submit()">
+        <option value="">All Categories</option>
+        {% for c in categories %}
+        <option value="{{ c }}" {% if category == c %}selected{% endif %}>{{ c }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+{% if terms %}
+<div>
+    {% for t in terms %}
+    <div class="glossary-card">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap;">
+            <div class="glossary-term">{{ t.term }}</div>
+            {% if t.category %}
+            <span class="hazard-pill" style="background: var(--accent-glow); color: var(--accent);">{{ t.category }}</span>
+            {% endif %}
+        </div>
+
+        <p style="font-size: 1rem; color: var(--text-primary); font-weight: 500; margin-bottom: 8px;">
+            {{ t.simple_definition }}
+        </p>
+
+        {% if t.scientific_definition %}
+        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px; border-left: 3px solid var(--border); padding-left: 12px;">
+            <strong>Scientific Explanation:</strong> {{ t.scientific_definition }}
+        </p>
+        {% endif %}
+
+        {% if t.example %}
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0;">
+            <strong>Example Context:</strong> {{ t.example }}
+        </p>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="content-card" style="text-align: center; padding: 40px;">
+    <h3>No terms found matching "{{ query }}"</h3>
+    <p style="color: var(--text-muted);">Try searching for terms like Epicentre, Fault, Liquefaction, Tsunami, or Cyclone.</p>
+    <a href="/disaster-glossary" class="btn btn-secondary">Clear Filter</a>
+</div>
+{% endif %}
+{% endblock %}

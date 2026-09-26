@@ -34,20 +34,32 @@ ADMIN_EMAILS = [
     "nitu9sharma9@gmail.com"
 ]
 
-# ================= MODEL =================
+# ================= USER MODEL =================
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
     email = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(200))
 
+# ================= MODELS & SEEDING =================
+import json
+from models import init_models
+from seed_data import seed_all
+
+models = init_models(db)
+
 with app.app_context():
     db.create_all()
+    seed_all(db, models)
+
 
 # ================= HOME =================
 @app.route("/")
 def home():
-    return render_template("index.html")
+    disasters = models.DisasterType.query.filter_by(is_active=True).order_by(models.DisasterType.display_order.asc()).all()
+    featured_states = models.IndianState.query.filter(models.IndianState.seismic_zone.in_(['Zone V', 'Zone IV'])).limit(6).all()
+    return render_template("index.html", disasters=disasters, featured_states=featured_states)
+
 
 # ================= AUTH =================
 @app.route("/signup", methods=["GET", "POST"])
@@ -257,12 +269,27 @@ def sitemap():
             if rule.rule not in ["/rishav", "/logout", "/account", "/edit_account", "/sitemap.xml", "/robots.txt", "/ads.txt", "/ping"]:
                 pages.append("https://raa-earthquake.onrender.com" + rule.rule)
     
+    # Append dynamic multi-disaster pages
+    try:
+        disasters = models.DisasterType.query.filter_by(is_active=True).all()
+        for d in disasters:
+            pages.append(f"https://raa-earthquake.onrender.com/disasters/{d.slug}")
+        states = models.IndianState.query.all()
+        for s in states:
+            pages.append(f"https://raa-earthquake.onrender.com/india-disaster-risk/{s.slug}")
+        events = models.HistoricalEvent.query.all()
+        for e in events:
+            pages.append(f"https://raa-earthquake.onrender.com/historic-disasters/{e.id}")
+    except Exception as err:
+        print("SITEMAP DYNAMIC ERR:", err)
+    
     sitemap_xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
     for page in pages:
         sitemap_xml += f'  <url><loc>{page}</loc><lastmod>{datetime.utcnow().strftime("%Y-%m-%d")}</lastmod></url>\n'
     sitemap_xml += '</urlset>'
     
     return sitemap_xml, 200, {'Content-Type': 'application/xml'}
+
 
 # ================= EXISTING ARTICLES =================
 @app.route("/earthquake")
@@ -332,7 +359,106 @@ def ancestral_earthquake_knowledge(): return render_template("ancestral-earthqua
 @app.route("/ethics-of-disaster-response")
 def ethics_of_disaster_response(): return render_template("ethics-of-disaster-response.html")
 
+# ================= MULTI-DISASTER PLATFORM ROUTES =================
+
+@app.route("/disasters")
+def disasters_hub():
+    disasters = models.DisasterType.query.filter_by(is_active=True).order_by(models.DisasterType.display_order.asc()).all()
+    categories = {}
+    for d in disasters:
+        cat = d.category or "General"
+        if cat not in categories:
+            categories[cat] = []
+        categories[cat].append(d)
+    return render_template("disasters/index.html", categories=categories, disasters=disasters)
+
+@app.route("/disasters/<slug>")
+def disaster_detail(slug):
+    disaster = models.DisasterType.query.filter_by(slug=slug, is_active=True).first_or_404()
+    guide = models.SafetyGuide.query.filter_by(disaster_slug=slug, is_active=True).first()
+    before_steps = json.loads(guide.before_steps) if (guide and guide.before_steps) else []
+    during_steps = json.loads(guide.during_steps) if (guide and guide.during_steps) else []
+    after_steps = json.loads(guide.after_steps) if (guide and guide.after_steps) else []
+    
+    events = models.HistoricalEvent.query.filter_by(disaster_type=slug).order_by(models.HistoricalEvent.year.desc()).all()
+    other_disasters = models.DisasterType.query.filter(models.DisasterType.slug != slug, models.DisasterType.is_active == True).limit(6).all()
+    
+    return render_template("disasters/detail.html", disaster=disaster, guide=guide, before_steps=before_steps, during_steps=during_steps, after_steps=after_steps, events=events, other_disasters=other_disasters)
+
+@app.route("/india-disaster-risk")
+def india_risk():
+    states = models.IndianState.query.order_by(models.IndianState.name.asc()).all()
+    for s in states:
+        s.hazards_list = json.loads(s.major_hazards) if s.major_hazards else []
+    return render_template("india_risk/index.html", states=states)
+
+@app.route("/india-disaster-risk/<slug>")
+def state_risk_detail(slug):
+    state = models.IndianState.query.filter_by(slug=slug).first_or_404()
+    hazards_list = json.loads(state.major_hazards) if state.major_hazards else []
+    hazard_objs = models.DisasterType.query.filter(models.DisasterType.slug.in_(hazards_list)).all() if hazards_list else []
+    contacts = models.EmergencyContact.query.filter((models.EmergencyContact.state == state.name) | (models.EmergencyContact.country == 'India')).all()
+    events = models.HistoricalEvent.query.filter_by(state=state.name).order_by(models.HistoricalEvent.year.desc()).all()
+    return render_template("india_risk/detail.html", state=state, hazard_objs=hazard_objs, contacts=contacts, events=events)
+
+@app.route("/preparedness")
+def preparedness():
+    guides = models.SafetyGuide.query.filter_by(is_active=True).all()
+    disasters = models.DisasterType.query.filter_by(is_active=True).all()
+    return render_template("preparedness/index.html", guides=guides, disasters=disasters)
+
+@app.route("/emergency-contacts")
+def emergency_contacts():
+    contacts = models.EmergencyContact.query.filter_by(is_active=True).all()
+    national_contacts = [c for c in contacts if not c.state or c.country == 'India']
+    state_contacts = [c for c in contacts if c.state]
+    return render_template("preparedness/emergency_contacts.html", national_contacts=national_contacts, state_contacts=state_contacts)
+
+@app.route("/disaster-kit-guide")
+def disaster_kit_guide():
+    return render_template("preparedness/kit_guide.html")
+
+@app.route("/disaster-glossary")
+def disaster_glossary():
+    query = request.args.get("q", "").strip()
+    category = request.args.get("cat", "").strip()
+    
+    terms_query = models.GlossaryTerm.query
+    if query:
+        terms_query = terms_query.filter(models.GlossaryTerm.term.ilike(f"%{query}%") | models.GlossaryTerm.simple_definition.ilike(f"%{query}%"))
+    if category:
+        terms_query = terms_query.filter_by(category=category)
+        
+    terms = terms_query.order_by(models.GlossaryTerm.term.asc()).all()
+    categories_raw = db.session.query(models.GlossaryTerm.category).distinct().all()
+    categories = [c[0] for c in categories_raw if c[0]]
+    
+    return render_template("resources/glossary.html", terms=terms, query=query, category=category, categories=categories)
+
+@app.route("/official-data-sources")
+def official_data_sources():
+    sources = models.DataSource.query.order_by(models.DataSource.priority.asc()).all()
+    return render_template("resources/data_sources.html", sources=sources)
+
+@app.route("/live-disaster-feeds")
+def live_disaster_feeds():
+    sources = models.DataSource.query.filter_by(status='operational').all()
+    return render_template("resources/live_feeds.html", sources=sources)
+
+@app.route("/historic-disasters")
+def historic_disasters():
+    events = models.HistoricalEvent.query.order_by(models.HistoricalEvent.year.desc()).all()
+    disasters = models.DisasterType.query.filter_by(is_active=True).all()
+    return render_template("resources/historic.html", events=events, disasters=disasters)
+
+@app.route("/historic-disasters/<int:event_id>")
+def historic_disaster_detail(event_id):
+    event = models.HistoricalEvent.query.get_or_404(event_id)
+    related_disaster = models.DisasterType.query.filter_by(slug=event.disaster_type).first()
+    return render_template("resources/historic_detail.html", event=event, related_disaster=related_disaster)
+
 # ================= API ENDPOINT =================
+
 @app.route("/api/stats")
 def api_stats():
     try:

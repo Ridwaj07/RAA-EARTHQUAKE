@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Official Data Sources & Monitoring Agencies Directory | RAA Earthquake{% endblock %}
+{% block meta_description %}Directory of official national and international disaster monitoring agencies including
+USGS, IMD, NDMA, INCOIS, GDACS, WMO, NASA, and CWC.{% endblock %}
+
+{% block content %}
+<div class="breadcrumb">
+    <a href="/">Home</a> <span>/</span> <span>Official Data Sources</span>
+</div>
+
+<div style="text-align: center; max-width: 800px; margin: 0 auto 40px;">
+    <span class="category-badge" style="background: rgba(14, 165, 233, 0.15); color: #0ea5e9;">🏛️ Data
+        Transparency</span>
+    <h1 style="margin-top: 12px; margin-bottom: 16px;">Official Disaster Data Sources & Monitoring Agencies</h1>
+    <p style="font-size: 1.1rem; color: var(--text-secondary);">
+        RAA Earthquake aggregates real-time data and scientific feeds from accredited international and national
+        disaster monitoring organizations.
+    </p>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px;">
+    {% for s in sources %}
+    <div class="content-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+                <span class="hazard-pill"
+                    style="background: var(--accent-glow); color: var(--accent); font-weight: 700;">{{ s.agency
+                    }}</span>
+                <span class="risk-badge risk-low" style="font-size: 0.75rem;">{{ s.status|capitalize }}</span>
+            </div>
+
+            <h3 style="margin-bottom: 4px;">{{ s.name }}</h3>
+            <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">Country / Scope: {{
+                s.country }}</div>
+
+            <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 16px;">
+                <strong>Update Frequency:</strong> {{ s.update_frequency or 'Real-time / Automated' }}
+            </p>
+        </div>
+
+        <div>
+            {% if s.website %}
+            <a href="{{ s.website }}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm"
+                style="width: 100%; text-align: center; border-radius: 8px;">
+                Visit Official Website ↗
+            </a>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

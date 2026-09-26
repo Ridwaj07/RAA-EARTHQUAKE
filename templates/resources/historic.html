@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Historic Disasters Archive | Major Global & Indian Events — RAA Earthquake{% endblock %}
+{% block meta_description %}Verified archive of major historical disasters in India and worldwide including death tolls, seismic magnitudes, storm surges, and lessons learned.{% endblock %}
+
+{% block content %}
+<div class="breadcrumb">
+    <a href="/">Home</a> <span>/</span> <span>Historic Disasters Archive</span>
+</div>
+
+<div style="text-align: center; max-width: 800px; margin: 0 auto 40px;">
+    <span class="category-badge" style="background: rgba(245, 158, 11, 0.15); color: var(--warning);">🏛️ Historical Archives</span>
+    <h1 style="margin-top: 12px; margin-bottom: 16px;">Historic Disasters Archive</h1>
+    <p style="font-size: 1.1rem; color: var(--text-secondary);">
+        Chronological record of major historical disasters in India and globally. Learning from past catastrophic events to strengthen future preparedness and structural resilience.
+    </p>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr; gap: 20px;">
+    {% for ev in events %}
+    <div class="historic-card">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px;">
+            <div>
+                <span class="hazard-pill" style="background: var(--accent-glow); color: var(--accent); font-weight: 700; margin-bottom: 8px; inline-block;">{{ ev.disaster_type|upper }}</span>
+                <h2 style="font-size: 1.3rem; margin-bottom: 4px;">
+                    <a href="/historic-disasters/{{ ev.id }}" style="color: var(--text-primary); text-decoration: none;">{{ ev.title }} ({{ ev.year }})</a>
+                </h2>
+                <div style="font-size: 0.85rem; color: var(--text-muted);">
+                    📍 {{ ev.location or ev.country }} {% if ev.state %}({{ ev.state }}){% endif %}
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 10px; align-items: center;">
+                {% if ev.deaths %}
+                <span class="deaths-badge" style="font-size: 0.9rem;">☠️ {{ "{:,}".format(ev.deaths) }} Deaths</span>
+                {% endif %}
+                {% if ev.magnitude %}
+                <span class="risk-badge risk-high" style="font-size: 0.85rem;">⚡ M {{ ev.magnitude }}</span>
+                {% endif %}
+            </div>
+        </div>
+
+        <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 8px;">
+            {{ ev.description }}
+        </p>
+
+        <div class="historic-meta">
+            {% if ev.source %}<span>ℹ️ Source: {{ ev.source }}</span>{% endif %}
+            {% if ev.severity %}<span>⚠️ Severity: {{ ev.severity }}</span>{% endif %}
+            <a href="/historic-disasters/{{ ev.id }}" style="margin-left: auto; font-size: 0.85rem; font-weight: 600;">View Event Details &rarr;</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

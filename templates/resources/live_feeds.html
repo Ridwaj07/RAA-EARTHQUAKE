@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Live Multi-Hazard Disaster Feeds Hub | RAA Earthquake Platform{% endblock %}
+{% block meta_description %}Live multi-hazard feeds aggregator consolidating real-time earthquake feeds, cyclone warnings, weather alerts, and global disaster bulletins.{% endblock %}
+
+{% block content %}
+<div class="breadcrumb">
+    <a href="/">Home</a> <span>/</span> <span>Live Feeds Aggregator</span>
+</div>
+
+<div style="text-align: center; max-width: 800px; margin: 0 auto 40px;">
+    <span class="category-badge" style="background: rgba(239, 68, 68, 0.15); color: var(--danger);">📡 Real-Time Data Stream</span>
+    <h1 style="margin-top: 12px; margin-bottom: 16px;">Live Multi-Hazard Feeds Hub</h1>
+    <p style="font-size: 1.1rem; color: var(--text-secondary);">
+        Consolidated real-time disaster streams from official scientific agencies including USGS, IMD, NDMA, INCOIS, and GDACS.
+    </p>
+</div>
+
+<!-- LIVE MAP BANNER -->
+<div class="content-card" style="margin-bottom: 32px; background: linear-gradient(135deg, #1a1d2e, #2d1b69); color: white;">
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+        <div>
+            <span style="background: rgba(16, 185, 129, 0.2); color: #34d399; padding: 4px 12px; border-radius: 12px; font-weight: 700; font-size: 0.8rem;">● LIVE DATA ONLINE</span>
+            <h2 style="color: white; margin-top: 8px; margin-bottom: 4px;">Live Global Seismic Map</h2>
+            <p style="color: rgba(255,255,255,0.8); font-size: 0.95rem; margin-bottom: 0;">Interactive Leaflet map updating live with real-time global earthquake events.</p>
+        </div>
+        <a href="/map" class="btn btn-primary" style="background: var(--accent); color: white;">Open Interactive Map &rarr;</a>
+    </div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
+    <div class="content-card">
+        <h3>🌍 USGS Global Earthquakes</h3>
+        <p style="font-size: 0.9rem; color: var(--text-secondary);">Automated real-time seismic feed updated every minute.</p>
+        <a href="/world" class="btn btn-secondary btn-sm" style="width: 100%; text-align: center;">View World Earthquakes &rarr;</a>
+    </div>
+
+    <div class="content-card">
+        <h3>🇮🇳 IMD Cyclone & Weather Warnings</h3>
+        <p style="font-size: 0.9rem; color: var(--text-secondary);">Official India Meteorological Department severe weather bulletins.</p>
+        <a href="https://mausam.imd.gov.in/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm" style="width: 100%; text-align: center;">Visit IMD Official Feed ↗</a>
+    </div>
+
+    <div class="content-card">
+        <h3>🌊 INCOIS Indian Ocean Tsunami Watch</h3>
+        <p style="font-size: 0.9rem; color: var(--text-secondary);">Indian Tsunami Early Warning Centre real-time bulletins.</p>
+        <a href="https://incois.gov.in/portal/tsunami/index.jsp" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm" style="width: 100%; text-align: center;">Visit INCOIS Advisory ↗</a>
+    </div>
+
+    <div class="content-card">
+        <h3>🛰️ GDACS Global Disaster Alerts</h3>
+        <p style="font-size: 0.9rem; color: var(--text-secondary);">Joint UN/EU Global Disaster Alert and Coordination System.</p>
+        <a href="https://www.gdacs.org/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm" style="width: 100%; text-align: center;">Visit GDACS Live Stream ↗</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}Disaster Preparedness & Survival Portal | RAA Earthquake{% endblock %}
+{% block meta_description %}Comprehensive disaster preparedness portal. Action plans for before, during, and after disasters, emergency survival kit building, home structural safety, and emergency helplines.{% endblock %}
+
+{% block content %}
+<div class="breadcrumb">
+    <a href="/">Home</a> <span>/</span> <span>Disaster Preparedness Portal</span>
+</div>
+
+<div style="text-align: center; max-width: 800px; margin: 0 auto 40px;">
+    <span class="category-badge" style="background: rgba(16, 185, 129, 0.15); color: var(--success);">🛡️ Life-Saving Readiness</span>
+    <h1 style="margin-top: 12px; margin-bottom: 16px;">Disaster Preparedness & Survival Portal</h1>
+    <p style="font-size: 1.1rem; color: var(--text-secondary);">
+        Being prepared saves lives. Discover comprehensive household emergency plans, survival kit building checklists, structural safety tips, and hazard-specific safety guidelines.
+    </p>
+</div>
+
+<!-- TOP CARDS -->
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-bottom: 48px;">
+    <div class="content-card" style="border-top: 4px solid var(--accent);">
+        <div style="font-size: 32px; margin-bottom: 12px;">🎒</div>
+        <h3>Emergency Survival Kit</h3>
+        <p style="font-size: 0.9rem;">Interactive checklist of essential supplies for 72-hour family survival including water, food, medical, and document protection.</p>
+        <a href="/disaster-kit-guide" class="btn btn-primary btn-sm" style="margin-top: 12px; width: 100%; text-align: center;">Build Survival Kit &rarr;</a>
+    </div>
+
+    <div class="content-card" style="border-top: 4px solid var(--danger);">
+        <div style="font-size: 32px; margin-bottom: 12px;">📞</div>
+        <h3>Emergency Helplines (112)</h3>
+        <p style="font-size: 0.9rem;">National and State helpline directory for India including NDRF, SDRF, Fire, Ambulance, Police, and Disaster Control Rooms.</p>
+        <a href="/emergency-contacts" class="btn btn-primary btn-sm" style="margin-top: 12px; width: 100%; text-align: center;">View Helpline Numbers &rarr;</a>
+    </div>
+
+    <div class="content-card" style="border-top: 4px solid var(--warning);">
+        <div style="font-size: 32px; margin-bottom: 12px;">📖</div>
+        <h3>Disaster Glossary A-Z</h3>
+        <p style="font-size: 0.9rem;">Clear, accessible definitions for disaster terminology, magnitude scales, meteorology terms, and scientific concepts.</p>
+        <a href="/disaster-glossary" class="btn btn-primary btn-sm" style="margin-top: 12px; width: 100%; text-align: center;">Browse Glossary &rarr;</a>
+    </div>
+</div>
+
+<!-- HAZARD SAFETY GUIDES GRID -->
+<div class="content-card" style="margin-bottom: 48px;">
+    <h2>⚠️ Hazard-Specific Safety Guides</h2>
+    <p>Select a hazard to view detailed Before, During, and After emergency action steps:</p>
+
+    <div class="disaster-grid" style="margin-top: 24px;">
+        {% for d in disasters %}
+        <a href="/disasters/{{ d.slug }}" style="text-decoration: none; color: inherit;">
+            <div class="disaster-card" style="padding: 16px;">
+                <div class="disaster-card-header" style="margin-bottom: 8px;">
+                    <div class="disaster-card-icon" style="width: 40px; height: 40px; font-size: 20px; background: {{ d.color_code }}20; color: {{ d.color_code }};">
+                        {{ d.icon }}
+                    </div>
+                    <div>
+                        <div style="font-weight: 700;">{{ d.name }} Safety</div>
+                        <div style="font-size: 0.75rem; color: var(--text-muted);">{{ d.category }}</div>
+                    </div>
+                </div>
+                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0;">Step-by-step preparedness, evacuation & emergency actions.</p>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- GENERAL PREPAREDNESS STEPS -->
+<div class="content-card">
+    <h2>📋 4 Pillars of Household Disaster Preparedness</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-top: 24px;">
+        <div style="padding: 20px; background: var(--bg-tertiary); border-radius: 12px;">
+            <div style="font-size: 1.4rem; font-weight: 800; color: var(--accent);">01. Stay Informed</div>
+            <p style="font-size: 0.9rem; margin-top: 8px; margin-bottom: 0;">Know the disaster risks in your area. Subscribe to official early warnings from IMD, NDMA, and local authorities.</p>
+        </div>
+
+        <div style="padding: 20px; background: var(--bg-tertiary); border-radius: 12px;">
+            <div style="font-size: 1.4rem; font-weight: 800; color: var(--accent);">02. Family Emergency Plan</div>
+            <p style="font-size: 0.9rem; margin-top: 8px; margin-bottom: 0;">Agree on meeting locations, out-of-state emergency contacts, and evacuation routes for all family members.</p>
+        </div>
+
+        <div style="padding: 20px; background: var(--bg-tertiary); border-radius: 12px;">
+            <div style="font-size: 1.4rem; font-weight: 800; color: var(--accent);">03. Prepare Go-Bag</div>
+            <p style="font-size: 0.9rem; margin-top: 8px; margin-bottom: 0;">Assemble a portable survival kit with 72 hours of water, non-perishable food, first aid, torch, and medicines.</p>
+        </div>
+
+        <div style="padding: 20px; background: var(--bg-tertiary); border-radius: 12px;">
+            <div style="font-size: 1.4rem; font-weight: 800; color: var(--accent);">04. Secure Home</div>
+            <p style="font-size: 0.9rem; margin-top: 8px; margin-bottom: 0;">Anchor heavy furniture, identify safe spots (under heavy tables), and know how to shut off gas/electricity mains.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

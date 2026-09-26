@@ -1,0 +1,194 @@
+{% extends "base.html" %}
+
+{% block title %}{{ disaster.name }} — Causes, Dangers, India Risk & Safety Guide | RAA Disaster Intelligence{% endblock
+%}
+{% block meta_description %}{{ disaster.short_description }} Complete guide on {{ disaster.name }} formation, causes,
+early warning indicators, India vulnerability, and step-by-step safety rules.{% endblock %}
+
+{% block content %}
+<div class="breadcrumb">
+    <a href="/">Home</a> <span>/</span> <a href="/disasters">Disasters Hub</a> <span>/</span> <span>{{ disaster.name
+        }}</span>
+</div>
+
+<!-- HEADER BANNER -->
+<div class="content-card"
+    style="margin-bottom: 32px; border-left: 6px solid {{ disaster.color_code }}; position: relative; overflow: hidden;">
+    <div style="display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap;">
+        <div
+            style="width: 72px; height: 72px; border-radius: 20px; background: {{ disaster.color_code }}20; color: {{ disaster.color_code }}; display: flex; align-items: center; justify-content: center; font-size: 36px;">
+            {{ disaster.icon }}
+        </div>
+        <div style="flex: 1; min-width: 280px;">
+            <span class="category-badge"
+                style="background: {{ disaster.color_code }}20; color: {{ disaster.color_code }}; margin-bottom: 8px; inline-block;">{{
+                disaster.category }} Hazard</span>
+            <h1 style="margin-bottom: 8px;">{{ disaster.name }} Intelligence & Safety Guide</h1>
+            <p style="font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 0;">{{ disaster.short_description
+                }}</p>
+        </div>
+    </div>
+</div>
+
+<!-- MAIN GRID -->
+<div style="display: grid; grid-template-columns: 2fr 1fr; gap: 32px;" class="card-grid">
+    <div>
+        <!-- OVERVIEW -->
+        <div class="content-card" style="margin-bottom: 32px;">
+            <h2>Overview & Scientific Definition</h2>
+            <p>{{ disaster.description }}</p>
+
+            {% if disaster.how_it_forms %}
+            <h3 style="margin-top: 24px;">How It Forms</h3>
+            <p>{{ disaster.how_it_forms }}</p>
+            {% endif %}
+
+            {% if disaster.causes %}
+            <h3 style="margin-top: 24px;">Primary Causes</h3>
+            <p>{{ disaster.causes }}</p>
+            {% endif %}
+
+            {% if disaster.dangers %}
+            <h3 style="margin-top: 24px;">Associated Dangers & Secondary Impacts</h3>
+            <p>{{ disaster.dangers }}</p>
+            {% endif %}
+        </div>
+
+        <!-- INDIA RELEVANCE -->
+        {% if disaster.india_relevance %}
+        <div class="content-card"
+            style="margin-bottom: 32px; background: linear-gradient(135deg, var(--bg-secondary), rgba(245, 158, 11, 0.05)); border-color: rgba(245, 158, 11, 0.3);">
+            <h2>🇮🇳 Vulnerability & Context in India</h2>
+            <p>{{ disaster.india_relevance }}</p>
+            <a href="/india-disaster-risk" class="btn btn-secondary btn-sm" style="margin-top: 12px;">View India State
+                Disaster Risk Map &rarr;</a>
+        </div>
+        {% endif %}
+
+        <!-- SAFETY GUIDE -->
+        {% if guide %}
+        <div class="content-card" style="margin-bottom: 32px;">
+            <h2>🛡️ Actionable Safety & Survival Steps</h2>
+
+            {% if before_steps %}
+            <div style="margin-top: 20px;">
+                <h3 style="color: var(--accent); display: flex; align-items: center; gap: 8px;">
+                    <span>📋 BEFORE — Preparedness Actions</span>
+                </h3>
+                <ul>
+                    {% for step in before_steps %}
+                    <li>{{ step }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            {% if during_steps %}
+            <div style="margin-top: 20px;">
+                <h3 style="color: var(--danger); display: flex; align-items: center; gap: 8px;">
+                    <span>🚨 DURING — Emergency Survival</span>
+                </h3>
+                <ul>
+                    {% for step in during_steps %}
+                    <li>{{ step }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            {% if after_steps %}
+            <div style="margin-top: 20px;">
+                <h3 style="color: var(--success); display: flex; align-items: center; gap: 8px;">
+                    <span>✅ AFTER — Recovery & Safety</span>
+                </h3>
+                <ul>
+                    {% for step in after_steps %}
+                    <li>{{ step }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <!-- HISTORICAL EVENTS -->
+        {% if events %}
+        <div class="content-card">
+            <h2>📜 Major Historical Events</h2>
+            {% for ev in events %}
+            <div class="historic-card" style="margin-bottom: 16px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                    <h3 style="margin-bottom: 0;">{{ ev.title }} ({{ ev.year }})</h3>
+                    {% if ev.deaths %}
+                    <span class="deaths-badge">☠️ {{ "{:,}".format(ev.deaths) }} Deaths</span>
+                    {% endif %}
+                </div>
+                <p style="font-size: 0.9rem; margin-bottom: 0;">{{ ev.description }}</p>
+                <div class="historic-meta">
+                    <span>📍 {{ ev.location or ev.country }}</span>
+                    {% if ev.magnitude %}<span>⚡ Magnitude: {{ ev.magnitude }}</span>{% endif %}
+                    {% if ev.source %}<span>ℹ️ Source: {{ ev.source }}</span>{% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- SIDEBAR -->
+    <div>
+        <div class="content-card" style="margin-bottom: 24px;">
+            <h3>Quick Facts</h3>
+            <ul style="padding-left: 0; list-style: none;">
+                <li style="margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+                    <strong
+                        style="color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase;">Category:</strong><br>
+                    <span>{{ disaster.category }}</span>
+                </li>
+                {% if disaster.common_regions %}
+                <li style="margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+                    <strong style="color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase;">Common
+                        Regions:</strong><br>
+                    <span>{{ disaster.common_regions }}</span>
+                </li>
+                {% endif %}
+                {% if disaster.frequency_info %}
+                <li style="margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+                    <strong
+                        style="color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase;">Frequency:</strong><br>
+                    <span>{{ disaster.frequency_info }}</span>
+                </li>
+                {% endif %}
+                {% if disaster.duration_info %}
+                <li style="margin-bottom: 12px;">
+                    <strong style="color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase;">Typical
+                        Duration:</strong><br>
+                    <span>{{ disaster.duration_info }}</span>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+
+        <div class="content-card"
+            style="margin-bottom: 24px; background: rgba(239, 68, 68, 0.05); border-color: rgba(239, 68, 68, 0.2);">
+            <h3 style="color: var(--danger);">🚨 Emergency Assistance</h3>
+            <p style="font-size: 0.9rem;">Immediate national emergency helpline in India:</p>
+            <a href="tel:112" class="phone-number"
+                style="font-size: 1.8rem; display: block; text-align: center; margin: 12px 0;">112</a>
+            <a href="/emergency-contacts" class="btn btn-primary btn-sm"
+                style="width: 100%; text-align: center; border-radius: 8px;">Full Emergency Contacts &rarr;</a>
+        </div>
+
+        <div class="content-card">
+            <h3>Explore Other Hazards</h3>
+            {% for od in other_disasters %}
+            <a href="/disasters/{{ od.slug }}"
+                style="display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); color: var(--text-primary); text-decoration: none;">
+                <span>{{ od.icon }}</span>
+                <span style="font-weight: 500;">{{ od.name }}</span>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

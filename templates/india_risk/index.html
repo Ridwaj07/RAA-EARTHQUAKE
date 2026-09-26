@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}India Multi-Hazard Disaster Risk Map & Directory (36 States & UTs) | RAA Earthquake{% endblock %}
+{% block meta_description %}Interactive disaster risk directory covering all 36 States and Union Territories of India. Detailed hazard profiles, seismic zoning (Zone II-V), cyclone risk, flood zones, and emergency contacts.{% endblock %}
+
+{% block content %}
+<div class="breadcrumb">
+    <a href="/">Home</a> <span>/</span> <span>India Disaster Risk Directory</span>
+</div>
+
+<div style="text-align: center; max-width: 800px; margin: 0 auto 40px;">
+    <span class="category-badge" style="background: rgba(239, 68, 68, 0.15); color: var(--danger);">🇮🇳 National Vulnerability Index</span>
+    <h1 style="margin-top: 12px; margin-bottom: 16px;">India Multi-Hazard Disaster Risk Directory</h1>
+    <p style="font-size: 1.1rem; color: var(--text-secondary);">
+        Detailed hazard vulnerability profiles, seismic zoning, coastal & Himalayan risk indicators, and official emergency contacts for all 36 States and Union Territories of India.
+    </p>
+</div>
+
+<!-- SEARCH & FILTER BAR -->
+<div class="search-box-lg">
+    <input type="text" id="stateSearch" class="search-input-lg" placeholder="🔍 Search state or UT (e.g. Gujarat, Assam, Uttarakhand, Kerala)..." onkeyup="filterStates()">
+</div>
+
+<div class="state-grid" id="stateGrid">
+    {% for s in states %}
+    <div class="state-card" data-name="{{ s.name|lower }}" data-hazards="{{ s.major_hazards|lower if s.major_hazards else '' }}">
+        <div class="state-card-header">
+            <div>
+                <h3 class="state-title">{{ s.name }}</h3>
+                <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">
+                    Capital: {{ s.capital or 'N/A' }} | {{ s.region or 'India' }}
+                </span>
+            </div>
+            {% if 'Zone V' in s.seismic_zone %}
+            <span class="risk-badge risk-high">Zone V High</span>
+            {% elif 'Zone IV' in s.seismic_zone %}
+            <span class="risk-badge risk-high">Zone IV High</span>
+            {% elif 'Zone III' in s.seismic_zone %}
+            <span class="risk-badge risk-moderate">Zone III Mod</span>
+            {% else %}
+            <span class="risk-badge risk-low">{{ s.seismic_zone or 'Zone II' }}</span>
+            {% endif %}
+        </div>
+
+        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 10px; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+            {{ s.geography or s.climate or 'Multi-hazard region in India.' }}
+        </p>
+
+        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px;">
+            {% if s.is_himalayan %}
+            <span class="hazard-pill" style="background: rgba(79, 70, 229, 0.15); color: var(--accent);">🏔️ Himalayan Region</span>
+            {% endif %}
+            {% if s.is_coastal %}
+            <span class="hazard-pill" style="background: rgba(14, 165, 233, 0.15); color: #0ea5e9;">🌊 Coastal Line</span>
+            {% endif %}
+        </div>
+
+        <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 6px;">
+            Primary Hazards:
+        </div>
+        <div class="hazard-pills">
+            {% for h in s.hazards_list %}
+            <span class="hazard-pill">⚠️ {{ h|capitalize }}</span>
+            {% endfor %}
+        </div>
+
+        <div style="margin-top: 16px;">
+            <a href="/india-disaster-risk/{{ s.slug }}" class="btn btn-secondary btn-sm" style="width: 100%; text-align: center; border-radius: 8px;">
+                View Full State Disaster Profile &rarr;
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+function filterStates() {
+    let input = document.getElementById('stateSearch').value.toLowerCase();
+    let cards = document.getElementsByClassName('state-card');
+    
+    for (let card of cards) {
+        let name = card.getAttribute('data-name');
+        let hazards = card.getAttribute('data-hazards');
+        if (name.includes(input) || hazards.includes(input)) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    }
+}
+</script>
+{% endblock %}

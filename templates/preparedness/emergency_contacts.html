@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}National & State Emergency Helpline Directory India | RAA Earthquake{% endblock %}
+{% block meta_description %}Official emergency contacts, helpline numbers, control rooms, NDRF, SDRF, ambulance, fire, police, and disaster management authorities across India.{% endblock %}
+
+{% block content %}
+<div class="breadcrumb">
+    <a href="/">Home</a> <span>/</span> <a href="/preparedness">Preparedness</a> <span>/</span> <span>Emergency Contacts</span>
+</div>
+
+<div style="text-align: center; max-width: 800px; margin: 0 auto 40px;">
+    <span class="category-badge" style="background: rgba(239, 68, 68, 0.15); color: var(--danger);">🚨 24/7 Emergency Directory</span>
+    <h1 style="margin-top: 12px; margin-bottom: 16px;">National & State Emergency Helplines (India)</h1>
+    <p style="font-size: 1.1rem; color: var(--text-secondary);">
+        Direct emergency contacts for life-threatening situations, natural disasters, rescue operations, and disaster control rooms across India.
+    </p>
+</div>
+
+<!-- TOP EMERGENCY NUMBERS HERO BOX -->
+<div class="content-card" style="margin-bottom: 40px; background: linear-gradient(135deg, #1a1d2e, #3730a3); color: white;">
+    <div style="text-align: center; margin-bottom: 24px;">
+        <span style="background: rgba(239, 68, 68, 0.3); color: #fca5a5; padding: 4px 14px; border-radius: 20px; font-weight: 700; font-size: 0.85rem; text-transform: uppercase;">Single Emergency Number India</span>
+        <h2 style="color: white; font-size: 2.2rem; margin-top: 8px;">Call 112</h2>
+        <p style="color: rgba(255,255,255,0.85);">Unified Emergency Response Support System (ERSS) — Police, Fire, Ambulance, Disaster Relief.</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-top: 24px;">
+        <div style="background: rgba(255,255,255,0.1); padding: 16px; border-radius: 12px; text-align: center;">
+            <div style="font-size: 0.8rem; color: rgba(255,255,255,0.7); font-weight: 700;">NDMA CONTROL ROOM</div>
+            <a href="tel:1078" style="font-size: 1.5rem; font-weight: 800; color: #60a5fa; font-family: monospace;">1078</a>
+        </div>
+        <div style="background: rgba(255,255,255,0.1); padding: 16px; border-radius: 12px; text-align: center;">
+            <div style="font-size: 0.8rem; color: rgba(255,255,255,0.7); font-weight: 700;">STATE DISASTER (SDMA)</div>
+            <a href="tel:1070" style="font-size: 1.5rem; font-weight: 800; color: #60a5fa; font-family: monospace;">1070</a>
+        </div>
+        <div style="background: rgba(255,255,255,0.1); padding: 16px; border-radius: 12px; text-align: center;">
+            <div style="font-size: 0.8rem; color: rgba(255,255,255,0.7); font-weight: 700;">DISTRICT CONTROL ROOM</div>
+            <a href="tel:1077" style="font-size: 1.5rem; font-weight: 800; color: #60a5fa; font-family: monospace;">1077</a>
+        </div>
+        <div style="background: rgba(255,255,255,0.1); padding: 16px; border-radius: 12px; text-align: center;">
+            <div style="font-size: 0.8rem; color: rgba(255,255,255,0.7); font-weight: 700;">NATIONAL HEALTH/AMBULANCE</div>
+            <a href="tel:108" style="font-size: 1.5rem; font-weight: 800; color: #60a5fa; font-family: monospace;">108</a>
+        </div>
+    </div>
+</div>
+
+<!-- NATIONAL HELPLINES TABLE -->
+<div class="content-card" style="margin-bottom: 40px;">
+    <h2>🏛️ Primary National Helplines (India)</h2>
+    <div class="contact-table-wrapper">
+        <table class="contact-table">
+            <thead>
+                <tr>
+                    <th>Service / Agency</th>
+                    <th>Emergency Number</th>
+                    <th>Region Scope</th>
+                    <th>Notes / Purpose</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in national_contacts %}
+                <tr>
+                    <td><strong>{{ c.service }}</strong></td>
+                    <td><a href="tel:{{ c.number }}" class="phone-number">{{ c.number }}</a></td>
+                    <td><span class="hazard-pill">National</span></td>
+                    <td><span style="font-size: 0.85rem; color: var(--text-secondary);">{{ c.notes or 'Toll-free 24/7 hotline' }}</span></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- STATE EMERGENCY CONTROL ROOMS TABLE -->
+{% if state_contacts %}
+<div class="content-card">
+    <h2>🗺️ State Emergency Control Rooms</h2>
+    <div class="contact-table-wrapper">
+        <table class="contact-table">
+            <thead>
+                <tr>
+                    <th>State / UT</th>
+                    <th>Control Room / Service</th>
+                    <th>Helpline Number</th>
+                    <th>Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in state_contacts %}
+                <tr>
+                    <td><strong>{{ c.state }}</strong></td>
+                    <td>{{ c.service }}</td>
+                    <td><a href="tel:{{ c.number }}" class="phone-number">{{ c.number }}</a></td>
+                    <td><span style="font-size: 0.85rem; color: var(--text-secondary);">{{ c.notes or 'State SDMA Helpline' }}</span></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

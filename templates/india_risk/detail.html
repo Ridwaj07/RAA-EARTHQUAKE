@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% block title %}{{ state.name }} Disaster Risk Profile, Seismic Zone & Emergency Contacts | RAA Earthquake{% endblock %}
+{% block meta_description %}Comprehensive disaster vulnerability profile for {{ state.name }}, India. Seismic zoning ({{ state.seismic_zone }}), primary hazards, historical disasters, and state emergency helpline numbers.{% endblock %}
+
+{% block content %}
+<div class="breadcrumb">
+    <a href="/">Home</a> <span>/</span> <a href="/india-disaster-risk">India Risk Directory</a> <span>/</span> <span>{{ state.name }}</span>
+</div>
+
+<!-- HEADER CARD -->
+<div class="content-card" style="margin-bottom: 32px; background: linear-gradient(135deg, var(--bg-secondary), var(--accent-glow)); border-left: 6px solid var(--accent);">
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 20px;">
+        <div>
+            <span class="category-badge">🇮🇳 State Vulnerability Profile</span>
+            <h1 style="margin-top: 8px; margin-bottom: 8px;">{{ state.name }} Disaster Profile</h1>
+            <p style="font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 0;">
+                Capital: <strong>{{ state.capital or 'N/A' }}</strong> | Region: <strong>{{ state.region or 'India' }}</strong>
+            </p>
+        </div>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            {% if 'Zone V' in state.seismic_zone or 'Zone IV' in state.seismic_zone %}
+            <span class="risk-badge risk-high" style="font-size: 0.9rem; padding: 6px 14px;">{{ state.seismic_zone }} High Risk</span>
+            {% else %}
+            <span class="risk-badge risk-moderate" style="font-size: 0.9rem; padding: 6px 14px;">{{ state.seismic_zone or 'Zone II' }}</span>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div style="display: grid; grid-template-columns: 2fr 1fr; gap: 32px;" class="card-grid">
+    <div>
+        <!-- GEOGRAPHY & VULNERABILITY -->
+        <div class="content-card" style="margin-bottom: 32px;">
+            <h2>Geography & Hazard Vulnerability</h2>
+            <p>{{ state.geography }}</p>
+
+            {% if state.climate %}
+            <h3 style="margin-top: 20px;">Climate & Seasonal Risks</h3>
+            <p>{{ state.climate }}</p>
+            {% endif %}
+
+            {% if state.disaster_history %}
+            <h3 style="margin-top: 20px;">Historical Disaster Context</h3>
+            <p>{{ state.disaster_history }}</p>
+            {% endif %}
+        </div>
+
+        <!-- HAZARDS -->
+        <div class="content-card" style="margin-bottom: 32px;">
+            <h2>⚠️ Key Primary Hazards</h2>
+            <div class="disaster-grid" style="margin-top: 20px;">
+                {% for ho in hazard_objs %}
+                <div class="disaster-card" style="padding: 16px;">
+                    <div class="disaster-card-header" style="margin-bottom: 8px;">
+                        <div class="disaster-card-icon" style="width: 36px; height: 36px; font-size: 18px; background: {{ ho.color_code }}20; color: {{ ho.color_code }};">
+                            {{ ho.icon }}
+                        </div>
+                        <div>
+                            <div style="font-weight: 700;">{{ ho.name }}</div>
+                        </div>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 12px;">{{ ho.short_description }}</p>
+                    <a href="/disasters/{{ ho.slug }}" class="btn btn-secondary btn-sm" style="font-size: 0.8rem; text-align: center;">View Hazard Guide &rarr;</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- HISTORICAL EVENTS IN STATE -->
+        {% if events %}
+        <div class="content-card">
+            <h2>📜 Major Historical Disasters in {{ state.name }}</h2>
+            {% for ev in events %}
+            <div class="historic-card" style="margin-bottom: 16px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                    <h3 style="margin-bottom: 0;">{{ ev.title }} ({{ ev.year }})</h3>
+                    {% if ev.deaths %}
+                    <span class="deaths-badge">☠️ {{ "{:,}".format(ev.deaths) }} Deaths</span>
+                    {% endif %}
+                </div>
+                <p style="font-size: 0.9rem; margin-bottom: 0;">{{ ev.description }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- SIDEBAR -->
+    <div>
+        <div class="content-card" style="margin-bottom: 24px; border-left: 4px solid var(--danger);">
+            <h3 style="color: var(--danger);">📞 Emergency Numbers ({{ state.name }})</h3>
+            <p style="font-size: 0.85rem; color: var(--text-secondary);">State & National Control Room Helplines:</p>
+
+            <ul style="padding-left: 0; list-style: none;">
+                <li style="margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+                    <span style="font-size: 0.8rem; color: var(--text-muted); display: block;">National Emergency Number</span>
+                    <a href="tel:112" class="phone-number">112</a>
+                </li>
+                <li style="margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+                    <span style="font-size: 0.8rem; color: var(--text-muted); display: block;">State Disaster Management (SDMA)</span>
+                    <a href="tel:1070" class="phone-number">1070</a>
+                </li>
+                <li style="margin-bottom: 12px;">
+                    <span style="font-size: 0.8rem; color: var(--text-muted); display: block;">District Disaster Control Room</span>
+                    <a href="tel:1077" class="phone-number">1077</a>
+                </li>
+            </ul>
+
+            {% for c in contacts %}
+            {% if c.state == state.name %}
+            <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border);">
+                <span style="font-weight: 600; font-size: 0.85rem;">{{ c.service }}</span><br>
+                <a href="tel:{{ c.number }}" class="phone-number" style="font-size: 1rem;">{{ c.number }}</a>
+            </div>
+            {% endif %}
+            {% endfor %}
+            <a href="/emergency-contacts" class="btn btn-primary btn-sm" style="width: 100%; text-align: center; border-radius: 8px; margin-top: 16px;">View All Emergency Contacts &rarr;</a>
+        </div>
+
+        <div class="content-card">
+            <h3>State Attributes</h3>
+            <ul style="padding-left: 0; list-style: none;">
+                <li style="margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+                    <strong style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase;">Seismic Zone:</strong><br>
+                    <span>{{ state.seismic_zone }}</span>
+                </li>
+                <li style="margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+                    <strong style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase;">Himalayan Terrain:</strong><br>
+                    <span>{{ 'Yes' if state.is_himalayan else 'No' }}</span>
+                </li>
+                <li style="margin-bottom: 12px;">
+                    <strong style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase;">Coastal Region:</strong><br>
+                    <span>{{ 'Yes' if state.is_coastal else 'No' }}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

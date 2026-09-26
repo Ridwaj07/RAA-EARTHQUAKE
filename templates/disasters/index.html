@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Disaster Intelligence Hub | All 34 Hazard Types — RAA Earthquake{% endblock %}
+{% block meta_description %}Comprehensive multi-hazard disaster directory covering 34 natural, environmental, and technological hazards. Learn causes, warning signs, and safety protocols for earthquakes, tsunamis, cyclones, floods, wildfires, and more.{% endblock %}
+
+{% block content %}
+<div class="breadcrumb">
+    <a href="/">Home</a> <span>/</span> <span>Disasters Directory</span>
+</div>
+
+<div style="text-align: center; max-width: 800px; margin: 0 auto 48px;">
+    <span class="category-badge">Global Disaster Intelligence</span>
+    <h1 style="margin-top: 12px; margin-bottom: 16px;">Multi-Hazard Disaster Directory</h1>
+    <p style="font-size: 1.1rem; color: var(--text-secondary);">
+        Explore scientific facts, formation mechanics, danger factors, India-specific risk contexts, and safety protocols for 34 major natural and technological hazards.
+    </p>
+</div>
+
+{% for cat_name, cat_disasters in categories.items() %}
+<div class="disaster-category-section">
+    <div class="category-header">
+        <h2>
+            {% if cat_name == 'Geological' or cat_name == 'Geological/Oceanic' %}🌋{% elif cat_name == 'Hydrological' %}🌊{% elif 'Meteorological' in cat_name or 'Atmospheric' in cat_name %}🌀{% elif cat_name == 'Climatological' %}🔥{% elif 'Environmental' in cat_name %}☣️{% else %}🛡️{% endif %}
+            {{ cat_name }} Hazards
+        </h2>
+        <span class="category-badge">{{ cat_disasters|length }} Hazard Types</span>
+    </div>
+
+    <div class="disaster-grid">
+        {% for d in cat_disasters %}
+        <div class="disaster-card">
+            <div>
+                <div class="disaster-card-header">
+                    <div class="disaster-card-icon" style="background: {{ d.color_code }}20; color: {{ d.color_code }};">
+                        {{ d.icon }}
+                    </div>
+                    <div>
+                        <div class="disaster-card-title">{{ d.name }}</div>
+                        <div class="disaster-card-cat">{{ d.category }}</div>
+                    </div>
+                </div>
+                <p class="disaster-card-desc">{{ d.short_description }}</p>
+            </div>
+            <div>
+                <a href="/disasters/{{ d.slug }}" class="btn btn-primary btn-sm" style="width: 100%; text-align: center; border-radius: 8px;">
+                    View Hazard Intelligence &rarr;
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endfor %}
+
+<div class="content-card" style="margin-top: 48px; background: linear-gradient(135deg, var(--bg-secondary), var(--accent-glow));">
+    <div style="display: flex; gap: 24px; align-items: center; flex-wrap: wrap;">
+        <div style="font-size: 3rem;">🇮🇳</div>
+        <div style="flex: 1;">
+            <h3>Looking for India-Specific Disaster Vulnerability?</h3>
+            <p style="margin-bottom: 0;">Check our interactive India Disaster Risk Directory covering hazard profiles, seismic zoning, and official emergency contacts for all 36 States and Union Territories.</p>
+        </div>
+        <a href="/india-disaster-risk" class="btn btn-primary">Explore India Risk Map &rarr;</a>
+    </div>
+</div>
+{% endblock %}
