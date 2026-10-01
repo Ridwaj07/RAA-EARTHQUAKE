@@ -1,86 +1,444 @@
-{% extends "base.html" %}
+```html
+{% extends "base.html" %} 
+ 
+{% block title %}About Us — Our Mission and Team | RAA Earthquake{% endblock %} 
+{% block meta_description %}Learn about the mission of RAA Earthquake, its founder Rishav Bharadwaj, the team behind the platform, and the vision behind building technology for earthquake awareness and natural disaster education.{% endblock %} 
+ 
+{% block content %} 
+<div class="breadcrumb"><a href="/">Home</a> <span>/</span> <span>About</span></div> 
+ 
+<section class="section fade-in"> 
+    <div class="section-header"> 
+        <span class="section-label">Our Story</span> 
+        <h1>About RAA Earthquake</h1> 
+        <p>A technology-driven platform dedicated to earthquake awareness, seismic information, disaster education, and public safety.</p> 
+    </div> 
+ 
+    <div class="content-card"> 
+        <div class="article-container" style="max-width:100%;"> 
+            <p>
+                RAA Earthquake is a real-time earthquake information and awareness platform created to make 
+                seismic information easier to understand and access. The platform combines earthquake data, 
+                geographical visualization, educational resources, safety guidance, and technology to create 
+                a centralized place where people can learn about earthquakes and natural hazards.
+            </p> 
+ 
+            <div class="info-box success"> 
+                <strong>Our Mission:</strong> To make earthquake and disaster information more accessible, understandable, and useful while encouraging awareness, preparedness, and responsible use of information.
+            </div> 
+ 
+            <h2>Why RAA Earthquake was Created</h2> 
+ 
+            <p>
+                The idea behind RAA Earthquake came from a simple interest in earthquakes, technology, maps, 
+                and the way real-world information can be presented through the web. Earthquakes happen 
+                throughout the world, yet seismic information can sometimes be difficult for ordinary users 
+                to understand quickly. Data may be distributed across different websites, technical reports, 
+                maps, and scientific resources.
+            </p> 
+ 
+            <p>
+                RAA Earthquake was created with the goal of bringing useful information into a more accessible 
+                digital experience. Instead of presenting seismic information only as technical numbers, the 
+                platform aims to help users understand what happened, where it happened, how large the event 
+                was, and why earthquake awareness and preparedness matter.
+            </p> 
+ 
+            <p>
+                The project has grown beyond the original idea of simply displaying earthquake information. 
+                It has developed into a broader vision involving interactive maps, educational content, 
+                earthquake guides, safety information, geographical awareness, and information about other 
+                natural hazards.
+            </p> 
+ 
+            <h2>Our Commitment to Education & Transparency</h2> 
+ 
+            <p>
+                RAA Earthquake aims to present complex information in a clear and understandable format. 
+                Earthquake science involves subjects such as seismology, tectonic plates, seismic waves, 
+                fault systems, magnitude, depth, epicenters, and geographical distribution. Our goal is to 
+                explain these subjects in a way that can be understood by students, curious learners, and 
+                general visitors while still respecting the scientific nature of the information.
+            </p> 
+ 
+            <p>
+                The platform is continuously developed and improved. New features, educational resources, 
+                visualizations, and information sections are added as the project evolves. We also recognize 
+                the importance of clearly distinguishing between information provided by seismic data sources 
+                and educational explanations created for the platform.
+            </p> 
+ 
+            <div class="card-grid" style="margin-top: 40px; margin-bottom: 40px;"> 
+                <div class="card" style="border-top: 4px solid var(--accent);"> 
+                    <h4>Education First</h4> 
+                    <p style="font-size: 0.85rem;">
+                        We aim to turn complex earthquake and disaster concepts into clear educational 
+                        resources that students and the general public can understand.
+                    </p> 
+                </div> 
+ 
+                <div class="card" style="border-top: 4px solid var(--success);"> 
+                    <h4>Accessible Information</h4> 
+                    <p style="font-size: 0.85rem;">
+                        RAA Earthquake is designed to make important seismic information easier to discover, 
+                        understand, and explore through the web.
+                    </p> 
+                </div> 
+            </div> 
+ 
+            <h2>Meet the Founder — Rishav Bharadwaj</h2> 
+ 
+            <p>
+                <strong>Rishav Bharadwaj</strong> is the founder and lead developer of RAA Earthquake and 
+                one of the people responsible for turning the original idea into a working technology platform. 
+                He is a student, developer, technology enthusiast, and young builder interested in creating 
+                practical digital products.
+            </p> 
+ 
+            <p>
+                Rishav's interest in technology goes beyond simply learning programming languages. He enjoys 
+                taking an idea, understanding the problem behind it, designing a possible solution, and then 
+                turning that solution into an actual working website or application. This project-based approach 
+                has shaped the development of RAA Earthquake and several of his other technology projects.
+            </p> 
+ 
+            <p>
+                As the founder and lead developer of RAA Earthquake, Rishav has worked on the platform's 
+                website structure, user interface, information architecture, features, maps, content organization, 
+                technical improvements, deployment, search visibility, and ongoing development. Building and 
+                maintaining a real website has also given him experience with the practical challenges that 
+                come with web development, including debugging, performance, hosting, APIs, data handling, 
+                responsive design, and continuous improvement.
+            </p> 
+ 
+            <p>
+                One of the most important parts of Rishav's approach to development is learning through 
+                building. Rather than treating programming only as a theoretical subject, he uses real projects 
+                to understand how different technologies work together. RAA Earthquake has therefore become not 
+                only a public-facing platform but also a long-term learning journey involving web development, 
+                geographical information, seismic data, search engine optimization, deployment, and digital 
+                product development.
+            </p> 
+ 
+            <p>
+                Rishav is particularly interested in technology that can solve practical problems. For him, 
+                building a website is not only about creating an attractive interface. A successful project 
+                should have a purpose, provide useful information, and give users a reason to return. This 
+                philosophy influenced the development of RAA Earthquake, where the objective is to combine 
+                technology with disaster awareness and education.
+            </p> 
+ 
+            <p>
+                Another important part of Rishav's interests is entrepreneurship. Alongside RAA Earthquake, 
+                he has been exploring startup ideas and digital products designed around real-world problems. 
+                One of these projects is <strong>RAPLIFY</strong>, a local-commerce technology platform 
+                designed around connecting customers with local businesses and creating a more organized 
+                digital experience for local commerce.
+            </p> 
+ 
+            <p>
+                Working on different projects has helped Rishav explore different areas of technology. 
+                RAA Earthquake focuses heavily on information, maps, data, disaster awareness, and public 
+                education, while RAPLIFY explores commerce, customer experiences, sellers, products, orders, 
+                and digital business systems. Together, these projects represent his broader interest in 
+                building useful technology rather than limiting himself to a single type of application.
+            </p> 
+ 
+            <p>
+                Rishav is also interested in modern web development, user interface design, APIs, databases, 
+                deployment platforms, search engine optimization, Git and GitHub, product design, and 
+                entrepreneurship. He enjoys experimenting with new ideas and technologies and improving his 
+                projects based on problems discovered during development.
+            </p> 
+ 
+            <p>
+                The development of RAA Earthquake has also taught Rishav that building a technology platform 
+                is an ongoing process. A project does not become complete simply because the first version is 
+                online. Features need to be tested, information needs to be improved, technical problems need 
+                to be solved, and the overall user experience needs to evolve. This continuous-development 
+                mindset is an important part of how Rishav approaches his work.
+            </p> 
+ 
+            <p>
+                Rishav's long-term interest is to continue learning, building, and experimenting with technology 
+                while developing projects that have practical value. RAA Earthquake represents one part of that 
+                journey. The platform provides an opportunity to combine his interests in programming, geography, 
+                natural disasters, data visualization, education, and entrepreneurship into one project.
+            </p> 
+ 
+            <p>
+                His broader vision is not limited to earthquakes. Rishav wants RAA Earthquake to gradually 
+                develop into a wider natural-disaster information and awareness platform. Future areas may 
+                include tsunamis, floods, lightning, volcanic eruptions, tornadoes, cyclones, wildfires, 
+                extreme weather, and other major natural hazards. The goal is to create useful educational 
+                resources and safety information for different types of events while keeping information 
+                organized and understandable.
+            </p> 
+ 
+            <p>
+                Rishav believes that age should not be a barrier to learning, experimenting, or creating. 
+                Building RAA Earthquake has been an example of learning by doing: starting with an idea, 
+                encountering technical problems, researching solutions, improving the platform, and continuing 
+                to develop it over time.
+            </p> 
+ 
+            <p>
+                Outside individual projects, Rishav is interested in the broader world of technology, 
+                entrepreneurship, software development, digital products, and innovation. His portfolio 
+                represents his growing collection of projects, experiments, and work as he continues to 
+                develop his skills.
+            </p> 
+ 
+            <p>
+                Rishav's role in RAA Earthquake is therefore not limited to writing code. He contributes to 
+                the project's direction, product ideas, interface decisions, technical development, research, 
+                content structure, testing, deployment, and future planning. The project continues to evolve 
+                as he learns new technologies and discovers new ways to make the platform more useful.
+            </p> 
+ 
+            <div class="info-box" style="margin-top: 30px;">
+                <strong>In short:</strong> Rishav Bharadwaj is a young developer and technology builder 
+                interested in creating practical digital products. RAA Earthquake represents his work toward 
+                combining software, information, maps, education, and disaster awareness into a single platform.
+            </div> 
+ 
+            <h2>Rishav Across the Web</h2> 
+ 
+            <p>
+                You can explore Rishav's work, projects, development activity, and professional presence 
+                through the links below.
+            </p> 
+ 
+            <div class="card-grid" style="margin-top: 30px; margin-bottom: 40px;"> 
+ 
+                <div class="card"> 
+                    <h4>🌐 Portfolio</h4> 
+                    <p>
+                        Explore Rishav's personal portfolio, projects, skills, interests, and developer journey.
+                    </p> 
+                    <a href="https://rishav-bharadwaj-seven.vercel.app/" 
+                       target="_blank" 
+                       rel="noopener noreferrer">
+                        Visit Portfolio →
+                    </a> 
+                </div> 
+ 
+                <div class="card"> 
+                    <h4>💻 GitHub</h4> 
+                    <p>
+                        Explore Rishav's public repositories and development projects, including RAA Earthquake 
+                        and RAPLIFY.
+                    </p> 
+                    <a href="https://github.com/Ridwaj07" 
+                       target="_blank" 
+                       rel="noopener noreferrer">
+                        Visit GitHub →
+                    </a> 
+                </div> 
+ 
+                <div class="card"> 
+                    <h4>💼 LinkedIn</h4> 
+                    <p>
+                        Connect with Rishav and explore his professional developer profile and technology journey.
+                    </p> 
+                    <a href="https://www.linkedin.com/in/rishav-bharadwaj-287053417/" 
+                       target="_blank" 
+                       rel="noopener noreferrer">
+                        Visit LinkedIn →
+                    </a> 
+                </div> 
+ 
+                <div class="card"> 
+                    <h4>📸 Instagram</h4> 
+                    <p>
+                        Follow Rishav on Instagram for personal updates, interests, and moments from his journey.
+                    </p> 
+                    <a href="https://www.instagram.com/rishavv.____/" 
+                       target="_blank" 
+                       rel="noopener noreferrer">
+                        Visit Instagram →
+                    </a> 
+                </div> 
+ 
+            </div> 
+ 
+            <h2>Skills & Areas of Interest</h2> 
+ 
+            <p>
+                Rishav's interests cover several areas of technology and digital product development. 
+                His current learning and project experience includes web development, frontend interfaces, 
+                backend development, APIs, databases, maps and geographical visualization, deployment, 
+                website performance, search engine optimization, Git and GitHub, product design, and 
+                entrepreneurship.
+            </p> 
+ 
+            <div class="card-grid" style="margin-top: 30px; margin-bottom: 40px;"> 
+ 
+                <div class="card"> 
+                    <h4>Web Development</h4> 
+                    <p style="font-size: 0.85rem;">
+                        Building responsive websites, interfaces, dashboards, and web-based applications.
+                    </p> 
+                </div> 
+ 
+                <div class="card"> 
+                    <h4>Data & APIs</h4> 
+                    <p style="font-size: 0.85rem;">
+                        Working with external data sources, APIs, structured information, and data-driven features.
+                    </p> 
+                </div> 
+ 
+                <div class="card"> 
+                    <h4>Maps & Visualization</h4> 
+                    <p style="font-size: 0.85rem;">
+                        Exploring geographical data, interactive maps, locations, and visual representations of information.
+                    </p> 
+                </div> 
+ 
+                <div class="card"> 
+                    <h4>SEO & Deployment</h4> 
+                    <p style="font-size: 0.85rem;">
+                        Learning about search visibility, website deployment, hosting, performance, and maintaining public websites.
+                    </p> 
+                </div> 
+ 
+                <div class="card"> 
+                    <h4>Entrepreneurship</h4> 
+                    <p style="font-size: 0.85rem;">
+                        Exploring startup ideas, product development, business models, and technology-driven solutions.
+                    </p> 
+                </div> 
+ 
+                <div class="card"> 
+                    <h4>Problem Solving</h4> 
+                    <p style="font-size: 0.85rem;">
+                        Learning through real projects, debugging challenges, experimentation, research, and continuous improvement.
+                    </p> 
+                </div> 
+ 
+            </div> 
+ 
+            <h2>Projects & Experiments</h2> 
+ 
+            <p>
+                RAA Earthquake is currently one of Rishav's major technology projects. His public development 
+                work also includes RAPLIFY and other experiments focused on web applications and digital products.
+                These projects allow him to explore different technical and product challenges while gradually 
+                expanding his development skills.
+            </p> 
+ 
+            <p>
+                The purpose of building multiple projects is not simply to collect websites or repositories. 
+                Each project provides a different opportunity to understand how technology can be designed around 
+                a specific problem. Through these projects, Rishav continues to experiment with different 
+                approaches to user experience, software architecture, data, deployment, and product development.
+            </p> 
+ 
+            <h2>A Vision Beyond One Project</h2> 
+ 
+            <p>
+                RAA Earthquake is part of a larger personal vision to create technology projects that can have 
+                practical value and encourage innovation.
+            </p> 
+ 
+            <p>
+                RAA Earthquake currently focuses on earthquakes and disaster awareness, but the long-term 
+                direction is broader. The platform can continue expanding into multiple natural hazards and 
+                educational areas while maintaining its focus on accessible information and responsible 
+                communication.
+            </p> 
+ 
+            <p>
+                For Rishav, the project is also a continuing learning experience. Every new feature presents 
+                a new challenge, whether it involves programming, design, data, maps, performance, content, 
+                or deployment. Solving those challenges is part of what makes the project valuable.
+            </p> 
+ 
+            <h2>What We Believe</h2> 
+ 
+            <p>
+                We believe that useful technology should be understandable, accessible, and built around 
+                real needs. We also believe that learning does not have to wait until someone becomes a 
+                professional. Students and young developers can experiment with ideas, build projects, 
+                learn from mistakes, and contribute meaningful work.
+            </p> 
+ 
+            <p>
+                RAA Earthquake reflects that philosophy. It is an evolving project built through curiosity, 
+                experimentation, research, and continuous learning. Our aim is to keep improving the platform 
+                while providing visitors with useful earthquake information, educational resources, and 
+                disaster-awareness content.
+            </p> 
+ 
+            <h2>Looking Ahead</h2> 
+ 
+            <p>
+                The journey of RAA Earthquake is still continuing. Future development may include additional 
+                disaster categories, improved visualizations, expanded educational resources, better user 
+                experiences, more geographical coverage, and new tools designed to help users understand 
+                natural hazards.
+            </p> 
+ 
+            <p>
+                The long-term goal is to build a platform where people can learn about natural hazards, 
+                understand the science behind them, explore relevant information, and find practical 
+                preparedness guidance in one place.
+            </p> 
+ 
+            <div class="info-box success" style="margin-top: 35px;">
+                <strong>Built with curiosity. Developed through learning. Driven by a real-world purpose.</strong>
+                <br><br>
+                RAA Earthquake is an ongoing journey of technology, education, experimentation, and innovation.
+            </div> 
+ 
+        </div> 
+    </div> 
+</section> 
+ 
+<!-- TEAM SECTION --> 
+<section class="section fade-in"> 
+    <div class="section-header"> 
+        <span class="section-label">The Team</span> 
+        <h2>Meet the Founders</h2> 
+        <p>The people behind the RAA Earthquake platform.</p> 
+    </div> 
+ 
+    <div class="team-grid"> 
+        <div class="team-card"> 
+            <div class="team-avatar">RB</div> 
+            <h3>Rishav Bharadwaj</h3> 
+            <div class="role">Founder & Lead Developer</div> 
+            <p>
+                A student, developer, and technology enthusiast who founded RAA Earthquake and 
+                leads its technical development. Rishav is responsible for the platform's 
+                development, design, features, technical direction, research, deployment, and 
+                continuous improvement. His interests include web development, APIs, maps, 
+                data visualization, entrepreneurship, disaster awareness, and building 
+                technology that addresses real-world problems.
+            </p> 
+        </div> 
 
-{% block title %}About Us — Our Mission and Team | RAA Earthquake{% endblock %}
-{% block meta_description %}Learn about the mission of RAA Earthquake, our commitment to seismic education, and the team behind the platform. Dedicated to spreading earthquake awareness.{% endblock %}
-
-{% block content %}
-<div class="breadcrumb"><a href="/">Home</a> <span>/</span> <span>About</span></div>
-
-<section class="section fade-in">
-    <div class="section-header">
-        <span class="section-label">Our Story</span>
-        <h1>About RAA Earthquake</h1>
-        <p>A mission-driven platform dedicated to global earthquake monitoring, awareness, and public education.</p>
-    </div>
-
-    <div class="content-card">
-        <div class="article-container" style="max-width:100%;">
-            <p>RAA Earthquake is a real-time earthquake monitoring platform designed to provide accurate, fast, and accessible information about seismic activity across the world. Our mission is to bridge the gap between complex seismic data and public understanding, ensuring that everyone has the tools they need to stay informed and safe during natural disasters.</p>
-
-            <div class="info-box success">
-                <strong>Our Mission:</strong> To empower global communities with real-time seismic awareness, high-quality educational resources, and life-saving safety guidance.
-            </div>
-
-            <h2>Why RAA Earthquake was Created</h2>
-            <p>The concept for RAA Earthquake was born out of a realization that while seismic data is abundant, it is often presented in ways that are difficult for the general public to quickly interpret. In moments of seismic emergency, seconds matter. Our platform was created to transform raw data from agencies like the USGS into clear, visual, and actionable information.</p>
-
-            <p>But monitoring is only half the battle. We believe that true safety comes from education. That is why we have expanded RAA Earthquake into a comprehensive knowledge hub, providing detailed articles on the science of seismology, historical earthquake analysis, and practical safety protocols for homes, schools, and workplaces.</p>
-
-            <h2>Our Commitment to Education & Transparency</h2>
-            <p>We are dedicated to providing clear, authoritative, and unique information on every page. Every article on our platform is researched and cross-referenced with scientific geological journals to provide high educational value. We adhere to the highest standards of digital publishing to ensure our content is original, human-written, and useful.</p>
-
-            <div class="card-grid" style="margin-top: 40px; margin-bottom: 40px;">
-                <div class="card" style="border-top: 4px solid var(--accent);">
-                    <h4>Editorial Rigor</h4>
-                    <p style="font-size: 0.85rem;">All articles are peer-reviewed internally for scientific accuracy and clarity. We do not use AI-generated filler content; every word is written with the reader's safety in mind.</p>
-                </div>
-                <div class="card" style="border-top: 4px solid var(--success);">
-                    <h4>Data Integrity</h4>
-                    <p style="font-size: 0.85rem;">We source real-time data only from verified governmental seismic networks (USGS, EMSC) ensuring the highest reliability in our reporting.</p>
-                </div>
-            </div>
-
-            <h2>Our Journey (RAA Groups)</h2>
-            <p>Our technical goals include maintaining a zero-latency data pipeline that fetches global seismic events within seconds of their publication. We use advanced mapping technologies to visualize these events, allowing users to see not just where an earthquake happened, but how it relates to historical fault lines and populated areas.</p>
-        </div>
-    </div>
-</section>
-
-<!-- TEAM SECTION -->
-<section class="section fade-in">
-    <div class="section-header">
-        <span class="section-label">The Team</span>
-        <h2>Meet the Founders</h2>
-        <p>The visionaries behind RAA Groups and the RAA Earthquake platform.</p>
-    </div>
-
-    <div class="team-grid">
-        <div class="team-card">
-            <div class="team-avatar">RB</div>
-            <h3>Rishav Bharadwaj</h3>
-            <div class="role">Founder & Lead Developer</div>
-            <p>A dedicated student and developer (Class 9) at S.N. C.B.S.E. SCHOOL, Birpur. Rishav built the platform from scratch with a passion for using technology to solve real-world problems.</p>
-        </div>
-        <div class="team-card">
-            <div class="team-avatar">AR</div>
-            <h3>Anurag Raj</h3>
-            <div class="role">Co-Founder</div>
-            <p>A student (Class 9) at S.N. C.B.S.E. SCHOOL, Birpur. Anurag contributed significantly to the planning, growth strategy, and the structural development of the platform.</p>
-        </div>
-    </div>
-</section>
-
-<section class="section fade-in">
-    <div class="content-card">
-        <div class="article-container" style="max-width: 100%;">
-            <h2>Our Journey (RAA Groups)</h2>
-            <p>RAA Earthquake is the flagship project of <strong>RAA Groups</strong>, a collective vision of students interested in building meaningful technology. Our journey began with a simple curiosity about natural disasters and grew into a year-long research project into seismology, API architecture, and web design.</p>
-            
-            <p>Developing this platform came with significant challenges, especially in handling real-time data streams and ensuring cross-platform performance. However, our commitment to public safety kept us moving forward. Today, RAA Earthquake stands as a testament to the fact that innovation has no age limit.</p>
-            
-            <p>Looking ahead, RAA Groups plans to expand into other areas of natural disaster awareness and educational technology, always keeping our core values of clarity, speed, and reliability at the forefront.</p>
-        </div>
-    </div>
-</section>
-
+        <div class="team-card"> 
+            <div class="team-avatar">AR</div> 
+            <h3>Anurag Raj</h3> 
+            <div class="role">Co-Founder</div> 
+            <p>
+                Anurag Raj is a co-founder of RAA Earthquake and an important contributor to 
+                the early development and direction of the project. He has contributed to 
+                planning, ideas, growth strategy, project discussions, and the structural 
+                development of the platform. His involvement has helped shape the project 
+                alongside Rishav and contributed to the broader vision behind RAA Earthquake.
+            </p> 
+            <p>
+                As part of the founding team, Anurag has been involved in discussing new 
+                features, exploring ideas for improving the platform, and helping develop 
+                the project's long-term direction. His contribution represents the collaborative 
+                side of RAA Earthquake, where ideas, planning, and technical development come 
+                together to build the platform.
+            </p>
+        </div> 
+    </div> 
+</section> 
+ 
 {% endblock %}
+```
