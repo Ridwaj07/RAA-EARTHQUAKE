@@ -3,24 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{% block title %}RAA Earthquake | Real-Time Earthquake Monitoring & Safety Platform{% endblock %}</title>
-<meta name="description" content="{% block meta_description %}RAA Earthquake provides real-time earthquake monitoring, live seismic maps, educational articles, and comprehensive safety guides. Track earthquakes worldwide and stay prepared.{% endblock %}">
-<meta name="keywords" content="{% block meta_keywords %}earthquake tracker, real-time earthquake, earthquake map, earthquake safety, seismic activity, earthquake alerts, earthquake monitoring{% endblock %}">
+<title>{% block title %}RAA Earthquake — Live Earthquake Information, Maps & Safety{% endblock %}</title>
+<meta name="description" content="{% block meta_description %}RAA Earthquake provides live earthquake data, interactive maps, educational guides, and safety information. An independent platform powered by USGS data.{% endblock %}">
 <meta name="author" content="RAA Earthquake">
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#4f46e5">
-<link rel="icon" href="https://earthquake.usgs.gov/favicon.ico">
-<link rel="canonical" href="{% block canonical %}https://raa-earthquake.onrender.com/{% endblock %}">
+<link rel="canonical" href="{% block canonical %}https://raa-earthquake2-0.onrender.com/{% endblock %}">
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="{% block og_title %}RAA Earthquake — Real-Time Earthquake Monitoring{% endblock %}">
-<meta property="og:description" content="{% block og_description %}Track earthquakes worldwide with real-time data, interactive maps, safety guides, and educational content.{% endblock %}">
+<meta property="og:title" content="{% block og_title %}RAA Earthquake — Live Earthquake Information & Safety{% endblock %}">
+<meta property="og:description" content="{% block og_description %}Live earthquake data, interactive maps, safety guides, and educational content. Independent platform powered by USGS data.{% endblock %}">
 <meta property="og:site_name" content="RAA Earthquake">
+<meta property="og:url" content="https://raa-earthquake2-0.onrender.com/">
 
 <!-- Twitter Card -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="RAA Earthquake — Real-Time Monitoring">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RAA Earthquake — Live Earthquake Information & Safety">
 
 <!-- Google Verification -->
 <meta name="google-site-verification" content="aKhYEG-Q-t5PaNZiKUb1DyFniY4j3ITzPq1hrzK_0Fg" />
@@ -43,11 +42,12 @@
   "@context": "https://schema.org",
   "@type": "WebSite",
   "name": "RAA Earthquake",
-  "url": "https://raa-earthquake.onrender.com",
-  "description": "Real-time earthquake monitoring platform with live maps, safety guides, and educational content.",
+  "url": "https://raa-earthquake2-0.onrender.com",
+  "description": "Independent earthquake information platform providing live data, maps, educational guides, and safety resources. Earthquake data sourced from USGS.",
   "publisher": {
     "@type": "Organization",
-    "name": "RAA EARTHQUAKE"
+    "name": "RAA Groups",
+    "url": "https://raa-earthquake2-0.onrender.com/about"
   }
 }
 </script>
@@ -76,15 +76,16 @@
                 <span>RAA Earthquake</span>
             </a>
             <div class="desktop-nav-links" style="display:flex;align-items:center;gap:18px;margin-left:20px;">
+                <a href="/world" style="font-weight:600;font-size:0.9rem;color:var(--text-secondary);">Live Earthquakes</a>
+                <a href="/map" style="font-weight:600;font-size:0.9rem;color:var(--text-secondary);">Map</a>
+                <a href="/india" style="font-weight:600;font-size:0.9rem;color:var(--text-secondary);">India</a>
+                <a href="/earthquake" style="font-weight:600;font-size:0.9rem;color:var(--text-secondary);">Learn</a>
                 <a href="/disasters" style="font-weight:600;font-size:0.9rem;color:var(--text-secondary);">Disasters</a>
-                <a href="/india-disaster-risk" style="font-weight:600;font-size:0.9rem;color:var(--text-secondary);">India Risk</a>
-                <a href="/preparedness" style="font-weight:600;font-size:0.9rem;color:var(--text-secondary);">Preparedness</a>
-                <a href="/emergency-contacts" style="font-weight:600;font-size:0.9rem;color:var(--danger);">Helplines 🚨</a>
-                <a href="/map" style="font-weight:600;font-size:0.9rem;color:var(--text-secondary);">Live Map</a>
-                <a href="/disaster-glossary" style="font-weight:600;font-size:0.9rem;color:var(--text-secondary);">Glossary</a>
+                <a href="/earthquake-safety" style="font-weight:600;font-size:0.9rem;color:var(--text-secondary);">Safety</a>
             </div>
         </div>
         <div class="navbar-actions">
+            <button class="nav-btn" id="searchToggle" onclick="toggleSearch()" aria-label="Search">🔍</button>
             <button class="nav-btn" id="darkToggle" aria-label="Toggle dark mode">🌙</button>
             {% if session.get("user_id") %}
             <a href="/account" class="nav-btn" aria-label="Account">👤</a>
@@ -95,6 +96,51 @@
     </div>
 </nav>
 
+<!-- SEARCH MODAL -->
+<div class="search-modal" id="searchModal">
+    <div class="search-modal-content">
+        <div class="search-modal-header">
+            <input type="text" id="searchInput" class="search-input" placeholder="Search earthquakes, guides, safety..." autocomplete="off">
+            <button class="search-close" onclick="toggleSearch()">✕</button>
+        </div>
+        <div class="search-results" id="searchResults">
+            <div class="search-section">
+                <div class="search-section-label">Quick Links</div>
+                <a href="/world" class="search-result-item">🌍 Live World Earthquakes</a>
+                <a href="/map" class="search-result-item">🗺️ Live Earthquake Map</a>
+                <a href="/india" class="search-result-item">🇮🇳 India Earthquakes</a>
+                <a href="/earthquake-safety" class="search-result-item">🛡️ Earthquake Safety Guide</a>
+                <a href="/earthquake-search" class="search-result-item">🔎 Search & Filter Earthquakes</a>
+            </div>
+            <div class="search-section">
+                <div class="search-section-label">Education</div>
+                <a href="/what-is-earthquake" class="search-result-item">📖 What is an Earthquake?</a>
+                <a href="/tectonic-plates" class="search-result-item">🧩 Tectonic Plates</a>
+                <a href="/richter-scale" class="search-result-item">📊 How Earthquakes Are Measured</a>
+                <a href="/earthquake-prediction" class="search-result-item">🔮 Can Earthquakes Be Predicted?</a>
+                <a href="/magnitude-vs-intensity" class="search-result-item">⚡ Magnitude vs Intensity</a>
+                <a href="/faq" class="search-result-item">❓ Earthquake FAQ</a>
+            </div>
+            <div class="search-section">
+                <div class="search-section-label">Safety & Preparedness</div>
+                <a href="/earthquake-safety" class="search-result-item">🛡️ Earthquake Safety Guide</a>
+                <a href="/earthquake-safety-home" class="search-result-item">🏠 Home Safety</a>
+                <a href="/earthquake-safety-schools" class="search-result-item">🏫 School Safety</a>
+                <a href="/earthquake-preparedness" class="search-result-item">🎒 Preparedness Checklist</a>
+                <a href="/disaster-kit-guide" class="search-result-item">📦 Emergency Kit Guide</a>
+                <a href="/emergency-contacts" class="search-result-item">📞 Emergency Helplines</a>
+            </div>
+            <div class="search-section">
+                <div class="search-section-label">Disasters & Resources</div>
+                <a href="/disasters" class="search-result-item">⚠️ Natural Disaster Guide</a>
+                <a href="/india-disaster-risk" class="search-result-item">🇮🇳 India Disaster Risk</a>
+                <a href="/official-resources" class="search-result-item">🏛️ Official Resources</a>
+                <a href="/how-it-works" class="search-result-item">⚙️ How RAA Earthquake Works</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <!-- SIDEBAR -->
 <aside class="sidebar" id="sidebar">
@@ -104,12 +150,12 @@
     </div>
 
     <div class="sidebar-section">
-        <div class="sidebar-label">Monitor & Map</div>
+        <div class="sidebar-label">Live Data</div>
         <a href="/" class="sidebar-link">
             <span class="link-icon">🏠</span> Home
         </a>
         <a href="/map" class="sidebar-link">
-            <span class="link-icon">🗺️</span> Live Map
+            <span class="link-icon">🗺️</span> Live Earthquake Map
         </a>
         <a href="/world" class="sidebar-link">
             <span class="link-icon">🌍</span> World Earthquakes
@@ -120,56 +166,77 @@
         <a href="/india" class="sidebar-link">
             <span class="link-icon">🇮🇳</span> India Earthquakes
         </a>
-        <a href="/live-disaster-feeds" class="sidebar-link">
-            <span class="link-icon">📡</span> Live Multi-Hazard Feeds
+        <a href="/earthquake-search" class="sidebar-link">
+            <span class="link-icon">🔎</span> Search & Filter
         </a>
     </div>
 
     <div class="sidebar-divider"></div>
 
     <div class="sidebar-section">
-        <div class="sidebar-label">Disasters & Risk</div>
-        <a href="/disasters" class="sidebar-link">
-            <span class="link-icon">⚠️</span> Disasters Hub (34 Types)
-        </a>
-        <a href="/india-disaster-risk" class="sidebar-link">
-            <span class="link-icon">🗺️</span> India Disaster Risk Map
-        </a>
-    </div>
-
-    <div class="sidebar-divider"></div>
-
-    <div class="sidebar-section">
-        <div class="sidebar-label">Preparedness & Safety</div>
-        <a href="/preparedness" class="sidebar-link">
-            <span class="link-icon">🛡️</span> Preparedness Portal
-        </a>
-        <a href="/disaster-kit-guide" class="sidebar-link">
-            <span class="link-icon">🎒</span> Emergency Survival Kit
-        </a>
-        <a href="/emergency-contacts" class="sidebar-link">
-            <span class="link-icon">📞</span> Helpline & Emergency Contacts
-        </a>
-    </div>
-
-    <div class="sidebar-divider"></div>
-
-    <div class="sidebar-section">
-        <div class="sidebar-label">Knowledge & Resources</div>
+        <div class="sidebar-label">Learn</div>
         <a href="/earthquake" class="sidebar-link">
-            <span class="link-icon">📚</span> Earthquake Articles
+            <span class="link-icon">📚</span> Knowledge Hub
         </a>
-        <a href="/guide" class="sidebar-link">
-            <span class="link-icon">📘</span> Safety Guide
+        <a href="/what-is-earthquake" class="sidebar-link">
+            <span class="link-icon">📖</span> What is an Earthquake?
+        </a>
+        <a href="/faq" class="sidebar-link">
+            <span class="link-icon">❓</span> Earthquake FAQ
         </a>
         <a href="/disaster-glossary" class="sidebar-link">
-            <span class="link-icon">📖</span> Disaster Glossary A-Z
+            <span class="link-icon">📘</span> Disaster Glossary
         </a>
-        <a href="/official-data-sources" class="sidebar-link">
-            <span class="link-icon">🏛️</span> Official Data Sources
+    </div>
+
+    <div class="sidebar-divider"></div>
+
+    <div class="sidebar-section">
+        <div class="sidebar-label">Safety & Preparedness</div>
+        <a href="/earthquake-safety" class="sidebar-link">
+            <span class="link-icon">🛡️</span> Earthquake Safety Guide
+        </a>
+        <a href="/guide" class="sidebar-link">
+            <span class="link-icon">📘</span> Quick Safety Guide
+        </a>
+        <a href="/earthquake-preparedness" class="sidebar-link">
+            <span class="link-icon">🎒</span> Preparedness Checklist
+        </a>
+        <a href="/disaster-kit-guide" class="sidebar-link">
+            <span class="link-icon">📦</span> Emergency Kit Guide
+        </a>
+        <a href="/emergency-contacts" class="sidebar-link">
+            <span class="link-icon">📞</span> Emergency Helplines
+        </a>
+    </div>
+
+    <div class="sidebar-divider"></div>
+
+    <div class="sidebar-section">
+        <div class="sidebar-label">Disasters & India</div>
+        <a href="/disasters" class="sidebar-link">
+            <span class="link-icon">⚠️</span> Natural Disaster Guide
+        </a>
+        <a href="/india-disaster-risk" class="sidebar-link">
+            <span class="link-icon">🗺️</span> India Disaster Risk
         </a>
         <a href="/historic-disasters" class="sidebar-link">
-            <span class="link-icon">🏛️</span> Historic Disasters Archive
+            <span class="link-icon">🏛️</span> Historic Disasters
+        </a>
+    </div>
+
+    <div class="sidebar-divider"></div>
+
+    <div class="sidebar-section">
+        <div class="sidebar-label">Resources</div>
+        <a href="/official-resources" class="sidebar-link">
+            <span class="link-icon">🏛️</span> Official Resources
+        </a>
+        <a href="/how-it-works" class="sidebar-link">
+            <span class="link-icon">⚙️</span> How RAA Earthquake Works
+        </a>
+        <a href="/official-data-sources" class="sidebar-link">
+            <span class="link-icon">📡</span> Data Sources
         </a>
     </div>
 
@@ -234,55 +301,52 @@
 <footer class="site-footer">
     <div class="footer-grid">
         <div class="footer-brand">
-            <h3>🌍 RAA Earthquake & Multi-Disaster Platform</h3>
-            <p>RAA Earthquake is a multi-hazard disaster information, monitoring, education, and preparedness platform. Empowering individuals and communities with scientific data, India disaster risk profiles, and life-saving safety guidance.</p>
-            <div style="margin-top: 16px; font-size: 0.8rem; color: var(--text-muted);">
-                <strong>Primary Data Sources:</strong> USGS, IMD, NDMA, INCOIS, GDACS, WMO<br>
-                <strong>Scientific & Safety Review:</strong> RAA Advisory Panel<br>
-                <strong>Service Status:</strong> 24/7 Multi-Hazard Monitoring
+            <h3>🌍 RAA Earthquake</h3>
+            <p>An independent earthquake and disaster information platform providing live data, maps, educational guides, and safety resources.</p>
+            <div class="footer-disclaimer">
+                <strong>Important:</strong> RAA Earthquake is an independent information platform and is not a government emergency service. Live earthquake data is sourced from the USGS Earthquake Hazards Program. Always follow instructions from local authorities and official emergency agencies during emergencies.
+            </div>
+            <div style="margin-top: 12px; font-size: 0.8rem; color: var(--text-muted);">
+                <strong>Primary Data Source:</strong> <a href="https://earthquake.usgs.gov/" target="_blank" rel="noopener noreferrer" style="color:var(--text-muted);text-decoration:underline;">USGS Earthquake Hazards Program</a>
             </div>
         </div>
         <div class="footer-col">
-            <h4>Monitor</h4>
+            <h4>Live Data</h4>
             <a href="/">Home</a>
             <a href="/map">Live Map</a>
             <a href="/world">World Earthquakes</a>
-            <a href="/asia">Asia Earthquakes</a>
             <a href="/india">India Earthquakes</a>
-            <a href="/live-disaster-feeds">Live Multi-Hazard Feeds</a>
+            <a href="/earthquake-search">Search & Filter</a>
+        </div>
+        <div class="footer-col">
+            <h4>Learn & Safety</h4>
+            <a href="/earthquake">Knowledge Hub</a>
+            <a href="/earthquake-safety">Safety Guide</a>
+            <a href="/earthquake-preparedness">Preparedness</a>
+            <a href="/faq">Earthquake FAQ</a>
+            <a href="/disaster-kit-guide">Emergency Kit</a>
+            <a href="/emergency-contacts">Emergency Helplines</a>
         </div>
         <div class="footer-col">
             <h4>Disasters & India</h4>
-            <a href="/disasters">Disasters Directory (34 Types)</a>
-            <a href="/disasters/earthquake">Earthquakes</a>
-            <a href="/disasters/tsunami">Tsunamis</a>
-            <a href="/disasters/cyclone">Cyclones & Typhoons</a>
-            <a href="/india-disaster-risk">India Disaster Risk Map</a>
-            <a href="/historic-disasters">Historic Disasters</a>
+            <a href="/disasters">Natural Disaster Guide</a>
+            <a href="/india-disaster-risk">India Disaster Risk</a>
+            <a href="/official-resources">Official Resources</a>
+            <a href="/how-it-works">How It Works</a>
+            <a href="/official-data-sources">Data Sources</a>
         </div>
         <div class="footer-col">
-            <h4>Preparedness</h4>
-            <a href="/preparedness">Preparedness Portal</a>
-            <a href="/disaster-kit-guide">Emergency Survival Kit</a>
-            <a href="/emergency-contacts">Emergency Helplines (112)</a>
-            <a href="/earthquake-safety">Earthquake Safety Tips</a>
-            <a href="/guide">Safety Guide</a>
-        </div>
-        <div class="footer-col">
-            <h4>Knowledge & Company</h4>
-            <a href="/disaster-glossary">Disaster Glossary A-Z</a>
-            <a href="/official-data-sources">Official Data Sources</a>
-            <a href="/earthquake">Earthquake Articles</a>
-            <a href="/about">About Us</a>
+            <h4>About & Legal</h4>
+            <a href="/about">About RAA Earthquake</a>
             <a href="/contact">Contact</a>
-            <a href="/terms">Terms</a>
-            <a href="/privacy">Privacy</a>
+            <a href="/terms">Terms of Service</a>
+            <a href="/privacy">Privacy Policy</a>
             <a href="/disclaimer">Disclaimer</a>
         </div>
     </div>
     <div class="footer-bottom">
-        <p>&copy; 2026 RAA Earthquake & Multi-Disaster Platform — Built by Rishav Bharadwaj & Anurag Raj. All rights reserved.</p>
-</div>
+        <p>&copy; 2026 RAA Earthquake — An independent project by RAA Groups (Rishav Bharadwaj & Anurag Raj). Earthquake data provided by <a href="https://earthquake.usgs.gov/" target="_blank" rel="noopener noreferrer" style="color:var(--text-muted);text-decoration:underline;">USGS</a>.</p>
+    </div>
 </footer>
 
 
@@ -296,6 +360,45 @@ function toggleSidebar() {
     document.getElementById('sidebar').classList.toggle('active');
     document.getElementById('overlay').classList.toggle('active');
 }
+
+// Search toggle
+function toggleSearch() {
+    const modal = document.getElementById('searchModal');
+    modal.classList.toggle('active');
+    if (modal.classList.contains('active')) {
+        document.getElementById('searchInput').focus();
+    }
+}
+
+// Close search on Escape
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        document.getElementById('searchModal').classList.remove('active');
+    }
+    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        toggleSearch();
+    }
+});
+
+// Simple search filter
+document.getElementById('searchInput').addEventListener('input', function(e) {
+    const query = e.target.value.toLowerCase();
+    const items = document.querySelectorAll('.search-result-item');
+    const sections = document.querySelectorAll('.search-section');
+    
+    items.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        item.style.display = text.includes(query) ? 'block' : 'none';
+    });
+    
+    // Hide empty sections
+    sections.forEach(section => {
+        const visibleItems = section.querySelectorAll('.search-result-item[style*="block"], .search-result-item:not([style])');
+        const hasVisible = Array.from(section.querySelectorAll('.search-result-item')).some(item => item.style.display !== 'none');
+        section.style.display = hasVisible ? 'block' : 'none';
+    });
+});
 
 // Dark mode
 const darkToggle = document.getElementById('darkToggle');
@@ -338,13 +441,12 @@ async function checkEarthquakes() {
                 // Show alert banner
                 const banner = document.getElementById('alertBanner');
                 const text = document.getElementById('alertText');
-                text.textContent = `⚡ M${mag} earthquake detected near ${place}`;
+                text.textContent = `Earthquake detected: M${mag} near ${place} (Source: USGS)`;
                 banner.classList.add('active');
                 // Browser notification
                 if (Notification.permission === 'granted') {
-                    new Notification('🚨 Large Earthquake Detected!', {
-                        body: `${place} | Magnitude: ${mag}`,
-                        icon: 'https://earthquake.usgs.gov/favicon.ico'
+                    new Notification('Earthquake Detected', {
+                        body: `M${mag} near ${place} — Source: USGS`,
                     });
                 }
             }
@@ -364,6 +466,7 @@ document.addEventListener('click', function(e) {
 function animateCounters() {
     document.querySelectorAll('.counter').forEach(el => {
         const target = parseInt(el.getAttribute('data-target'));
+        if (!target) return;
         const duration = 2000;
         const step = target / (duration / 16);
         let current = 0;

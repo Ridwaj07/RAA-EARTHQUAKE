@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
-{% block title %}Disclaimer | RAA Earthquake{% endblock %}
+{% block title %}Disclaimer & Public Safety Notice | RAA Earthquake{% endblock %}
+{% block meta_description %}Official disclaimer, data limitations, and public safety notice for the RAA Earthquake monitoring and educational platform.{% endblock %}
 
 {% block content %}
 <div class="breadcrumb"><a href="/">Home</a> <span>/</span> <span>Disclaimer</span></div>
@@ -8,23 +9,35 @@
 <section class="section fade-in">
     <div class="content-card">
         <div class="article-container" style="max-width: 100%;">
-            <h1>Disclaimer for RAA Earthquake</h1>
-            <p>Last Updated: May 2026</p>
+            <h1>Disclaimer & Public Safety Notice</h1>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Last Reviewed & Updated: October 2026</p>
 
-            <p>If you require any more information or have any questions about our site's disclaimer, please feel free to contact us by email at raa.earthquake.2.0@gmail.com.</p>
+            <div class="info-box" style="margin: 20px 0; border-left-color: var(--danger);">
+                <strong>CRITICAL SAFETY NOTICE:</strong> RAA Earthquake is an independent information and educational resource. <strong>It is NOT an official government emergency alert service or real-time early warning broadcast network.</strong> During an active earthquake, tsunami, or disaster event, always immediately follow instructions and evacuation orders issued by local emergency authorities, police, civil defense, and national disaster agencies.
+            </div>
 
-            <h2>Disclaimers for RAA Earthquake</h2>
-            <p>All the information on this website - raa-earthquake.onrender.com - is published in good faith and for general information purpose only. RAA Earthquake does not make any warranties about the completeness, reliability and accuracy of this information. Any action you take upon the information you find on this website (RAA Earthquake), is strictly at your own risk. RAA Earthquake will not be liable for any losses and/or damages in connection with the use of our website.</p>
+            <h2>1. General Informational Purpose</h2>
+            <p>All information provided on this website — <strong>raa-earthquake2-0.onrender.com</strong> — is published in good faith and for general educational, scientific awareness, and informational purposes only. While we aim to present accurate and timely information, RAA Earthquake makes no representations or warranties of any kind, express or implied, regarding the completeness, accuracy, reliability, suitability, or availability of the website or the information, products, services, or related graphics contained on the website.</p>
 
-            <p>From our website, you can visit other websites by following hyperlinks to such external sites. While we strive to provide only quality links to useful and ethical websites, we have no control over the content and nature of these sites. These links to other websites do not imply a recommendation for all the content found on these sites. Site owners and content may change without notice and may occur before we have the opportunity to remove a link which may have gone 'bad'.</p>
+            <h2>2. Live Seismic Data Attribution & Latency</h2>
+            <p>Real-time earthquake data displayed on RAA Earthquake is sourced via public API feeds provided by the <strong>United States Geological Survey (USGS) Earthquake Hazards Program</strong>, with supplementary data from international seismological networks. Please note that:</p>
+            <ul>
+                <li>Initial earthquake determinations (magnitude, epicenter, and depth) are calculated automatically by computer algorithms and are subject to subsequent revision by professional seismologists.</li>
+                <li>Network latency, API rate limits, or server maintenance may cause delays between the occurrence of a seismic event and its appearance on this platform.</li>
+                <li>RAA Earthquake assumes no liability for any errors, delays, or omissions in the source data.</li>
+            </ul>
 
-            <p>Please be also aware that when you leave our website, other sites may have different privacy policies and terms which are beyond our control. Please be sure to check the Privacy Policies of these sites as well as their "Terms of Service" before engaging in any business or uploading any information.</p>
+            <h2>3. Emergency Preparedness & Safety Guidelines</h2>
+            <p>The safety checklists, emergency kit recommendations, and multi-hazard guides on this site are synthesized from established civil protection frameworks (including NDMA India, FEMA, and the Red Cross). However, specific conditions in your home, building, or region may require specialized engineering assessments or local protocols. Use your own judgment and consult certified civil engineering or local emergency management specialists for specific structural safety evaluations.</p>
 
-            <h2>Earthquake Data</h2>
-            <p>The real-time earthquake data is provided by the USGS. While we strive for low latency, RAA Earthquake is not responsible for any delays in data delivery or inaccuracies in the source data. This platform should be used for informational and educational purposes only and should not be treated as an official emergency alert system.</p>
+            <h2>4. External Hyperlinks</h2>
+            <p>Throughout our website, you may find links directing you to external official portals, research organizations, or third-party websites. While we strive to link only to reputable, secure, and ethical sources, we have no control over the content, uptime, or privacy practices of external domains. The inclusion of external links does not imply endorsement.</p>
 
-            <h2>Consent</h2>
-            <p>By using our website, you hereby consent to our disclaimer and agree to its terms.</p>
+            <h2>5. Limitation of Liability</h2>
+            <p>To the fullest extent permitted by applicable law, RAA Earthquake, its founders, contributors, and affiliates will not be liable for any direct, indirect, incidental, consequential, or punitive damages arising from the use of, or inability to use, the information or tools provided on this website.</p>
+
+            <h2>6. Contact & Inquiries</h2>
+            <p>If you have questions regarding this disclaimer or wish to report a data discrepancy, please reach out to our team at <a href="mailto:raa.earthquake.2.0@gmail.com" style="color:var(--accent);font-weight:600;">raa.earthquake.2.0@gmail.com</a> or via our <a href="/contact" style="color:var(--accent);font-weight:600;">Contact Page</a>.</p>
         </div>
     </div>
 </section>

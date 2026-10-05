@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block title %}Official Disaster & Emergency Resources Directory | RAA Earthquake{% endblock %}
+{% block meta_description %}Authoritative directory of official disaster management agencies, seismology institutes, and national emergency contacts worldwide.{% endblock %}
+
+{% block content %}
+<div class="breadcrumb">
+    <a href="/">Home</a> <span>/</span> <span>Official Resources</span>
+</div>
+
+<section class="section fade-in">
+    <div class="section-header">
+        <span class="section-label">Authoritative Directory</span>
+        <h1>Official Disaster Management & Seismology Resources</h1>
+        <p>A curated reference index of verified national disaster management authorities, geological surveys, and emergency response portals worldwide.</p>
+    </div>
+
+    <div class="content-card" style="margin-bottom: 36px; padding: 24px; background: rgba(79,70,229,0.06); border-left: 4px solid var(--accent);">
+        <strong>Emergency Note:</strong> If you are experiencing an immediate disaster or life-threatening situation, call your country's national emergency number immediately (<strong>112 in India & Europe</strong>, <strong>911 in the USA/Canada</strong>, <strong>999 in the UK</strong>).
+    </div>
+
+    <!-- Section 1: India National Disaster Agencies -->
+    <div class="section-header" style="text-align: left; margin: 40px 0 20px;">
+        <h2>🇮🇳 India National Disaster & Meteorological Agencies</h2>
+    </div>
+
+    <div class="card-grid" style="margin-bottom: 40px;">
+        <div class="card" style="border-top: 4px solid #f97316;">
+            <h3>NDMA — National Disaster Management Authority</h3>
+            <p>Apex statutory body headed by the Prime Minister of India, responsible for framing policies, laying down guidelines, and coordinating disaster response.</p>
+            <div style="margin-top: 14px; font-size: 0.85rem; color: var(--text-secondary);">
+                <div>📞 Helpline: <strong>011-26701728 / 1070</strong></div>
+                <div style="margin-top: 6px;"><a href="https://ndma.gov.in" target="_blank" rel="noopener noreferrer" style="color:var(--accent);font-weight:600;">Visit ndma.gov.in →</a></div>
+            </div>
+        </div>
+
+        <div class="card" style="border-top: 4px solid #0284c7;">
+            <h3>IMD — India Meteorological Department</h3>
+            <p>National meteorological service responsible for seismic monitoring via the National Center for Seismology (NCS), cyclone warnings, and severe weather forecasting.</p>
+            <div style="margin-top: 14px; font-size: 0.85rem; color: var(--text-secondary);">
+                <div>🌐 Seismology Portal: <strong>seismo.gov.in</strong></div>
+                <div style="margin-top: 6px;"><a href="https://mausam.imd.gov.in" target="_blank" rel="noopener noreferrer" style="color:var(--accent);font-weight:600;">Visit imd.gov.in →</a></div>
+            </div>
+        </div>
+
+        <div class="card" style="border-top: 4px solid #16a34a;">
+            <h3>NDRF — National Disaster Response Force</h3>
+            <p>Specialized multi-disciplinary force trained for rapid disaster response, search and rescue operations during earthquakes, floods, and landslides.</p>
+            <div style="margin-top: 14px; font-size: 0.85rem; color: var(--text-secondary);">
+                <div>📞 24/7 Control Room: <strong>011-24363260 / 9711077372</strong></div>
+                <div style="margin-top: 6px;"><a href="https://www.ndrf.gov.in" target="_blank" rel="noopener noreferrer" style="color:var(--accent);font-weight:600;">Visit ndrf.gov.in →</a></div>
+            </div>
+        </div>
+
+        <div class="card" style="border-top: 4px solid #8b5cf6;">
+            <h3>GSI — Geological Survey of India</h3>
+            <p>Premier scientific agency conducting geo-hazard mapping, landslide zonation, active fault mapping, and post-earthquake geological assessments across India.</p>
+            <div style="margin-top: 14px; font-size: 0.85rem; color: var(--text-secondary);">
+                <div>🌐 Portal: <strong>gsi.gov.in</strong></div>
+                <div style="margin-top: 6px;"><a href="https://www.gsi.gov.in" target="_blank" rel="noopener noreferrer" style="color:var(--accent);font-weight:600;">Visit gsi.gov.in →</a></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 2: International Scientific & Monitoring Organizations -->
+    <div class="section-header" style="text-align: left; margin: 40px 0 20px;">
+        <h2>🌍 International Seismological & Disaster Centers</h2>
+    </div>
+
+    <div class="card-grid">
+        <div class="card" style="border-top: 4px solid #2563eb;">
+            <h3>USGS — Earthquake Hazards Program</h3>
+            <p>United States Geological Survey's global monitoring division, delivering open seismic data, Moment Magnitude calculations, and ShakeMap shake intensity modeling.</p>
+            <div style="margin-top: 14px; font-size: 0.85rem;">
+                <a href="https://earthquake.usgs.gov" target="_blank" rel="noopener noreferrer" style="color:var(--accent);font-weight:600;">Visit earthquake.usgs.gov →</a>
+            </div>
+        </div>
+
+        <div class="card" style="border-top: 4px solid #9333ea;">
+            <h3>EMSC — Euro-Mediterranean Seismological Centre</h3>
+            <p>European-Mediterranean rapid real-time earthquake detection network with citizen seismology and "Did You Feel It" crowd-sourced ground shaking reports.</p>
+            <div style="margin-top: 14px; font-size: 0.85rem;">
+                <a href="https://www.emsc-csem.org" target="_blank" rel="noopener noreferrer" style="color:var(--accent);font-weight:600;">Visit emsc-csem.org →</a>
+            </div>
+        </div>
+
+        <div class="card" style="border-top: 4px solid #dc2626;">
+            <h3>JMA — Japan Meteorological Agency</h3>
+            <p>World-leading agency in earthquake early warning (EEW) systems, seismic intensity scale (Shindo), and Pacific tsunami warning services.</p>
+            <div style="margin-top: 14px; font-size: 0.85rem;">
+                <a href="https://www.jma.go.jp/jma/indexe.html" target="_blank" rel="noopener noreferrer" style="color:var(--accent);font-weight:600;">Visit jma.go.jp →</a>
+            </div>
+        </div>
+
+        <div class="card" style="border-top: 4px solid #059669;">
+            <h3>NOAA — Pacific Tsunami Warning Center (PTWC)</h3>
+            <p>International tsunami warning center monitoring undersea earthquakes and ocean buoy telemetry to issue tsunami alerts across the Pacific and Indian Oceans.</p>
+            <div style="margin-top: 14px; font-size: 0.85rem;">
+                <a href="https://www.tsunami.gov" target="_blank" rel="noopener noreferrer" style="color:var(--accent);font-weight:600;">Visit tsunami.gov →</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Related Internal Pages -->
+    <div class="content-card" style="margin-top: 48px; text-align: center; padding: 32px 20px;">
+        <h3>Explore Related RAA Earthquake Resources</h3>
+        <p style="color: var(--text-secondary); margin-bottom: 20px;">Use our integrated modules to explore risk zones and emergency preparedness plans.</p>
+        <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+            <a href="/emergency-contacts" class="btn btn-primary">📞 Emergency Helplines Directory</a>
+            <a href="/india-disaster-risk" class="btn btn-outline">🇮🇳 India State Risk Index</a>
+            <a href="/disaster-kit-guide" class="btn btn-outline">🎒 Emergency Survival Kit</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

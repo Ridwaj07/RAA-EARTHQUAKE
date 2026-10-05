@@ -1,0 +1,264 @@
+{% extends "base.html" %}
+
+{% block title %}Earthquake FAQ — Frequently Asked Questions & Science Facts | RAA Earthquake{% endblock %}
+{% block meta_description %}Find answers to frequently asked questions about earthquakes: causes, magnitude vs intensity, prediction myths, safety procedures, and data sources.{% endblock %}
+
+{% block head %}
+<!-- FAQ Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What causes an earthquake?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Earthquakes are caused by the sudden release of accumulated energy in the Earth's crust. Most earthquakes occur along tectonic plate boundaries where friction temporarily locks moving plates until the stress overcomes frictional resistance, causing rocks to rupture and emit seismic waves."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can scientists predict earthquakes in advance?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Current scientific consensus confirms that neither the USGS, IMD, nor any other scientific body can predict the exact date, time, and location of future earthquakes. Scientists can calculate long-term statistical probabilities and seismic hazard zones, but precise short-term predictions are not scientifically possible."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between an earthquake's epicenter and hypocenter?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The hypocenter (or focus) is the exact point beneath the Earth's surface where the rupture initiates and seismic energy is first released. The epicenter is the point on the Earth's surface directly vertically above the hypocenter."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between magnitude and intensity?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Magnitude measures the total energy released at the source of the earthquake (a single fixed number, commonly measured on the Moment Magnitude Scale). Intensity measures the strength of ground shaking and observed damage at specific locations, varying depending on distance, soil conditions, and building quality (measured on scales like Modified Mercalli)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What should I do during an earthquake?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The internationally recognized safety guideline is Drop, Cover, and Hold On: Drop to your hands and knees, take Cover under a sturdy table or desk, and Hold On until all shaking stops. If indoors, stay inside and avoid windows, heavy cabinets, and elevators."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where does RAA Earthquake source its live data?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "RAA Earthquake retrieves public real-time seismic feeds from the United States Geological Survey (USGS) Earthquake Hazards Program via standardized GeoJSON feeds. We aggregate and visualize this data for educational and situational awareness."
+      }
+    }
+  ]
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="breadcrumb">
+    <a href="/">Home</a> <span>/</span> <a href="/earthquake">Learn</a> <span>/</span> <span>Earthquake FAQ</span>
+</div>
+
+<section class="section fade-in">
+    <div class="section-header">
+        <span class="section-label">Knowledge Base</span>
+        <h1>Frequently Asked Questions About Earthquakes</h1>
+        <p>Clear, scientifically validated answers to essential questions about seismology, earth dynamics, public safety, and real-time monitoring.</p>
+    </div>
+
+    <!-- Live Search Box for FAQ -->
+    <div class="content-card" style="margin-bottom: 32px; padding: 20px;">
+        <input type="text" id="faqSearchInput" placeholder="🔍 Search FAQ topics (e.g. prediction, epicenter, safety, richter scale)..." style="width: 100%; padding: 14px 18px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg-primary); color: var(--text-primary); font-size: 1rem;">
+    </div>
+
+    <div class="faq-container" id="faqList">
+
+        <!-- Category: Earthquake Science -->
+        <h2 style="font-size: 1.4rem; margin: 32px 0 16px; color: var(--accent);">🔬 Earthquake Science & Seismology</h2>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                <span>What actually causes an earthquake?</span>
+                <span class="faq-toggle">+</span>
+            </button>
+            <div class="faq-answer">
+                <p>Earthquakes occur due to the dynamic motion of Earth's tectonic plates. The Earth's outer crust is fractured into large puzzle-like slabs called lithospheric plates that drift slowly over the semi-fluid asthenosphere beneath. Along plate boundaries (faults), the edges of plates get stuck due to friction while the rest of the plates continue moving.</p>
+                <p>Over decades or centuries, immense elastic strain builds up in the locked rocks. When this stress finally exceeds the frictional strength of the fault, the rocks rupture violently, slipping rapidly and releasing the stored energy as <strong>seismic waves</strong> that travel through the planet and shake the surface.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                <span>Can scientists predict earthquakes in advance?</span>
+                <span class="faq-toggle">+</span>
+            </button>
+            <div class="faq-answer">
+                <p><strong>No.</strong> No scientific organization in the world (including USGS, IMD, or EMSC) can predict the exact date, time, and location of an earthquake. Any claims of exact predictions are scientifically unsubstantiated.</p>
+                <p>What seismologists <em>can</em> do is calculate <strong>probabilistic seismic hazard assessments</strong>. This means scientists determine the probability of a certain magnitude earthquake occurring in a specific region over a multi-decade span (e.g., a 60% probability of a M6.7+ event in Northern California over 30 years). Early warning systems can also detect the initial P-waves seconds before stronger S-waves arrive, giving citizens and automated systems seconds of crucial warning.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                <span>What is the difference between the Hypocenter and Epicenter?</span>
+                <span class="faq-toggle">+</span>
+            </button>
+            <div class="faq-answer">
+                <p>The two terms describe distinct spatial points of a seismic event:</p>
+                <ul>
+                    <li><strong>Hypocenter (Focus):</strong> The true 3D point inside the Earth's crust where the rupture starts and initial energy is released. Depth is measured from the surface down to this point.</li>
+                    <li><strong>Epicenter:</strong> The geographical point on the Earth's surface directly vertically above the hypocenter. This is the coordinate (latitude and longitude) mapped on geographical maps.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                <span>Why is the Richter Scale no longer used by professional seismologists?</span>
+                <span class="faq-toggle">+</span>
+            </button>
+            <div class="faq-answer">
+                <p>Charles Richter developed the Richter Scale in 1935 specifically for measuring moderate earthquakes in Southern California using Wood-Anderson seismographs. It "saturates" (fails to accurately distinguish size) for earthquakes larger than magnitude 7.0 and cannot properly measure distant or deep events.</p>
+                <p>Today, modern seismological agencies rely on the <strong>Moment Magnitude Scale (Mw)</strong>. Moment magnitude is based on the physical parameters of the fault rupture: the shear modulus of the rock, the surface area of the fault that slipped, and the average distance of the slip. Because it directly quantifies energy release without saturation, it accurately measures events of all sizes worldwide.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                <span>What is the difference between Magnitude and Intensity?</span>
+                <span class="faq-toggle">+</span>
+            </button>
+            <div class="faq-answer">
+                <p>While often confused in news reports, magnitude and intensity measure two completely different characteristics:</p>
+                <ul>
+                    <li><strong>Magnitude (Mw):</strong> Represents the singular, fixed quantity of energy released at the earthquake source. It does not change with distance.</li>
+                    <li><strong>Intensity (e.g., Modified Mercalli Intensity - MMI):</strong> Measures the localized strength of ground shaking and observed physical damage at a given location. Intensity varies greatly depending on distance from the epicenter, focal depth, local soil composition (e.g., bedrock vs. soft sedimentary basin), and structural design.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                <span>What are foreshocks, mainshocks, and aftershocks?</span>
+                <span class="faq-toggle">+</span>
+            </button>
+            <div class="faq-answer">
+                <p>These terms describe relative sequences of earthquakes in a specific cluster:</p>
+                <ul>
+                    <li><strong>Mainshock:</strong> The largest earthquake in a sequence.</li>
+                    <li><strong>Foreshock:</strong> An earthquake that occurs before a larger mainshock in the same geographic area. An event can only be identified as a foreshock retroactively once a larger mainshock occurs.</li>
+                    <li><strong>Aftershocks:</strong> Smaller earthquakes that occur in the same area during the days, weeks, months, or years following a mainshock as the crust adjusts to the altered stress state.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Category: Safety & Preparedness -->
+        <h2 style="font-size: 1.4rem; margin: 40px 0 16px; color: var(--success);">🛡️ Safety & Preparedness</h2>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                <span>What is the safest action during shaking: Drop, Cover, and Hold On?</span>
+                <span class="faq-toggle">+</span>
+            </button>
+            <div class="faq-answer">
+                <p>The globally accepted, research-backed response recommended by disaster agencies (NDMA, USGS, FEMA, Red Cross) is:</p>
+                <ol>
+                    <li><strong>DROP:</strong> Drop down onto your hands and knees. This position protects you from being knocked over and allows you to stay low while crawling if necessary.</li>
+                    <li><strong>COVER:</strong> Cover your head and neck (and your entire body if possible) underneath a sturdy table or desk. If no shelter is nearby, drop next to an interior wall and cover your head with your arms.</li>
+                    <li><strong>HOLD ON:</strong> Hold on to your shelter with one hand and move with it if it shifts, keeping your other arm shielding your neck and head until shaking completely ceases.</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                <span>Should I stand in a doorway or run outside during shaking?</span>
+                <span class="faq-toggle">+</span>
+            </button>
+            <div class="faq-answer">
+                <p><strong>No.</strong> These are outdated myths:</p>
+                <ul>
+                    <li><strong>Doorways:</strong> In modern construction, doorways are no stronger than other parts of a house and do not protect against flying or falling debris. Furthermore, a swinging door can cause severe injury.</li>
+                    <li><strong>Running outside:</strong> Research shows that attempting to run while ground is shaking is one of the leading causes of injury due to falling, collapsing exterior facades, shattering glass windows, and falling power lines. Stay inside until shaking stops, then evacuate calmly.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                <span>What should be included in a 72-hour family emergency kit?</span>
+                <span class="faq-toggle">+</span>
+            </button>
+            <div class="faq-answer">
+                <p>A basic 72-hour disaster supply kit should contain:</p>
+                <ul>
+                    <li>Water: One gallon (3.8 liters) per person per day for drinking and sanitation</li>
+                    <li>Food: A 3-day supply of non-perishable, easy-to-prepare food with a manual can opener</li>
+                    <li>Battery-powered or hand-crank emergency radio (NOAA/national weather broadcasts)</li>
+                    <li>LED flashlight and extra batteries</li>
+                    <li>First aid kit including essential prescription medications</li>
+                    <li>Whistle to signal for search and rescue</li>
+                    <li>Dust mask, plastic sheeting, and duct tape to help filter contaminated air</li>
+                    <li>Sturdy shoes, work gloves, and copies of important identification documents in a waterproof container</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Category: Platform Transparency -->
+        <h2 style="font-size: 1.4rem; margin: 40px 0 16px; color: var(--warning);">🌐 Platform & Data Questions</h2>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                <span>Where does RAA Earthquake get its earthquake data?</span>
+                <span class="faq-toggle">+</span>
+            </button>
+            <div class="faq-answer">
+                <p>RAA Earthquake ingests public real-time seismic feeds provided by the <strong>United States Geological Survey (USGS) Earthquake Hazards Program</strong>. These GeoJSON feeds are updated automatically by global seismometer telemetry networks. For local hazard analysis and state risk profiles in India, we reference publications from the National Disaster Management Authority (NDMA), Geological Survey of India (GSI), and India Meteorological Department (IMD).</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                <span>Is RAA Earthquake an official government agency?</span>
+                <span class="faq-toggle">+</span>
+            </button>
+            <div class="faq-answer">
+                <p><strong>No.</strong> RAA Earthquake is an independent educational and situational awareness project created under RAA Groups by developers Rishav Bharadwaj and Anurag Raj. It is designed to make public scientific data accessible, visually intuitive, and educational. In any life-threatening situation, always follow directives issued by official government disaster authorities (such as NDMA in India, FEMA in the US, or JMA in Japan).</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Contact & More Links -->
+    <div class="content-card" style="margin-top: 48px; text-align: center; padding: 32px 20px; background: var(--bg-secondary);">
+        <h3>Have a question not covered here?</h3>
+        <p style="color: var(--text-secondary); max-width: 600px; margin: 8px auto 20px;">We continuously expand our educational library and welcome suggestions, scientific corrections, and inquiries.</p>
+        <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+            <a href="/contact" class="btn btn-primary">✉️ Contact Editorial Team</a>
+            <a href="/how-it-works" class="btn btn-outline">⚙️ How RAA Earthquake Works</a>
+            <a href="/earthquake" class="btn btn-outline">📚 Explore Knowledge Hub</a>
+        </div>
+    </div>
+</section>
+
+<script>
+// Search filter for FAQs
+document.getElementById('faqSearchInput').addEventListener('input', function(e) {
+    const q = e.target.value.toLowerCase().trim();
+    const items = document.querySelectorAll('.faq-item');
+    items.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        item.style.display = text.includes(q) ? 'block' : 'none';
+    });
+});
+</script>
+{% endblock %}

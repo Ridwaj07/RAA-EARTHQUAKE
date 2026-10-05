@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}How It Works — Data Architecture & Methodology | RAA Earthquake{% endblock %}
+{% block meta_description %}Learn how RAA Earthquake ingests, processes, and visualizes real-time global seismic data from the USGS, our technical pipeline, and data governance.{% endblock %}
+
+{% block content %}
+<div class="breadcrumb">
+    <a href="/">Home</a> <span>/</span> <span>How It Works</span>
+</div>
+
+<section class="section fade-in">
+    <div class="section-header">
+        <span class="section-label">Architecture & Transparency</span>
+        <h1>How RAA Earthquake Works</h1>
+        <p>A transparent look at our data pipelines, seismic ingestion workflows, mapping architecture, and editorial methodology.</p>
+    </div>
+
+    <div class="content-card">
+        <div class="article-container" style="max-width: 100%;">
+            
+            <div class="info-box info">
+                <strong>Platform Overview:</strong> RAA Earthquake is an independent data aggregation, mapping, and educational platform. We transform publicly accessible open-science earthquake feeds into accessible visual dashboards, searchable catalogs, and life-safety educational content.
+            </div>
+
+            <h2>1. Real-Time Data Pipeline</h2>
+            <p>Seismic events occurring around the globe are recorded by thousands of seismometers operated by global geological networks. RAA Earthquake connects directly to the <strong>United States Geological Survey (USGS) Earthquake Hazards Program</strong> via their standardized RESTful GeoJSON API feeds.</p>
+
+            <div class="card-grid" style="margin: 24px 0;">
+                <div class="card" style="border-top: 4px solid var(--accent);">
+                    <h4>🛰️ Feed Ingestion</h4>
+                    <p style="font-size: 0.9rem;">We fetch real-time GeoJSON summaries across multiple temporal resolutions: past hour (all magnitudes), past 24 hours, past 7 days, and past 30 days (M4.5+).</p>
+                </div>
+                <div class="card" style="border-top: 4px solid var(--warning);">
+                    <h4>⚡ Telemetry Parsing</h4>
+                    <p style="font-size: 0.9rem;">Each event object is extracted with its primary attributes: Moment Magnitude (Mw/Mb), 3D spatial coordinates (Latitude, Longitude, Hypocentral Depth), timestamp, felt reports, and tsunami alert flags.</p>
+                </div>
+                <div class="card" style="border-top: 4px solid var(--success);">
+                    <h4>🗺️ Geospatial Rendering</h4>
+                    <p style="font-size: 0.9rem;">Data points are projected onto high-performance Leaflet.js interactive maps with dynamic color scaling and proportional circular marker geometries.</p>
+                </div>
+            </div>
+
+            <h2>2. Magnitude Color Coding & Classification</h2>
+            <p>To help users instantly understand the severity of an event at a glance, RAA Earthquake applies a standardized visual hierarchy based on moment magnitude:</p>
+
+            <div style="overflow-x: auto; margin: 20px 0;">
+                <table style="width: 100%; border-collapse: collapse; background: var(--bg-primary); border-radius: 10px; overflow: hidden;">
+                    <thead>
+                        <tr style="background: var(--bg-tertiary); text-align: left; border-bottom: 2px solid var(--border);">
+                            <th style="padding: 12px 16px;">Magnitude Tier</th>
+                            <th style="padding: 12px 16px;">Visual Badge</th>
+                            <th style="padding: 12px 16px;">Typical Energy & Ground Effect</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid var(--border);">
+                            <td style="padding: 12px 16px; font-weight: 600;">Minor / Light (&lt; 4.0)</td>
+                            <td style="padding: 12px 16px;"><span class="eq-mag low" style="display:inline-block;padding:2px 8px;font-size:0.8rem;border-radius:6px;">&lt; 4.0</span></td>
+                            <td style="padding: 12px 16px; color: var(--text-secondary);">Often felt indoors by few people; rarely causes damage.</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--border);">
+                            <td style="padding: 12px 16px; font-weight: 600;">Moderate (4.0 – 5.9)</td>
+                            <td style="padding: 12px 16px;"><span class="eq-mag moderate" style="display:inline-block;padding:2px 8px;font-size:0.8rem;border-radius:6px;">4.0–5.9</span></td>
+                            <td style="padding: 12px 16px; color: var(--text-secondary);">Felt by everyone; slight damage to poorly constructed buildings near epicenter.</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--border);">
+                            <td style="padding: 12px 16px; font-weight: 600;">Strong (6.0 – 6.9)</td>
+                            <td style="padding: 12px 16px;"><span class="eq-mag high" style="display:inline-block;padding:2px 8px;font-size:0.8rem;border-radius:6px;">6.0–6.9</span></td>
+                            <td style="padding: 12px 16px; color: var(--text-secondary);">Can cause significant structural damage in populated areas up to 100 km across.</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 12px 16px; font-weight: 600;">Major / Great (7.0+)</td>
+                            <td style="padding: 12px 16px;"><span class="eq-mag severe" style="display:inline-block;padding:2px 8px;font-size:0.8rem;border-radius:6px;">7.0+</span></td>
+                            <td style="padding: 12px 16px; color: var(--text-secondary);">Severe damage over large regional areas; potential trigger for regional tsunamis if subduction-related.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>3. Client-Side Alert System</h2>
+            <p>Our platform includes a browser-based monitoring routine that periodically checks for major new seismic detections (&ge; M6.0). When users opt-in via standard browser notification permissions:</p>
+            <ul>
+                <li>The browser client polls the USGS 1-hour real-time feed once every 60 seconds.</li>
+                <li>If a new high-magnitude earthquake ID is identified that was not previously displayed, a notification banner is displayed with the location and magnitude.</li>
+                <li>No private user data or geolocation is transmitted or stored on external servers to power this feature.</li>
+            </ul>
+
+            <h2>4. Technical & Data Limitations</h2>
+            <p>Transparency is fundamental to building trust. Users should be aware of the following technical characteristics of seismic monitoring:</p>
+            <ul>
+                <li><strong>Preliminary Determinations:</strong> Initial data published within 5–15 minutes of an earthquake is often automatically computed by computer algorithms. Seismologists subsequently review the waveform data manually, which may lead to revisions in magnitude, exact epicenter coordinates, or depth.</li>
+                <li><strong>Sensor Density Variations:</strong> Regions with dense seismometer arrays (e.g., California, Japan, Europe) detect micro-earthquakes down to M1.0 or lower. Remote oceanic zones or regions with sparse telemetry may only reliably report events above M4.0.</li>
+                <li><strong>Not an Early Warning Broadcast:</strong> RAA Earthquake is an informational web service and does <em>not</em> function as a substitute for government-run Earthquake Early Warning (EEW) systems (such as ShakeAlert in the US, JMA EEW in Japan, or National Disaster Emergency Broadcasts in India).</li>
+            </ul>
+
+            <h2>5. Open Data & Attribution</h2>
+            <p>RAA Earthquake respects open-science data licenses and attributes all seismic telemetry to the United States Geological Survey (USGS) and partner regional networks. We also reference hazard mapping methodologies developed by the National Disaster Management Authority (NDMA) of India, IMD, and international geophysical organizations.</p>
+
+            <div style="text-align: center; margin-top: 36px;">
+                <a href="/official-data-sources" class="btn btn-primary">📖 Explore Official Data Sources</a>
+                <a href="/earthquake-search" class="btn btn-outline" style="margin-left: 12px;">🔎 Search Live Seismic Data</a>
+            </div>
+
+        </div>
+    </div>
+</section>
+{% endblock %}

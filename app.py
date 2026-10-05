@@ -13,8 +13,8 @@ app.secret_key = "raa_super_secret_key"
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = 'raa.earthquake.2.0@gmail.com'
-app.config['MAIL_PASSWORD'] = 'soeg zmof dhse utjs'
+app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME', 'raa.earthquake.2.0@gmail.com')
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD', 'soeg zmof dhse utjs')
 
 mail = Mail(app)
 
@@ -261,31 +261,33 @@ def robots():
 
 @app.route("/sitemap.xml")
 def sitemap():
+    base_url = "https://raa-earthquake2-0.onrender.com"
     pages = []
     # Dynamic list of routes to include in sitemap
     for rule in app.url_map.iter_rules():
         if "GET" in rule.methods and len(rule.arguments) == 0:
-            # Exclude some routes
-            if rule.rule not in ["/rishav", "/logout", "/account", "/edit_account", "/sitemap.xml", "/robots.txt", "/ads.txt", "/ping"]:
-                pages.append("https://raa-earthquake.onrender.com" + rule.rule)
+            # Exclude non-public or utility routes
+            if rule.rule not in ["/rishav", "/logout", "/account", "/edit_account", "/sitemap.xml", "/robots.txt", "/ads.txt", "/ping", "/login", "/signup"]:
+                if not rule.rule.startswith("/api/"):
+                    pages.append(base_url + rule.rule)
     
     # Append dynamic multi-disaster pages
     try:
         disasters = models.DisasterType.query.filter_by(is_active=True).all()
         for d in disasters:
-            pages.append(f"https://raa-earthquake.onrender.com/disasters/{d.slug}")
+            pages.append(f"{base_url}/disasters/{d.slug}")
         states = models.IndianState.query.all()
         for s in states:
-            pages.append(f"https://raa-earthquake.onrender.com/india-disaster-risk/{s.slug}")
+            pages.append(f"{base_url}/india-disaster-risk/{s.slug}")
         events = models.HistoricalEvent.query.all()
         for e in events:
-            pages.append(f"https://raa-earthquake.onrender.com/historic-disasters/{e.id}")
+            pages.append(f"{base_url}/historic-disasters/{e.id}")
     except Exception as err:
         print("SITEMAP DYNAMIC ERR:", err)
     
     sitemap_xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-    for page in pages:
-        sitemap_xml += f'  <url><loc>{page}</loc><lastmod>{datetime.utcnow().strftime("%Y-%m-%d")}</lastmod></url>\n'
+    for page in sorted(list(set(pages))):
+        sitemap_xml += f'  <url><loc>{page}</loc><lastmod>{datetime.utcnow().strftime("%Y-%m-%d")}</lastmod><changefreq>daily</changefreq></url>\n'
     sitemap_xml += '</urlset>'
     
     return sitemap_xml, 200, {'Content-Type': 'application/xml'}
@@ -457,7 +459,105 @@ def historic_disaster_detail(event_id):
     related_disaster = models.DisasterType.query.filter_by(slug=event.disaster_type).first()
     return render_template("resources/historic_detail.html", event=event, related_disaster=related_disaster)
 
-# ================= API ENDPOINT =================
+# ================= CORE PLATFORM PAGES (QUALITY UPGRADE) =================
+
+@app.route("/faq")
+def faq():
+    return render_template("faq.html")
+
+@app.route("/how-it-works")
+def how_it_works():
+    return render_template("how-it-works.html")
+
+@app.route("/official-resources")
+def official_resources():
+    return render_template("official-resources.html")
+
+@app.route("/earthquake-search")
+def earthquake_search():
+    return render_template("earthquake_search.html")
+
+@app.route("/earthquake/<event_id>")
+@app.route("/earthquake-detail/<event_id>")
+def earthquake_detail(event_id):
+    eq_data = None
+    error_msg = None
+    try:
+        url = f"https://earthquake.usgs.gov/fdsnws/event/1/query?eventid={event_id}&format=geojson"
+        res = requests.get(url, timeout=6)
+        if res.status_code == 200:
+            eq_data = res.json()
+        else:
+            error_msg = "Earthquake record not found or unavailable."
+    except Exception as e:
+        print("DETAIL API ERROR:", e)
+        error_msg = "Unable to fetch live event details from USGS at this moment."
+    
+    return render_template("earthquake_detail.html", event_id=event_id, eq=eq_data, error_msg=error_msg)
+
+# ================= API ENDPOINTS =================
+
+@app.route("/api/earthquakes")
+def api_earthquakes():
+    feed = request.args.get("feed", "all_day") # all_hour, all_day, all_week, all_month, 4.5_day, 2.5_day, significant_month
+    min_mag = request.args.get("min_mag", type=float)
+    query = request.args.get("q", "").strip().lower()
+    
+    valid_feeds = {
+        "hour": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson",
+        "all_day": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson",
+        "all_week": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson",
+        "all_month": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson",
+        "m45_day": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson",
+        "m45_week": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_week.geojson",
+        "m45_month": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_month.geojson",
+        "significant_month": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_month.geojson"
+    }
+    
+    feed_url = valid_feeds.get(feed, valid_feeds["all_day"])
+    try:
+        response = requests.get(feed_url, timeout=7)
+        data = response.json()
+        features = data.get("features", [])
+        
+        results = []
+        for f in features:
+            props = f.get("properties", {})
+            geom = f.get("geometry", {})
+            coords = geom.get("coordinates", [0, 0, 0])
+            mag = props.get("mag") or 0.0
+            place = props.get("place") or "Unknown location"
+            time_ms = props.get("time") or 0
+            
+            if min_mag is not None and mag < min_mag:
+                continue
+            if query and query not in place.lower():
+                continue
+                
+            results.append({
+                "id": f.get("id"),
+                "place": place,
+                "mag": round(mag, 1),
+                "time": time_ms,
+                "time_formatted": datetime.utcfromtimestamp(time_ms / 1000).strftime("%Y-%m-%d %H:%M:%S UTC") if time_ms else "N/A",
+                "longitude": coords[0] if len(coords) > 0 else None,
+                "latitude": coords[1] if len(coords) > 1 else None,
+                "depth_km": coords[2] if len(coords) > 2 else None,
+                "url": props.get("url"),
+                "status": props.get("status"),
+                "tsunami": props.get("tsunami", 0),
+                "felt": props.get("felt"),
+                "alert": props.get("alert")
+            })
+            
+        return jsonify({
+            "count": len(results),
+            "generated": data.get("metadata", {}).get("generated"),
+            "earthquakes": results[:200]
+        })
+    except Exception as e:
+        print("API SEARCH ERROR:", e)
+        return jsonify({"error": "Failed to fetch earthquakes", "earthquakes": []}), 500
 
 @app.route("/api/stats")
 def api_stats():
@@ -469,9 +569,9 @@ def api_stats():
         total = len(features)
         significant = len([f for f in features if f["properties"].get("mag", 0) and f["properties"]["mag"] >= 4.5])
         max_mag = max([f["properties"].get("mag", 0) or 0 for f in features]) if features else 0
-        return jsonify({"total": total, "significant": significant, "max_mag": max_mag, "countries": 50})
+        return jsonify({"total": total, "significant": significant, "max_mag": max_mag, "countries": "Global"})
     except:
-        return jsonify({"total": 0, "significant": 0, "max_mag": 0, "countries": 0})
+        return jsonify({"total": 0, "significant": 0, "max_mag": 0, "countries": "Global"})
 
 # ================= ADMIN =================
 @app.route("/rishav")
@@ -486,14 +586,14 @@ def edit_account():
         return redirect("/login")
     return render_template("edit_account.html")
 
-# ================= ERROR HANDLER =================
+# ================= ERROR HANDLERS =================
 @app.errorhandler(404)
 def not_found(e):
-    return render_template("index.html"), 404
+    return render_template("404.html"), 404
 
 @app.errorhandler(500)
-def error(e):
-    return "Something went wrong. Please try again.", 500
+def server_error(e):
+    return render_template("404.html", error_title="500 — Server Error", error_msg="Something went wrong processing your request. Please try again shortly."), 500
 
 # ================= RUN =================
 if __name__ == "__main__":

@@ -1,0 +1,208 @@
+{% extends "base.html" %}
+
+{% block title %}Earthquake Search & Filter Tool — Live Seismic Query | RAA Earthquake{% endblock %}
+{% block meta_description %}Search and filter real-time global earthquake feeds by magnitude, time range, keyword, depth, and location. Powered by USGS telemetry data.{% endblock %}
+
+{% block content %}
+<div class="breadcrumb">
+    <a href="/">Home</a> <span>/</span> <a href="/world">Live Data</a> <span>/</span> <span>Earthquake Search</span>
+</div>
+
+<section class="section fade-in">
+    <div class="section-header">
+        <span class="section-label">Interactive Tool</span>
+        <h1>Global Earthquake Search & Catalog</h1>
+        <p>Query real-time seismic events worldwide with customizable filters for magnitude thresholds, time ranges, and geographic locations.</p>
+    </div>
+
+    <!-- Filter Control Card -->
+    <div class="content-card" style="padding: 24px; margin-bottom: 32px; background: var(--bg-secondary);">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; align-items: flex-end;">
+            
+            <div>
+                <label for="searchQuery" style="display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: 6px; color: var(--text-secondary);">Location / Region Keyword</label>
+                <input type="text" id="searchQuery" placeholder="e.g. Japan, California, India, Chile..." style="width: 100%; padding: 12px 14px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg-primary); color: var(--text-primary);">
+            </div>
+
+            <div>
+                <label for="feedTimeRange" style="display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: 6px; color: var(--text-secondary);">Time Range</label>
+                <select id="feedTimeRange" style="width: 100%; padding: 12px 14px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg-primary); color: var(--text-primary);">
+                    <option value="all_day" selected>Past 24 Hours (All Magnitudes)</option>
+                    <option value="hour">Past Hour (All Magnitudes)</option>
+                    <option value="all_week">Past 7 Days (All Magnitudes)</option>
+                    <option value="m45_day">Past 24 Hours (M4.5+ Only)</option>
+                    <option value="m45_week">Past 7 Days (M4.5+ Only)</option>
+                    <option value="m45_month">Past 30 Days (M4.5+ Only)</option>
+                    <option value="significant_month">Past 30 Days (Significant Events)</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="minMagSelect" style="display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: 6px; color: var(--text-secondary);">Minimum Magnitude</label>
+                <select id="minMagSelect" style="width: 100%; padding: 12px 14px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg-primary); color: var(--text-primary);">
+                    <option value="">Any Magnitude</option>
+                    <option value="2.5">M 2.5+</option>
+                    <option value="4.0">M 4.0+ (Moderate)</option>
+                    <option value="5.0">M 5.0+ (Strong)</option>
+                    <option value="6.0">M 6.0+ (Major)</option>
+                    <option value="7.0">M 7.0+ (Great)</option>
+                </select>
+            </div>
+
+            <div>
+                <button type="button" id="btnRunSearch" class="btn btn-primary" style="width: 100%; padding: 12px 16px; border-radius: 8px; font-weight: 600;">
+                    🔍 Apply Filters
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Summary Stats Strip -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin-bottom: 24px;">
+        <div class="stat-card" style="padding: 16px;">
+            <div class="stat-number" id="resultCount" style="font-size: 1.8rem;">0</div>
+            <div class="stat-label">Events Matched</div>
+        </div>
+        <div class="stat-card" style="padding: 16px;">
+            <div class="stat-number" id="resultMaxMag" style="font-size: 1.8rem;">—</div>
+            <div class="stat-label">Highest Magnitude</div>
+        </div>
+        <div class="stat-card" style="padding: 16px;">
+            <div class="stat-number" id="resultAvgDepth" style="font-size: 1.8rem;">—</div>
+            <div class="stat-label">Avg Depth (km)</div>
+        </div>
+        <div class="stat-card" style="padding: 16px;">
+            <div class="stat-number" style="font-size: 1.8rem; color: var(--success);">USGS</div>
+            <div class="stat-label">Verified Data Source</div>
+        </div>
+    </div>
+
+    <!-- Results Container -->
+    <div class="content-card" style="padding: 24px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; flex-wrap: wrap; gap: 10px;">
+            <h3 style="margin: 0; font-size: 1.2rem;" id="resultsTitle">Seismic Results</h3>
+            <span id="updateStatus" style="font-size: 0.85rem; color: var(--text-muted);">Loaded live</span>
+        </div>
+
+        <!-- Skeleton loader -->
+        <div id="searchSkeletons">
+            <div class="skeleton" style="height: 60px; margin-bottom: 10px; border-radius: 8px;"></div>
+            <div class="skeleton" style="height: 60px; margin-bottom: 10px; border-radius: 8px;"></div>
+            <div class="skeleton" style="height: 60px; margin-bottom: 10px; border-radius: 8px;"></div>
+            <div class="skeleton" style="height: 60px; margin-bottom: 10px; border-radius: 8px;"></div>
+        </div>
+
+        <div id="noResultsMsg" style="display: none; text-align: center; padding: 40px 20px; color: var(--text-muted);">
+            <div style="font-size: 40px; margin-bottom: 12px;">🌊</div>
+            <h4>No earthquakes found matching your criteria</h4>
+            <p>Try widening your time window or lowering the minimum magnitude filter.</p>
+        </div>
+
+        <ul class="eq-list" id="searchResultsList" style="display: none; list-style: none; padding: 0; margin: 0;">
+            <!-- Injected via JavaScript -->
+        </ul>
+    </div>
+</section>
+
+<script>
+function getMagClass(mag) {
+    if (mag >= 7) return 'severe';
+    if (mag >= 6) return 'high';
+    if (mag >= 4) return 'moderate';
+    return 'low';
+}
+
+async function performSearch() {
+    const query = document.getElementById('searchQuery').value.trim();
+    const feed = document.getElementById('feedTimeRange').value;
+    const minMag = document.getElementById('minMagSelect').value;
+
+    const skeletons = document.getElementById('searchSkeletons');
+    const list = document.getElementById('searchResultsList');
+    const noResults = document.getElementById('noResultsMsg');
+    const countEl = document.getElementById('resultCount');
+    const maxMagEl = document.getElementById('resultMaxMag');
+    const depthEl = document.getElementById('resultAvgDepth');
+    const statusEl = document.getElementById('updateStatus');
+
+    skeletons.style.display = 'block';
+    list.style.display = 'none';
+    noResults.style.display = 'none';
+
+    try {
+        let apiUrl = `/api/earthquakes?feed=${encodeURIComponent(feed)}`;
+        if (minMag) apiUrl += `&min_mag=${encodeURIComponent(minMag)}`;
+        if (query) apiUrl += `&q=${encodeURIComponent(query)}`;
+
+        const res = await fetch(apiUrl);
+        const data = await res.json();
+
+        skeletons.style.display = 'none';
+
+        if (!data.earthquakes || data.earthquakes.length === 0) {
+            noResults.style.display = 'block';
+            countEl.textContent = '0';
+            maxMagEl.textContent = '—';
+            depthEl.textContent = '—';
+            statusEl.textContent = 'Query completed (0 results)';
+            return;
+        }
+
+        countEl.textContent = data.earthquakes.length;
+        const maxMag = Math.max(...data.earthquakes.map(e => e.mag || 0));
+        maxMagEl.textContent = maxMag.toFixed(1);
+
+        const depths = data.earthquakes.map(e => e.depth_km).filter(d => d !== null && d !== undefined);
+        const avgDepth = depths.length > 0 ? (depths.reduce((a, b) => a + b, 0) / depths.length).toFixed(1) : '—';
+        depthEl.textContent = avgDepth;
+
+        list.innerHTML = '';
+        data.earthquakes.forEach(eq => {
+            const li = document.createElement('li');
+            li.className = 'eq-item fade-in';
+            const magClass = getMagClass(eq.mag);
+            
+            li.innerHTML = `
+                <div class="eq-mag ${magClass}">${eq.mag.toFixed(1)}</div>
+                <div class="eq-info" style="flex: 1;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; flex-wrap: wrap;">
+                        <a href="/earthquake-detail/${eq.id}" class="eq-place" style="font-weight: 600; color: var(--text-primary); text-decoration: none; hover: underline;">
+                            ${eq.place}
+                        </a>
+                        <span style="font-size: 0.8rem; background: var(--bg-tertiary); padding: 2px 8px; border-radius: 4px; color: var(--text-secondary);">
+                            Depth: ${eq.depth_km !== null ? eq.depth_km + ' km' : 'N/A'}
+                        </span>
+                    </div>
+                    <div style="display: flex; gap: 16px; margin-top: 6px; font-size: 0.82rem; color: var(--text-muted); flex-wrap: wrap;">
+                        <span>🕐 ${eq.time_formatted}</span>
+                        ${eq.felt ? `<span>👥 Felt by ${eq.felt} people</span>` : ''}
+                        ${eq.tsunami ? `<span style="color:var(--danger);font-weight:600;">🌊 Tsunami Flag</span>` : ''}
+                        <a href="/earthquake-detail/${eq.id}" style="color: var(--accent); text-decoration: underline; margin-left: auto;">View Event Report →</a>
+                    </div>
+                </div>
+            `;
+            list.appendChild(li);
+        });
+
+        list.style.display = 'block';
+        statusEl.textContent = `Updated at ${new Date().toLocaleTimeString()}`;
+    } catch (e) {
+        console.error('Search error:', e);
+        skeletons.style.display = 'none';
+        noResults.style.display = 'block';
+        noResults.querySelector('h4').textContent = 'Error loading earthquake feed';
+    }
+}
+
+document.getElementById('btnRunSearch').addEventListener('click', performSearch);
+document.getElementById('searchQuery').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') performSearch();
+});
+document.getElementById('feedTimeRange').addEventListener('change', performSearch);
+document.getElementById('minMagSelect').addEventListener('change', performSearch);
+
+// Initial load
+performSearch();
+</script>
+{% endblock %}

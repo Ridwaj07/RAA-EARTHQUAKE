@@ -5,4 +5,4 @@ Disallow: /logout
 Disallow: /account
 Disallow: /edit_account
 
-Sitemap: https://raa-earthquake.onrender.com/sitemap.xml
+Sitemap: https://raa-earthquake2-0.onrender.com/sitemap.xml

@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+
+{% block title %}
+{% if eq and eq.properties %}
+M {{ eq.properties.mag }} Earthquake - {{ eq.properties.place }} | RAA Earthquake
+{% else %}
+Earthquake Event Report | RAA Earthquake
+{% endif %}
+{% endblock %}
+
+{% block meta_description %}
+{% if eq and eq.properties %}
+Detailed seismic report for M {{ eq.properties.mag }} earthquake near {{ eq.properties.place }}. Epicenter coordinates, depth, shake intensity, and official USGS data.
+{% else %}
+View individual earthquake telemetry and epicenter map on RAA Earthquake.
+{% endif %}
+{% endblock %}
+
+{% block head %}
+{% if eq and eq.properties and eq.geometry %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SpecialAnnouncement",
+  "name": "M {{ eq.properties.mag }} Earthquake - {{ eq.properties.place }}",
+  "text": "Seismic event of magnitude {{ eq.properties.mag }} detected near {{ eq.properties.place }} with focal depth of {{ eq.geometry.coordinates[2] }} km.",
+  "datePosted": "{{ eq.properties.time }}",
+  "spatialCoverage": {
+    "@type": "Place",
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": {{ eq.geometry.coordinates[1] }},
+      "longitude": {{ eq.geometry.coordinates[0] }}
+    }
+  }
+}
+</script>
+{% endif %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="breadcrumb">
+    <a href="/">Home</a> <span>/</span> <a href="/earthquake-search">Search Feed</a> <span>/</span> <span>Event {{ event_id }}</span>
+</div>
+
+<section class="section fade-in">
+    {% if error_msg %}
+    <div class="content-card" style="text-align: center; padding: 48px 20px;">
+        <div style="font-size: 56px; margin-bottom: 16px;">⚠️</div>
+        <h2>Event Data Unavailable</h2>
+        <p style="color: var(--text-secondary); max-width: 500px; margin: 0 auto 24px;">{{ error_msg }}</p>
+        <a href="/earthquake-search" class="btn btn-primary">Return to Earthquake Search</a>
+    </div>
+    {% elif eq and eq.properties %}
+    {% set p = eq.properties %}
+    {% set coords = eq.geometry.coordinates %}
+    
+    <div class="section-header" style="text-align: left; margin-bottom: 24px;">
+        <span class="section-label">Seismic Telemetry Report</span>
+        <h1 style="font-size: 2rem; margin-top: 8px;">M {{ p.mag }} — {{ p.place }}</h1>
+        <p style="color: var(--text-secondary);">USGS Event ID: <code>{{ event_id }}</code> &bull; Status: <strong>{{ p.status|capitalize if p.status else 'Reviewed' }}</strong></p>
+    </div>
+
+    <!-- Quick Stat Cards -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 28px;">
+        <div class="stat-card" style="border-top: 4px solid var(--accent); padding: 18px;">
+            <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">MAGNITUDE</div>
+            <div style="font-size: 2rem; font-weight: 800; color: var(--accent); margin: 6px 0;">{{ p.mag }}</div>
+            <div style="font-size: 0.8rem; color: var(--text-secondary);">Type: {{ p.magType|upper if p.magType else 'Mw' }}</div>
+        </div>
+
+        <div class="stat-card" style="border-top: 4px solid var(--warning); padding: 18px;">
+            <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">FOCAL DEPTH</div>
+            <div style="font-size: 2rem; font-weight: 800; color: var(--warning); margin: 6px 0;">{{ coords[2] }} km</div>
+            <div style="font-size: 0.8rem; color: var(--text-secondary);">
+                {% if coords[2] < 70 %}Shallow Focus{% elif coords[2] < 300 %}Intermediate{% else %}Deep Focus{% endif %}
+            </div>
+        </div>
+
+        <div class="stat-card" style="border-top: 4px solid var(--success); padding: 18px;">
+            <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">FELT REPORTS</div>
+            <div style="font-size: 2rem; font-weight: 800; color: var(--success); margin: 6px 0;">{{ p.felt or 0 }}</div>
+            <div style="font-size: 0.8rem; color: var(--text-secondary);">Citizen responses</div>
+        </div>
+
+        <div class="stat-card" style="border-top: 4px solid var(--danger); padding: 18px;">
+            <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">TSUNAMI WARNING</div>
+            <div style="font-size: 2rem; font-weight: 800; color: {% if p.tsunami %}var(--danger){% else %}var(--text-muted){% endif %}; margin: 6px 0;">
+                {% if p.tsunami %}ACTIVE{% else %}NONE{% endif %}
+            </div>
+            <div style="font-size: 0.8rem; color: var(--text-secondary);">Oceanic wave hazard</div>
+        </div>
+    </div>
+
+    <!-- Map & Details Grid -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-bottom: 32px;">
+        <!-- Left: Map -->
+        <div class="content-card" style="padding: 16px;">
+            <h3 style="margin-bottom: 12px; font-size: 1.1rem;">📍 Epicenter Location Map</h3>
+            <div id="eventMap" style="height: 380px; width: 100%; border-radius: 8px;"></div>
+            <div style="margin-top: 12px; font-size: 0.85rem; color: var(--text-muted); display: flex; justify-content: space-between;">
+                <span>Coordinates: {{ coords[1] }}° N, {{ coords[0] }}° E</span>
+                <span>Zoom: Focused</span>
+            </div>
+        </div>
+
+        <!-- Right: Technical Details Table -->
+        <div class="content-card" style="padding: 20px;">
+            <h3 style="margin-bottom: 16px; font-size: 1.1rem;">📊 Seismological Parameters</h3>
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                <tr style="border-bottom: 1px solid var(--border);">
+                    <td style="padding: 10px 0; color: var(--text-secondary); font-weight: 600;">Location</td>
+                    <td style="padding: 10px 0; text-align: right; font-weight: 600;">{{ p.place }}</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                    <td style="padding: 10px 0; color: var(--text-secondary); font-weight: 600;">Latitude</td>
+                    <td style="padding: 10px 0; text-align: right;">{{ coords[1] }}°</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                    <td style="padding: 10px 0; color: var(--text-secondary); font-weight: 600;">Longitude</td>
+                    <td style="padding: 10px 0; text-align: right;">{{ coords[0] }}°</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                    <td style="padding: 10px 0; color: var(--text-secondary); font-weight: 600;">Depth</td>
+                    <td style="padding: 10px 0; text-align: right;">{{ coords[2] }} km</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                    <td style="padding: 10px 0; color: var(--text-secondary); font-weight: 600;">Max Intensity (MMI)</td>
+                    <td style="padding: 10px 0; text-align: right;">{{ p.mmi if p.mmi else 'Not calculated' }}</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border);">
+                    <td style="padding: 10px 0; color: var(--text-secondary); font-weight: 600;">Seismic Network</td>
+                    <td style="padding: 10px 0; text-align: right;">{{ p.net|upper if p.net else 'USGS' }}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px 0; color: var(--text-secondary); font-weight: 600;">Official Source</td>
+                    <td style="padding: 10px 0; text-align: right;">
+                        <a href="{{ p.url }}" target="_blank" rel="noopener noreferrer" style="color: var(--accent); font-weight: 600;">USGS Event Page ↗</a>
+                    </td>
+                </tr>
+            </table>
+
+            <!-- Safety Action Note -->
+            <div style="margin-top: 24px; padding: 14px; background: var(--bg-tertiary); border-radius: 8px; font-size: 0.85rem;">
+                <strong>Safety Reminder:</strong> In regions near recent shaking, remain alert for possible aftershocks. Inspect structures for gas leaks or electrical hazards before re-entering.
+            </div>
+        </div>
+    </div>
+
+    <!-- Map Script -->
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var lat = {{ coords[1] }};
+        var lon = {{ coords[0] }};
+        var mag = {{ p.mag or 4.0 }};
+        
+        var isDark = document.body.classList.contains('dark');
+        var tileUrl = isDark
+            ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
+            : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+
+        var map = L.map('eventMap').setView([lat, lon], 6);
+        L.tileLayer(tileUrl, { maxZoom: 16, attribution: '&copy; OpenStreetMap' }).addTo(map);
+
+        var color = mag >= 7 ? '#7c3aed' : (mag >= 6 ? '#ef4444' : (mag >= 4 ? '#f59e0b' : '#10b981'));
+
+        L.circleMarker([lat, lon], {
+            radius: Math.max(mag * 3.5, 6),
+            color: color,
+            fillColor: color,
+            fillOpacity: 0.85,
+            weight: 2
+        }).addTo(map).bindPopup('<strong>M {{ p.mag }}</strong><br>{{ p.place }}').openPopup();
+
+        // Outer pulse circle
+        L.circle([lat, lon], {
+            radius: 50000,
+            color: color,
+            fillOpacity: 0.1,
+            weight: 1
+        }).addTo(map);
+    });
+    </script>
+    {% endif %}
+</section>
+{% endblock %}

@@ -10,14 +10,32 @@
     <div class="hero-overlay"></div>
     <div class="hero-content">
         <div class="hero-badge">
-            <span class="pulse"></span> 24/7 Multi-Hazard Intelligence Active
+            <span class="pulse"></span> Live Global Seismic Telemetry &bull; USGS Feed Active
         </div>
-        <h1>Multi-Hazard Disaster Intelligence & Safety Platform</h1>
-        <p>Track real-time earthquakes, explore 34 disaster hazard profiles, view India state risk maps, and access life-saving emergency safety guides.</p>
-        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-            <a href="/disasters" class="btn btn-white btn-lg">⚠️ All 34 Disasters Hub</a>
-            <a href="/india-disaster-risk" class="btn btn-outline btn-lg" style="border-color:rgba(255,255,255,0.4);color:white;">🇮🇳 India Disaster Risk Map</a>
-            <a href="/map" class="btn btn-white btn-lg" style="background: rgba(255,255,255,0.2); color:white; border:1px solid rgba(255,255,255,0.4);">🗺️ Live Map</a>
+        <h1>Global Earthquake Monitoring & Multi-Hazard Safety Platform</h1>
+        <p>Real-time seismic data aggregation, interactive fault mapping, India state vulnerability profiles, and research-backed emergency safety guides.</p>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:20px;">
+            <a href="/earthquake-search" class="btn btn-white btn-lg">🔍 Search Earthquakes</a>
+            <a href="/map" class="btn btn-white btn-lg" style="background: rgba(255,255,255,0.2); color:white; border:1px solid rgba(255,255,255,0.4);">🗺️ Interactive Live Map</a>
+            <a href="/india-disaster-risk" class="btn btn-outline btn-lg" style="border-color:rgba(255,255,255,0.4);color:white;">🇮🇳 India Risk Map</a>
+            <a href="/disasters" class="btn btn-outline btn-lg" style="border-color:rgba(255,255,255,0.4);color:white;">⚠️ Disasters Hub</a>
+        </div>
+    </div>
+</section>
+
+<!-- DATA SOURCE & TRANSPARENCY BANNER -->
+<section class="section fade-in" style="padding-top: 16px; padding-bottom: 0;">
+    <div class="content-card" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; padding: 16px 24px; background: var(--bg-tertiary); border: 1px solid var(--border);">
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <span style="font-size: 24px;">📡</span>
+            <div style="font-size: 0.9rem;">
+                <strong>Verified Open Science Data:</strong> Live seismic feeds directly ingested from the <a href="https://earthquake.usgs.gov/" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;">USGS Earthquake Hazards Program</a>.
+            </div>
+        </div>
+        <div style="display: flex; gap: 12px; font-size: 0.85rem;">
+            <a href="/how-it-works" style="color: var(--text-secondary); text-decoration: underline;">How It Works &rarr;</a>
+            <a href="/faq" style="color: var(--text-secondary); text-decoration: underline;">Earthquake FAQ &rarr;</a>
+            <a href="/official-resources" style="color: var(--text-secondary); text-decoration: underline;">Official Agencies &rarr;</a>
         </div>
     </div>
 </section>
@@ -66,8 +84,8 @@
 <section class="section fade-in">
     <div class="section-header">
         <span class="section-label">Live Statistics</span>
-        <h2>Today's Earthquake Activity</h2>
-        <p>Real-time seismic data from the USGS Earthquake Hazards Program, updated continuously.</p>
+        <h2>Today's Global Seismic Activity</h2>
+        <p>Real-time telemetry aggregated from USGS monitoring stations worldwide.</p>
     </div>
     <div class="stats-grid" id="statsGrid">
         <div class="stat-card">
@@ -87,8 +105,8 @@
         </div>
         <div class="stat-card">
             <div class="stat-icon green">🌍</div>
-            <div class="stat-number">195</div>
-            <div class="stat-label">Countries Monitored</div>
+            <div class="stat-number" style="font-size:1.6rem;">Global</div>
+            <div class="stat-label">USGS Network Feed</div>
         </div>
     </div>
 </section>
@@ -97,8 +115,8 @@
 <section class="section fade-in">
     <div class="section-header">
         <span class="section-label">Live Feed</span>
-        <h2>Latest Earthquakes</h2>
-        <p>Most recent seismic events detected in the last hour, sourced from USGS.</p>
+        <h2>Latest Global Earthquakes</h2>
+        <p>Most recent seismic events detected in the last hour, sourced directly from USGS.</p>
     </div>
 
     <!-- Skeleton Loader -->
@@ -111,8 +129,9 @@
 
     <ul class="eq-list" id="quakeList" style="display:none;"></ul>
 
-    <div style="text-align:center;margin-top:20px;">
-        <a href="/world" class="btn btn-outline">View All World Earthquakes →</a>
+    <div style="display:flex;gap:12px;justify-content:center;margin-top:20px;flex-wrap:wrap;">
+        <a href="/earthquake-search" class="btn btn-primary">🔍 Search & Filter All Earthquakes →</a>
+        <a href="/world" class="btn btn-outline">View Country Catalog →</a>
     </div>
 </section>
 
@@ -341,14 +360,21 @@ async function loadEarthquakes() {
             const place = eq.properties.place;
             const time = new Date(eq.properties.time).toLocaleTimeString();
             const magClass = getMagClass(mag);
+            const depth = eq.geometry && eq.geometry.coordinates ? eq.geometry.coordinates[2] : null;
 
             const item = document.createElement('li');
             item.className = 'eq-item fade-in';
             item.innerHTML = `
                 <div class="eq-mag ${magClass}">${mag.toFixed(1)}</div>
-                <div class="eq-info">
-                    <div class="eq-place">${place}</div>
-                    <div class="eq-time">🕐 ${time}</div>
+                <div class="eq-info" style="flex:1;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
+                        <a href="/earthquake-detail/${eq.id}" class="eq-place" style="font-weight:600;color:var(--text-primary);text-decoration:none;">${place}</a>
+                        ${depth !== null ? `<span style="font-size:0.75rem;background:var(--bg-tertiary);padding:2px 6px;border-radius:4px;color:var(--text-muted);">${depth} km</span>` : ''}
+                    </div>
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px;">
+                        <div class="eq-time">🕐 ${time}</div>
+                        <a href="/earthquake-detail/${eq.id}" style="font-size:0.8rem;color:var(--accent);text-decoration:underline;">View Details →</a>
+                    </div>
                 </div>
             `;
             list.appendChild(item);
